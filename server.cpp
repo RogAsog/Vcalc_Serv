@@ -1,181 +1,242 @@
-#include <bits/stdc++.h>
+#include <iostream>
+#include <fstream>
+#include <vector>
+#include <string>
+#include <cstring>
 #include <arpa/inet.h>
 #include <unistd.h>
 #include <sys/socket.h>
+#include <ctime>
+#include <iomanip>
 #include "sha256.hpp"
+#include <boost/program_options.hpp>
 
+namespace po = boost::program_options;
 using namespace std;
 
-constexpr size_t LOGIN_SZ = 256;
-constexpr size_t SALT16_SZ = 16;
-constexpr size_t HASH_SZ = 64;
-
-void log_error(const string &logfile, const string &err, bool critical) {
-    FILE *f = fopen(logfile.c_str(), "a");
+void logMsg(const string &file, const string &msg, bool err = false) {
+    ofstream f(file, ios::app);
     if (!f) return;
     time_t t = time(nullptr);
-    struct tm tm = *localtime(&t);
-    fprintf(f, "%04d-%02d-%02d %02d:%02d:%02d | %s | %s\n",
-        tm.tm_year+1900, tm.tm_mon+1, tm.tm_mday,
-        tm.tm_hour, tm.tm_min, tm.tm_sec,
-        critical ? "CRITICAL" : "NONCRIT", err.c_str());
-    fclose(f);
+    tm *tm = localtime(&t);
+    f << put_time(tm, "%Y-%m-%d %H:%M:%S") << " | " 
+      << (err ? "ERROR" : "INFO") << " | " << msg << endl;
 }
 
-int load_users(const string &file, vector<pair<string,string>> &users) {
-    ifstream in(file);
-    if (!in.is_open()) return -1;
+vector<pair<string,string>> loadUsers(const string &file) {
+    vector<pair<string,string>> users;
+    ifstream f(file);
     string line;
-    while (getline(in, line)) {
-        if (line.empty()) continue;
-        auto pos = line.find(':');
-        if (pos == string::npos) continue;
-        string login = line.substr(0,pos);
-        string pass = line.substr(pos+1);
-        users.emplace_back(login, pass);
-        if (users.size() >= 100) break;
+    while (getline(f, line)) {
+        size_t p = line.find(':');
+        if (p != string::npos)
+            users.push_back({line.substr(0, p), line.substr(p + 1)});
     }
-    return 0;
+    return users;
 }
 
-static string to_hex_upper(const uint8_t *in, size_t len) {
-    static const char* hex = "0123456789ABCDEF";
-    string out;
-    out.resize(len*2);
-    for (size_t i=0;i<len;i++){
-        out[i*2] = hex[(in[i]>>4)&0xF];
-        out[i*2+1] = hex[in[i]&0xF];
-    }
-    return out;
-}
-
-bool verify_auth(const string &login, const string &salt16, const string &hashhex,
-                const vector<pair<string,string>> &users) {
-    for (auto &u : users) {
-        if (u.first == login) {
-            string concat = salt16 + u.second;
+bool checkAuth(const string &login, const string &salt, const string &hash, 
+               const vector<pair<string,string>> &users) {
+    for (const auto &[l, p] : users) {
+        if (l == login) {
+            string data = salt + p;
             uint8_t digest[32];
-            sha256((const uint8_t*)concat.data(), concat.size(), digest);
-            string calc = to_hex_upper(digest, 32);
-            return calc == hashhex;
+            sha256((uint8_t*)data.c_str(), data.size(), digest);
+            
+            char hex[65];
+            for (int i = 0; i < 32; i++) sprintf(hex + i*2, "%02X", digest[i]);
+            hex[64] = '\0';
+            
+            return string(hex) == hash;
         }
     }
     return false;
 }
 
-ssize_t recv_all(int fd, void *buf, size_t len) {
+bool readAll(int sock, void *buf, size_t len) {
     size_t got = 0;
     while (got < len) {
-        ssize_t r = read(fd, (char*)buf + got, len - got);
-        if (r <= 0) return -1;
-        got += r;
+        ssize_t n = read(sock, (char*)buf + got, len - got);
+        if (n <= 0) return false;
+        got += n;
     }
-    return got;
+    return true;
 }
-ssize_t send_all(int fd, const void *buf, size_t len) {
+
+bool writeAll(int sock, const void *buf, size_t len) {
     size_t sent = 0;
     while (sent < len) {
-        ssize_t r = write(fd, (const char*)buf + sent, len - sent);
-        if (r <= 0) return -1;
-        sent += r;
+        ssize_t n = write(sock, (char*)buf + sent, len - sent);
+        if (n <= 0) return false;
+        sent += n;
     }
-    return sent;
+    return true;
 }
 
-float sum_squares(const vector<float> &v) {
-    double s = 0.0;
-    for (float x : v) s += (double)x * (double)x;
-    return (float)s;
+// Функция преобразования little-endian в uint32_t
+uint32_t readLittleEndian32(const uint8_t* bytes) {
+    return (bytes[0] << 0) | (bytes[1] << 8) | (bytes[2] << 16) | (bytes[3] << 24);
 }
 
-int handle_client(int cfd, const vector<pair<string,string>> &users, const string &logfile) {
-    // read login, salt, hash fixed sizes
-    vector<char> login_buf(LOGIN_SZ);
-    vector<char> salt_buf(SALT16_SZ);
-    vector<char> hash_buf(HASH_SZ);
-    if (recv_all(cfd, login_buf.data(), LOGIN_SZ) < 0) { log_error(logfile, "Failed read login", false); return -1; }
-    if (recv_all(cfd, salt_buf.data(), SALT16_SZ) < 0) { log_error(logfile, "Failed read salt", false); return -1; }
-    if (recv_all(cfd, hash_buf.data(), HASH_SZ) < 0) { log_error(logfile, "Failed read hash", false); return -1; }
-    string login(login_buf.data(), LOGIN_SZ);
-    // trim trailing NULs
-    login = string(login.c_str());
-    string salt(salt_buf.data(), SALT16_SZ);
-    string hash(hash_buf.data(), HASH_SZ);
-    if (!verify_auth(login, salt, hash, users)) {
-        send_all(cfd, "ERR", 3);
-        return -1;
+// Функция преобразования uint32_t в little-endian
+void writeLittleEndian32(uint32_t value, uint8_t* bytes) {
+    bytes[0] = (value >> 0) & 0xFF;
+    bytes[1] = (value >> 8) & 0xFF;
+    bytes[2] = (value >> 16) & 0xFF;
+    bytes[3] = (value >> 24) & 0xFF;
+}
+
+void handleClient(int sock, const vector<pair<string,string>> &users, const string &logFile) {
+    logMsg(logFile, "Client connected");
+    
+    // Аутентификация
+    char auth[256];
+    ssize_t n = read(sock, auth, sizeof(auth)-1);
+    if (n <= 0) { 
+        logMsg(logFile, "Auth read failed", true); 
+        close(sock); 
+        return; 
     }
-    send_all(cfd, "OK", 2);
-    uint32_t N_net;
-    if (recv_all(cfd, &N_net, 4) < 0) { log_error(logfile, "Failed read N", false); return -1; }
-    uint32_t N = ntohl(N_net);
-    if (N > 1000000) { log_error(logfile, "N too large", true); return -1; }
-    vector<float> results;
-    results.reserve(N);
-    for (uint32_t i=0;i<N;i++) {
-        uint32_t S_net;
-        if (recv_all(cfd, &S_net, 4) < 0) { log_error(logfile, "Failed read S", false); return -1; }
-        uint32_t S = ntohl(S_net);
-        if (S > 10000000) { log_error(logfile, "S too large", true); return -1; }
-        vector<float> vec(S);
-        for (uint32_t j=0;j<S;j++) {
-            uint32_t fnet;
-            if (recv_all(cfd, &fnet, 4) < 0) { log_error(logfile, "Failed read float", false); return -1; }
-            uint32_t fh = ntohl(fnet);
-            float f;
-            memcpy(&f, &fh, 4);
-            vec[j] = f;
+    auth[n] = '\0';
+    
+    string authStr(auth);
+    if (authStr.length() < 84) { 
+        writeAll(sock, "ERR", 3); 
+        logMsg(logFile, "Auth message too short", true);
+        close(sock); 
+        return; 
+    }
+    
+    string login = authStr.substr(0, 4);
+    string salt = authStr.substr(4, 16);
+    string hash = authStr.substr(20, 64);
+    
+    if (!checkAuth(login, salt, hash, users)) {
+        writeAll(sock, "ERR", 3);
+        logMsg(logFile, "Auth failed for: " + login, true);
+        close(sock);
+        return;
+    }
+    
+    writeAll(sock, "OK", 2);
+    logMsg(logFile, "User authenticated: " + login);
+    
+    // Фаза вычислений
+    uint8_t buffer[4];
+    if (!readAll(sock, buffer, 4)) { 
+        logMsg(logFile, "Failed to read number of vectors", true);
+        close(sock); 
+        return; 
+    }
+    
+    uint32_t numVectors = readLittleEndian32(buffer);
+    logMsg(logFile, "Processing " + to_string(numVectors) + " vectors");
+    
+    // Обрабатываем векторы
+    for (uint32_t i = 0; i < numVectors; i++) {
+        // Читаем размер вектора
+        if (!readAll(sock, buffer, 4)) {
+            logMsg(logFile, "Failed to read vector size", true);
+            close(sock);
+            return;
         }
-        results.push_back(sum_squares(vec));
+        
+        uint32_t vectorSize = readLittleEndian32(buffer);
+        
+        // Читаем элементы вектора
+        float sum = 0.0f;
+        for (uint32_t j = 0; j < vectorSize; j++) {
+            if (!readAll(sock, buffer, 4)) {
+                logMsg(logFile, "Failed to read vector data", true);
+                close(sock);
+                return;
+            }
+            
+            uint32_t val = readLittleEndian32(buffer);
+            float f;
+            memcpy(&f, &val, sizeof(float));
+            sum += f * f;
+        }
+        
+        logMsg(logFile, "Vector " + to_string(i+1) + " result: " + to_string(sum));
+        
+        // Отправляем результат
+        uint32_t resultBits;
+        memcpy(&resultBits, &sum, sizeof(float));
+        
+        uint8_t resultBuffer[4];
+        writeLittleEndian32(resultBits, resultBuffer);
+        
+        if (!writeAll(sock, resultBuffer, 4)) {
+            logMsg(logFile, "Failed to send result", true);
+            close(sock);
+            return;
+        }
     }
-    // send back N then N floats
-    uint32_t outN = htonl((uint32_t)results.size());
-    if (send_all(cfd, &outN, 4) < 0) { log_error(logfile, "Failed send outN", false); return -1; }
-    for (float r : results) {
-        uint32_t bits;
-        memcpy(&bits, &r, 4);
-        uint32_t outbits = htonl(bits);
-        if (send_all(cfd, &outbits, 4) < 0) { log_error(logfile, "Failed send result", false); return -1; }
-    }
-    return 0;
+    
+    logMsg(logFile, "All " + to_string(numVectors) + " vectors processed");
+    close(sock);
 }
 
-int main(int argc, char **argv) {
-    string db_file = "/etc/vcalc.conf";
-    string log_file = "/var/log/vcalc.log";
+int main(int argc, char *argv[]) {
+    string userFile = "users.txt";
+    string logFile = "server.log";
     int port = 33333;
-    if (argc == 1 || (argc == 2 && string(argv[1])=="-h")) {
-        cout << "Usage: " << argv[0] << " -d DBFILE -l LOGFILE -p PORT\n";
-        return 0;
-    }
-    for (int i=1;i<argc;i++) {
-        if (string(argv[i])=="-d" && i+1<argc) db_file = argv[++i];
-        else if (string(argv[i])=="-l" && i+1<argc) log_file = argv[++i];
-        else if (string(argv[i])=="-p" && i+1<argc) port = atoi(argv[++i]);
-    }
-    vector<pair<string,string>> users;
-    if (load_users(db_file, users) < 0) {
-        cerr << "Failed to load user DB " << db_file << "\n";
-        log_error(log_file, "Failed to load user DB", true);
+    
+    po::options_description desc("Сервер vcalc");
+    desc.add_options()
+        ("help,h", "Справка")
+        ("database,d", po::value<string>(&userFile)->default_value("users.txt"), "Файл пользователей")
+        ("log,l", po::value<string>(&logFile)->default_value("server.log"), "Файл логов")
+        ("port,p", po::value<int>(&port)->default_value(33333), "Порт");
+    
+    po::variables_map vm;
+    try {
+        po::store(po::parse_command_line(argc, argv, desc), vm);
+        po::notify(vm);
+    } catch (exception &e) {
+        cerr << "Ошибка: " << e.what() << endl << desc << endl;
         return 1;
     }
-    int sfd = socket(AF_INET, SOCK_STREAM, 0);
-    if (sfd < 0) { perror("socket"); log_error(log_file, "socket failed", true); return 1; }
+    
+    if (vm.count("help")) {
+        cout << desc << endl;
+        return 0;
+    }
+    
+    // Загрузка пользователей
+    auto users = loadUsers(userFile);
+    if (users.empty()) {
+        cerr << "Нет пользователей в " << userFile << endl;
+        return 1;
+    }
+    
+    // Создание сокета
+    int sock = socket(AF_INET, SOCK_STREAM, 0);
+    if (sock < 0) { perror("socket"); return 1; }
+    
     int opt = 1;
-    setsockopt(sfd, SOL_SOCKET, SO_REUSEADDR, &opt, sizeof(opt));
-    sockaddr_in addr{};
+    setsockopt(sock, SOL_SOCKET, SO_REUSEADDR, &opt, sizeof(opt));
+    
+    sockaddr_in addr = {};
     addr.sin_family = AF_INET;
     addr.sin_port = htons(port);
     addr.sin_addr.s_addr = INADDR_ANY;
-    if (bind(sfd, (struct sockaddr*)&addr, sizeof(addr)) < 0) { perror("bind"); log_error(log_file, "bind failed", true); return 1; }
-    if (listen(sfd, 5) < 0) { perror("listen"); log_error(log_file, "listen failed", true); return 1; }
-    cout << "vcalc C++ server listening on port " << port << endl;
-    while (1) {
-        int cfd = accept(sfd, nullptr, nullptr);
-        if (cfd < 0) { log_error(log_file, "accept failed", false); continue; }
-        handle_client(cfd, users, log_file);
-        close(cfd);
+    
+    if (bind(sock, (sockaddr*)&addr, sizeof(addr)) < 0) { perror("bind"); close(sock); return 1; }
+    if (listen(sock, 5) < 0) { perror("listen"); close(sock); return 1; }
+    
+    cout << "Сервер запущен на порту " << port << endl;
+    logMsg(logFile, "Сервер запущен на порту " + to_string(port));
+    
+    while (true) {
+        sockaddr_in client;
+        socklen_t len = sizeof(client);
+        int clientSock = accept(sock, (sockaddr*)&client, &len);
+        if (clientSock < 0) continue;
+        handleClient(clientSock, users, logFile);
     }
-    close(sfd);
+    
+    close(sock);
     return 0;
 }
