@@ -7,6 +7,6 @@ Run server:
     ./server -d users.txt -l server.log -p 33333
 
 Run default client:
-    ./client 127.0.0.1 33333 user1 password1
+    ./client server 33333 user p@ssW0rd
 
 You can also use your previously provided client (client_float.c) — it is included in the archive as client_float.c.
