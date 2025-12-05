@@ -8,5 +8,5 @@ Run server:
     ./server -d users.txt -l server.log -p 33333
 
 Run default client:
-    ./client 127.0.0.1 33333 user P@ssW0rd
+    ./client_float -H SHA256 -S c
 
