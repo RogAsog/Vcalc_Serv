@@ -14,15 +14,16 @@
 namespace po = boost::program_options;
 using namespace std;
 
-void logMsg(const string &file, const string &msg, bool err = false) {
+// Функция логирования
+void logMsg(const string &file, const string &msg) {
     ofstream f(file, ios::app);
     if (!f) return;
     time_t t = time(nullptr);
     tm *tm = localtime(&t);
-    f << put_time(tm, "%Y-%m-%d %H:%M:%S") << " | " 
-      << (err ? "ERROR" : "INFO") << " | " << msg << endl;
+    f << put_time(tm, "%Y-%m-%d %H:%M:%S") << " | " << msg << endl;
 }
 
+// Загрузка пользователей
 vector<pair<string,string>> loadUsers(const string &file) {
     vector<pair<string,string>> users;
     ifstream f(file);
@@ -35,6 +36,7 @@ vector<pair<string,string>> loadUsers(const string &file) {
     return users;
 }
 
+// Проверка аутентификации
 bool checkAuth(const string &login, const string &salt, const string &hash, 
                const vector<pair<string,string>> &users) {
     for (const auto &[l, p] : users) {
@@ -53,6 +55,7 @@ bool checkAuth(const string &login, const string &salt, const string &hash,
     return false;
 }
 
+// Чтение точного количества байт
 bool readAll(int sock, void *buf, size_t len) {
     size_t got = 0;
     while (got < len) {
@@ -63,6 +66,7 @@ bool readAll(int sock, void *buf, size_t len) {
     return true;
 }
 
+// Запись точного количества байт
 bool writeAll(int sock, const void *buf, size_t len) {
     size_t sent = 0;
     while (sent < len) {
@@ -73,12 +77,11 @@ bool writeAll(int sock, const void *buf, size_t len) {
     return true;
 }
 
-// Функция преобразования little-endian в uint32_t
+// Little-endian конверсия
 uint32_t readLittleEndian32(const uint8_t* bytes) {
     return (bytes[0] << 0) | (bytes[1] << 8) | (bytes[2] << 16) | (bytes[3] << 24);
 }
 
-// Функция преобразования uint32_t в little-endian
 void writeLittleEndian32(uint32_t value, uint8_t* bytes) {
     bytes[0] = (value >> 0) & 0xFF;
     bytes[1] = (value >> 8) & 0xFF;
@@ -86,14 +89,22 @@ void writeLittleEndian32(uint32_t value, uint8_t* bytes) {
     bytes[3] = (value >> 24) & 0xFF;
 }
 
+// Обработка клиента
 void handleClient(int sock, const vector<pair<string,string>> &users, const string &logFile) {
-    logMsg(logFile, "Client connected");
+    char clientIP[INET_ADDRSTRLEN];
+    sockaddr_in client_addr;
+    socklen_t addr_len = sizeof(client_addr);
+    
+    if (getpeername(sock, (sockaddr*)&client_addr, &addr_len) == 0) {
+        inet_ntop(AF_INET, &client_addr.sin_addr, clientIP, INET_ADDRSTRLEN);
+        logMsg(logFile, "Клиент подключен: " + string(clientIP));
+    }
     
     // Аутентификация
     char auth[256];
     ssize_t n = read(sock, auth, sizeof(auth)-1);
     if (n <= 0) { 
-        logMsg(logFile, "Auth read failed", true); 
+        logMsg(logFile, "Ошибка чтения аутентификации");
         close(sock); 
         return; 
     }
@@ -102,7 +113,7 @@ void handleClient(int sock, const vector<pair<string,string>> &users, const stri
     string authStr(auth);
     if (authStr.length() < 84) { 
         writeAll(sock, "ERR", 3); 
-        logMsg(logFile, "Auth message too short", true);
+        logMsg(logFile, "Неверный формат аутентификации");
         close(sock); 
         return; 
     }
@@ -111,32 +122,34 @@ void handleClient(int sock, const vector<pair<string,string>> &users, const stri
     string salt = authStr.substr(4, 16);
     string hash = authStr.substr(20, 64);
     
+    logMsg(logFile, "Аутентификация: " + login);
+    
     if (!checkAuth(login, salt, hash, users)) {
         writeAll(sock, "ERR", 3);
-        logMsg(logFile, "Auth failed for: " + login, true);
+        logMsg(logFile, "Аутентификация отклонена: " + login);
         close(sock);
         return;
     }
     
     writeAll(sock, "OK", 2);
-    logMsg(logFile, "User authenticated: " + login);
+    logMsg(logFile, "Клиент аутентифицирован: " + login);
     
-    // Фаза вычислений
+    // Вычисления
     uint8_t buffer[4];
     if (!readAll(sock, buffer, 4)) { 
-        logMsg(logFile, "Failed to read number of vectors", true);
+        logMsg(logFile, "Ошибка чтения количества векторов");
         close(sock); 
         return; 
     }
     
     uint32_t numVectors = readLittleEndian32(buffer);
-    logMsg(logFile, "Processing " + to_string(numVectors) + " vectors");
+    logMsg(logFile, "Обработка " + to_string(numVectors) + " векторов");
     
     // Обрабатываем векторы
     for (uint32_t i = 0; i < numVectors; i++) {
         // Читаем размер вектора
         if (!readAll(sock, buffer, 4)) {
-            logMsg(logFile, "Failed to read vector size", true);
+            logMsg(logFile, "Ошибка чтения размера вектора");
             close(sock);
             return;
         }
@@ -147,7 +160,7 @@ void handleClient(int sock, const vector<pair<string,string>> &users, const stri
         float sum = 0.0f;
         for (uint32_t j = 0; j < vectorSize; j++) {
             if (!readAll(sock, buffer, 4)) {
-                logMsg(logFile, "Failed to read vector data", true);
+                logMsg(logFile, "Ошибка чтения данных вектора");
                 close(sock);
                 return;
             }
@@ -158,7 +171,7 @@ void handleClient(int sock, const vector<pair<string,string>> &users, const stri
             sum += f * f;
         }
         
-        logMsg(logFile, "Vector " + to_string(i+1) + " result: " + to_string(sum));
+        logMsg(logFile, "Вектор " + to_string(i+1) + ": сумма квадратов = " + to_string(sum));
         
         // Отправляем результат
         uint32_t resultBits;
@@ -168,13 +181,13 @@ void handleClient(int sock, const vector<pair<string,string>> &users, const stri
         writeLittleEndian32(resultBits, resultBuffer);
         
         if (!writeAll(sock, resultBuffer, 4)) {
-            logMsg(logFile, "Failed to send result", true);
+            logMsg(logFile, "Ошибка отправки результата");
             close(sock);
             return;
         }
     }
     
-    logMsg(logFile, "All " + to_string(numVectors) + " vectors processed");
+    logMsg(logFile, "Вычисления завершены для " + to_string(numVectors) + " векторов");
     close(sock);
 }
 
@@ -204,12 +217,18 @@ int main(int argc, char *argv[]) {
         return 0;
     }
     
+    // Старт сервера
+    logMsg(logFile, "=== Запуск сервера ===");
+    logMsg(logFile, "Порт: " + to_string(port));
+    
     // Загрузка пользователей
     auto users = loadUsers(userFile);
     if (users.empty()) {
         cerr << "Нет пользователей в " << userFile << endl;
         return 1;
     }
+    
+    logMsg(logFile, "Загружено пользователей: " + to_string(users.size()));
     
     // Создание сокета
     int sock = socket(AF_INET, SOCK_STREAM, 0);
@@ -227,8 +246,9 @@ int main(int argc, char *argv[]) {
     if (listen(sock, 5) < 0) { perror("listen"); close(sock); return 1; }
     
     cout << "Сервер запущен на порту " << port << endl;
-    logMsg(logFile, "Сервер запущен на порту " + to_string(port));
+    logMsg(logFile, "Сервер запущен, ожидание подключений");
     
+    // Основной цикл
     while (true) {
         sockaddr_in client;
         socklen_t len = sizeof(client);
