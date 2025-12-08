@@ -9,4 +9,7 @@ Run server:
 
 Run default client:
     ./client_float -H SHA256 -S c
-
+Make Doxygen documentation
+    make doc
+View documentation
+    make view-doc

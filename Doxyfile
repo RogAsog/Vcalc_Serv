@@ -1,0 +1,23 @@
+# Doxyfile с поддержкой русского
+PROJECT_NAME = "Vcalc Server"
+PROJECT_BRIEF = "Сервер аутентификации и вычислений"
+OUTPUT_DIRECTORY = docs
+
+# Исходные файлы
+INPUT = server.cpp sha256.cpp sha256.hpp
+EXTRACT_ALL = YES
+EXTRACT_PRIVATE = NO
+
+# HTML выход
+GENERATE_HTML = YES
+SHOW_FILES = YES
+SHOW_NAMESPACES = NO
+SHOW_FILE_MEMBERS = NO
+
+# LaTeX/PDF с поддержкой русского
+GENERATE_LATEX = YES
+USE_PDFLATEX = YES
+PDF_HYPERLINKS = YES
+
+# Ключевая настройка для русского
+LATEX_EXTRA_FILES = russian.sty
