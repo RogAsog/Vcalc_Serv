@@ -13,3 +13,7 @@ Make Doxygen documentation
     make doc
 View documentation
     make view-doc
+Make PDF documentation 
+    make pdf-doc
+View PDF-documentation
+    make view-pdf

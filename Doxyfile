@@ -1,23 +1,47 @@
-# Doxyfile с поддержкой русского
-PROJECT_NAME = "Vcalc Server"
-PROJECT_BRIEF = "Сервер аутентификации и вычислений"
-OUTPUT_DIRECTORY = docs
+# Проект
+PROJECT_NAME           = "Vcalc Server"
+PROJECT_NUMBER         = 1.0
+PROJECT_BRIEF          = "Сервер аутентификации и вычислений"
+OUTPUT_LANGUAGE        = Russian
 
-# Исходные файлы
-INPUT = server.cpp sha256.cpp sha256.hpp
-EXTRACT_ALL = YES
-EXTRACT_PRIVATE = NO
+# Входные файлы
+INPUT                  = server.cpp sha256.cpp sha256.hpp \
+                         tests/test_sha256.cpp tests/test_auth.cpp \
+                         tests/test_vectors.cpp tests/test_protocol.cpp \
+                         tests/test_cli.cpp
+RECURSIVE              = NO
+FILE_PATTERNS          = *.cpp *.h
 
-# HTML выход
-GENERATE_HTML = YES
-SHOW_FILES = YES
-SHOW_NAMESPACES = NO
-SHOW_FILE_MEMBERS = NO
+# Извлечение документации
+EXTRACT_ALL            = YES
+EXTRACT_PRIVATE        = YES
+EXTRACT_STATIC         = YES
 
-# LaTeX/PDF с поддержкой русского
-GENERATE_LATEX = YES
-USE_PDFLATEX = YES
-PDF_HYPERLINKS = YES
+# HTML вывод
+GENERATE_HTML          = YES
+HTML_OUTPUT            = html
 
-# Ключевая настройка для русского
-LATEX_EXTRA_FILES = russian.sty
+# LaTeX/PDF вывод - ключевые настройки!
+GENERATE_LATEX         = YES
+LATEX_OUTPUT           = latex
+USE_PDFLATEX           = YES
+PDF_HYPERLINKS         = YES
+
+# Добавь эти настройки:
+LATEX_EXTRA_STYLESHEET = 
+LATEX_EXTRA_FILES      = 
+
+# Показывать файлы
+SHOW_FILES             = YES
+SHOW_INCLUDE_FILES     = YES
+
+# Дополнительно
+SOURCE_BROWSER         = YES
+HAVE_DOT               = NO
+CALL_GRAPH             = NO
+CALLER_GRAPH           = NO
+
+# Кодировка - важный параметр!
+DOXYFILE_ENCODING      = UTF-8
+INPUT_ENCODING         = UTF-8
+OUTPUT_DIRECTORY       = docs
