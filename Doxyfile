@@ -8,7 +8,7 @@ OUTPUT_LANGUAGE        = Russian
 INPUT                  = server.cpp sha256.cpp sha256.hpp \
                          tests/test_sha256.cpp tests/test_auth.cpp \
                          tests/test_vectors.cpp tests/test_protocol.cpp \
-                         tests/test_cli.cpp
+                         tests/test_cli.cpp tests/test_func.cpp
 RECURSIVE              = NO
 FILE_PATTERNS          = *.cpp *.h
 

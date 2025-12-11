@@ -8,7 +8,7 @@ SERVER_OBJ = $(SERVER_SOURCES:.cpp=.o)
 DOXYFILE = Doxyfile
 DOC_DIR = docs
 
-.PHONY: all run clean doc pdf-doc view-doc view-pdf test help
+.PHONY: all run clean doc pdf-doc view-doc view-pdf test test-func test-all help
 
 all: server users.txt server.log
 	@echo "Сервер собран"
@@ -62,61 +62,67 @@ view-pdf:
 		echo "PDF документация не найдена. Сначала создайте: make pdf-doc"; \
 	fi
 
-# Компиляция и запуск всех тестов
+# Модульные тесты
 test: tests/test_sha256 tests/test_auth tests/test_vectors tests/test_protocol tests/test_cli
 	@echo "======================================="
-	@echo "Запуск UnitTest++ тестов..."
+	@echo "Запуск модульных тестов..."
 	@echo "======================================="
-	@echo "1. SHA256 тесты:"
 	@./tests/test_sha256
-	@echo "======================================="
-	@echo "2. Аутентификация тесты:"
 	@./tests/test_auth
-	@echo "======================================="
-	@echo "3. Векторы тесты:"
 	@./tests/test_vectors
-	@echo "======================================="
-	@echo "4. Протокол тесты:"
 	@./tests/test_protocol
-	@echo "======================================="
-	@echo "5. CLI тесты:"
 	@./tests/test_cli
 	@echo "======================================="
-	@echo "Все тесты завершены"
+	@echo "Модульные тесты завершены"
 
-# SHA256 тесты
+# Простые функциональные тесты
+test-func: tests/test_func
+	@echo "======================================="
+	@echo "Запуск функциональных тестов..."
+	@echo "======================================="
+	@./tests/test_func
+
+# Все тесты
+test-all: test test-func
+
+# Компиляция тестов
 tests/test_sha256: tests/test_sha256.cpp sha256.cpp
 	$(CXX) $(CXXFLAGS) -o $@ tests/test_sha256.cpp sha256.cpp $(LIBS)
 
-# Аутентификация тесты
 tests/test_auth: tests/test_auth.cpp sha256.cpp
 	$(CXX) $(CXXFLAGS) -o $@ tests/test_auth.cpp sha256.cpp $(LIBS)
 
-# Векторы тесты
 tests/test_vectors: tests/test_vectors.cpp
 	$(CXX) $(CXXFLAGS) -o $@ tests/test_vectors.cpp $(LIBS)
 
-# Протокол тесты
 tests/test_protocol: tests/test_protocol.cpp
 	$(CXX) $(CXXFLAGS) -o $@ tests/test_protocol.cpp $(LIBS)
 
-# CLI тесты - ТЕПЕРЬ С UnitTest++
 tests/test_cli: tests/test_cli.cpp
-	$(CXX) $(CXXFLAGS) -o $@ tests/test_cli.cpp $(LIBS)  # Добавил $(LIBS)
+	$(CXX) $(CXXFLAGS) -o $@ tests/test_cli.cpp $(LIBS)
+
+# Простые функциональные тесты
+tests/test_func: tests/test_func.cpp
+	$(CXX) $(CXXFLAGS) -o $@ tests/test_func.cpp $(LIBS)
 
 clean:
 	rm -f $(SERVER_OBJ) server users.txt server.log
 	rm -f tests/test_sha256 tests/test_auth tests/test_vectors tests/test_protocol tests/test_cli
+	rm -f tests/test_func
+	rm -f test*.txt test*.log 2>/dev/null
 	rm -rf $(DOC_DIR)
+	@pkill -f './server' 2>/dev/null || true
 
 help:
 	@echo "Доступные команды:"
 	@echo "  make all        - собрать сервер"
 	@echo "  make run        - запустить сервер"
-	@echo "  make test       - собрать и запустить все UnitTest++ тесты"
-	@echo "  make doc        - создать HTML документацию Doxygen"
-	@echo "  make pdf-doc    - создать PDF документацию (нужен doc)"
+	@echo "  make test       - модульные тесты"
+	@echo "  make test-func  - функциональные тесты"
+	@echo "  make test-all   - все тесты"
+	@echo "  make doc        - документация"
+	@echo "  make pdf-doc    - PDF документация"
 	@echo "  make view-doc   - открыть HTML документацию"
 	@echo "  make view-pdf   - открыть PDF документацию"
-	@echo "  make clean      - очистить проект"
-	@echo "  make help       - показать эту справку"
+	@echo "  make clean      - очистить"
+	@echo "  make help       - справка"
