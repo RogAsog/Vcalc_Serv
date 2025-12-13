@@ -1,0 +1,138 @@
+\doxysection{sha256.\+cpp}
+\hypertarget{sha256_8cpp_source}{}\label{sha256_8cpp_source}\mbox{\hyperlink{sha256_8cpp}{См. документацию.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{sha256_8cpp_source_l00001}00001\ }
+\DoxyCodeLine{\Hypertarget{sha256_8cpp_source_l00011}00011\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{sha256_8hpp}{sha256.hpp}}"{}}}
+\DoxyCodeLine{\Hypertarget{sha256_8cpp_source_l00012}00012\ \textcolor{preprocessor}{\#include\ <cstdint>}}
+\DoxyCodeLine{\Hypertarget{sha256_8cpp_source_l00013}00013\ \textcolor{preprocessor}{\#include\ <cstdlib>}}
+\DoxyCodeLine{\Hypertarget{sha256_8cpp_source_l00014}00014\ \textcolor{preprocessor}{\#include\ <cstring>}}
+\DoxyCodeLine{\Hypertarget{sha256_8cpp_source_l00015}00015\ }
+\DoxyCodeLine{\Hypertarget{sha256_8cpp_source_l00019}\mbox{\hyperlink{sha256_8cpp_aea65645ba9fb49eefab0abab58f24237}{00019}}\ \textcolor{keyword}{static}\ \textcolor{keyword}{inline}\ uint32\_t\ \mbox{\hyperlink{sha256_8cpp_aea65645ba9fb49eefab0abab58f24237}{ROTR}}(uint32\_t\ x,\ \textcolor{keywordtype}{int}\ n)\ \{\ }
+\DoxyCodeLine{\Hypertarget{sha256_8cpp_source_l00020}00020\ \ \ \ \ \textcolor{keywordflow}{return}\ (x\ >>\ n)\ |\ (x\ <<\ (32-\/n));\ }
+\DoxyCodeLine{\Hypertarget{sha256_8cpp_source_l00021}00021\ \}}
+\DoxyCodeLine{\Hypertarget{sha256_8cpp_source_l00022}00022\ }
+\DoxyCodeLine{\Hypertarget{sha256_8cpp_source_l00026}\mbox{\hyperlink{sha256_8cpp_a016d721de53fa58c497bc1fb1f28ee41}{00026}}\ \textcolor{keyword}{static}\ \textcolor{keyword}{inline}\ uint32\_t\ \mbox{\hyperlink{sha256_8cpp_a016d721de53fa58c497bc1fb1f28ee41}{SHR}}(uint32\_t\ x,\ \textcolor{keywordtype}{int}\ n)\ \{\ }
+\DoxyCodeLine{\Hypertarget{sha256_8cpp_source_l00027}00027\ \ \ \ \ \textcolor{keywordflow}{return}\ x\ >>\ n;\ }
+\DoxyCodeLine{\Hypertarget{sha256_8cpp_source_l00028}00028\ \}}
+\DoxyCodeLine{\Hypertarget{sha256_8cpp_source_l00029}00029\ }
+\DoxyCodeLine{\Hypertarget{sha256_8cpp_source_l00033}\mbox{\hyperlink{sha256_8cpp_af11ea3cdbca7345eb6a4a8ac5ce0434d}{00033}}\ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ uint32\_t\ \mbox{\hyperlink{sha256_8cpp_af11ea3cdbca7345eb6a4a8ac5ce0434d}{k}}[64]\ =\ \{}
+\DoxyCodeLine{\Hypertarget{sha256_8cpp_source_l00034}00034\ \ \ 0x428a2f98,0x71374491,0xb5c0fbcf,0xe9b5dba5,0x3956c25b,0x59f111f1,0x923f82a4,0xab1c5ed5,}
+\DoxyCodeLine{\Hypertarget{sha256_8cpp_source_l00035}00035\ \ \ 0xd807aa98,0x12835b01,0x243185be,0x550c7dc3,0x72be5d74,0x80deb1fe,0x9bdc06a7,0xc19bf174,}
+\DoxyCodeLine{\Hypertarget{sha256_8cpp_source_l00036}00036\ \ \ 0xe49b69c1,0xefbe4786,0x0fc19dc6,0x240ca1cc,0x2de92c6f,0x4a7484aa,0x5cb0a9dc,0x76f988da,}
+\DoxyCodeLine{\Hypertarget{sha256_8cpp_source_l00037}00037\ \ \ 0x983e5152,0xa831c66d,0xb00327c8,0xbf597fc7,0xc6e00bf3,0xd5a79147,0x06ca6351,0x14292967,}
+\DoxyCodeLine{\Hypertarget{sha256_8cpp_source_l00038}00038\ \ \ 0x27b70a85,0x2e1b2138,0x4d2c6dfc,0x53380d13,0x650a7354,0x766a0abb,0x81c2c92e,0x92722c85,}
+\DoxyCodeLine{\Hypertarget{sha256_8cpp_source_l00039}00039\ \ \ 0xa2bfe8a1,0xa81a664b,0xc24b8b70,0xc76c51a3,0xd192e819,0xd6990624,0xf40e3585,0x106aa070,}
+\DoxyCodeLine{\Hypertarget{sha256_8cpp_source_l00040}00040\ \ \ 0x19a4c116,0x1e376c08,0x2748774c,0x34b0bcb5,0x391c0cb3,0x4ed8aa4a,0x5b9cca4f,0x682e6ff3,}
+\DoxyCodeLine{\Hypertarget{sha256_8cpp_source_l00041}00041\ \ \ 0x748f82ee,0x78a5636f,0x84c87814,0x8cc70208,0x90befffa,0xa4506ceb,0xbef9a3f7,0xc67178f2}
+\DoxyCodeLine{\Hypertarget{sha256_8cpp_source_l00042}00042\ \};}
+\DoxyCodeLine{\Hypertarget{sha256_8cpp_source_l00043}00043\ }
+\DoxyCodeLine{\Hypertarget{sha256_8cpp_source_l00047}\mbox{\hyperlink{sha256_8cpp_a040629ce734f8c5b8c1b917ee7330a7b}{00047}}\ \textcolor{keyword}{static}\ \textcolor{keyword}{inline}\ uint32\_t\ \mbox{\hyperlink{sha256_8cpp_a040629ce734f8c5b8c1b917ee7330a7b}{ch}}(uint32\_t\ x,\ uint32\_t\ y,\ uint32\_t\ z)\{}
+\DoxyCodeLine{\Hypertarget{sha256_8cpp_source_l00048}00048\ \ \ \ \ \textcolor{keywordflow}{return}\ (x\ \&\ y)\ \string^\ (\string~x\ \&\ z);}
+\DoxyCodeLine{\Hypertarget{sha256_8cpp_source_l00049}00049\ \}}
+\DoxyCodeLine{\Hypertarget{sha256_8cpp_source_l00050}00050\ }
+\DoxyCodeLine{\Hypertarget{sha256_8cpp_source_l00054}\mbox{\hyperlink{sha256_8cpp_adf3fc35e01f72808b97bb5fbc8d525e1}{00054}}\ \textcolor{keyword}{static}\ \textcolor{keyword}{inline}\ uint32\_t\ \mbox{\hyperlink{sha256_8cpp_adf3fc35e01f72808b97bb5fbc8d525e1}{maj}}(uint32\_t\ x,\ uint32\_t\ y,\ uint32\_t\ z)\{}
+\DoxyCodeLine{\Hypertarget{sha256_8cpp_source_l00055}00055\ \ \ \ \ \textcolor{keywordflow}{return}\ (x\ \&\ y)\ \string^\ (x\ \&\ z)\ \string^\ (y\ \&\ z);}
+\DoxyCodeLine{\Hypertarget{sha256_8cpp_source_l00056}00056\ \}}
+\DoxyCodeLine{\Hypertarget{sha256_8cpp_source_l00057}00057\ }
+\DoxyCodeLine{\Hypertarget{sha256_8cpp_source_l00061}\mbox{\hyperlink{sha256_8cpp_a4cb1ce9ef76f0553934e86366af15f9d}{00061}}\ \textcolor{keyword}{static}\ \textcolor{keyword}{inline}\ uint32\_t\ \mbox{\hyperlink{sha256_8cpp_a4cb1ce9ef76f0553934e86366af15f9d}{bsig0}}(uint32\_t\ x)\{}
+\DoxyCodeLine{\Hypertarget{sha256_8cpp_source_l00062}00062\ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{sha256_8cpp_aea65645ba9fb49eefab0abab58f24237}{ROTR}}(x,2)\ \string^\ \mbox{\hyperlink{sha256_8cpp_aea65645ba9fb49eefab0abab58f24237}{ROTR}}(x,13)\ \string^\ \mbox{\hyperlink{sha256_8cpp_aea65645ba9fb49eefab0abab58f24237}{ROTR}}(x,22);}
+\DoxyCodeLine{\Hypertarget{sha256_8cpp_source_l00063}00063\ \}}
+\DoxyCodeLine{\Hypertarget{sha256_8cpp_source_l00064}00064\ }
+\DoxyCodeLine{\Hypertarget{sha256_8cpp_source_l00068}\mbox{\hyperlink{sha256_8cpp_a0c5fc8476f55a0ac52dda6e1fcfe375d}{00068}}\ \textcolor{keyword}{static}\ \textcolor{keyword}{inline}\ uint32\_t\ \mbox{\hyperlink{sha256_8cpp_a0c5fc8476f55a0ac52dda6e1fcfe375d}{bsig1}}(uint32\_t\ x)\{}
+\DoxyCodeLine{\Hypertarget{sha256_8cpp_source_l00069}00069\ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{sha256_8cpp_aea65645ba9fb49eefab0abab58f24237}{ROTR}}(x,6)\ \string^\ \mbox{\hyperlink{sha256_8cpp_aea65645ba9fb49eefab0abab58f24237}{ROTR}}(x,11)\ \string^\ \mbox{\hyperlink{sha256_8cpp_aea65645ba9fb49eefab0abab58f24237}{ROTR}}(x,25);}
+\DoxyCodeLine{\Hypertarget{sha256_8cpp_source_l00070}00070\ \}}
+\DoxyCodeLine{\Hypertarget{sha256_8cpp_source_l00071}00071\ }
+\DoxyCodeLine{\Hypertarget{sha256_8cpp_source_l00075}\mbox{\hyperlink{sha256_8cpp_ab236748de6063427c3c99d4bc02551c2}{00075}}\ \textcolor{keyword}{static}\ \textcolor{keyword}{inline}\ uint32\_t\ \mbox{\hyperlink{sha256_8cpp_ab236748de6063427c3c99d4bc02551c2}{ssig0}}(uint32\_t\ x)\{}
+\DoxyCodeLine{\Hypertarget{sha256_8cpp_source_l00076}00076\ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{sha256_8cpp_aea65645ba9fb49eefab0abab58f24237}{ROTR}}(x,7)\ \string^\ \mbox{\hyperlink{sha256_8cpp_aea65645ba9fb49eefab0abab58f24237}{ROTR}}(x,18)\ \string^\ \mbox{\hyperlink{sha256_8cpp_a016d721de53fa58c497bc1fb1f28ee41}{SHR}}(x,3);}
+\DoxyCodeLine{\Hypertarget{sha256_8cpp_source_l00077}00077\ \}}
+\DoxyCodeLine{\Hypertarget{sha256_8cpp_source_l00078}00078\ }
+\DoxyCodeLine{\Hypertarget{sha256_8cpp_source_l00082}\mbox{\hyperlink{sha256_8cpp_a9ca9d883ddb1c51b2213ac5be7d8c0a0}{00082}}\ \textcolor{keyword}{static}\ \textcolor{keyword}{inline}\ uint32\_t\ \mbox{\hyperlink{sha256_8cpp_a9ca9d883ddb1c51b2213ac5be7d8c0a0}{ssig1}}(uint32\_t\ x)\{}
+\DoxyCodeLine{\Hypertarget{sha256_8cpp_source_l00083}00083\ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{sha256_8cpp_aea65645ba9fb49eefab0abab58f24237}{ROTR}}(x,17)\ \string^\ \mbox{\hyperlink{sha256_8cpp_aea65645ba9fb49eefab0abab58f24237}{ROTR}}(x,19)\ \string^\ \mbox{\hyperlink{sha256_8cpp_a016d721de53fa58c497bc1fb1f28ee41}{SHR}}(x,10);}
+\DoxyCodeLine{\Hypertarget{sha256_8cpp_source_l00084}00084\ \}}
+\DoxyCodeLine{\Hypertarget{sha256_8cpp_source_l00085}00085\ }
+\DoxyCodeLine{\Hypertarget{sha256_8cpp_source_l00101}\mbox{\hyperlink{sha256_8cpp_a7133cfeac4cf97ed0425937e65f6a6d5}{00101}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{sha256_8cpp_a7133cfeac4cf97ed0425937e65f6a6d5}{sha256}}(\textcolor{keyword}{const}\ uint8\_t\ *data,\ \textcolor{keywordtype}{size\_t}\ len,\ uint8\_t\ out[32])\ \{}
+\DoxyCodeLine{\Hypertarget{sha256_8cpp_source_l00102}00102\ \ \ \ \ \textcolor{comment}{//\ Инициализация\ начальных\ хэш-\/значений}}
+\DoxyCodeLine{\Hypertarget{sha256_8cpp_source_l00103}00103\ \ \ \ \ uint32\_t\ h[8]\ =\ \{}
+\DoxyCodeLine{\Hypertarget{sha256_8cpp_source_l00104}00104\ \ \ \ \ \ \ \ \ 0x6a09e667UL,0xbb67ae85UL,0x3c6ef372UL,0xa54ff53aUL,}
+\DoxyCodeLine{\Hypertarget{sha256_8cpp_source_l00105}00105\ \ \ \ \ \ \ \ \ 0x510e527fUL,0x9b05688cUL,0x1f83d9abUL,0x5be0cd19UL}
+\DoxyCodeLine{\Hypertarget{sha256_8cpp_source_l00106}00106\ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{sha256_8cpp_source_l00107}00107\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{sha256_8cpp_source_l00108}00108\ \ \ \ \ \textcolor{comment}{//\ Подготовка\ сообщения\ (дополнение\ до\ кратного\ 512\ битам)}}
+\DoxyCodeLine{\Hypertarget{sha256_8cpp_source_l00109}00109\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ num\_blocks\ =\ ((len\ +\ 9)\ +\ 63)\ /\ 64;}
+\DoxyCodeLine{\Hypertarget{sha256_8cpp_source_l00110}00110\ \ \ \ \ uint8\_t\ *msg\ =\ (uint8\_t*)calloc(num\_blocks*64,\ 1);}
+\DoxyCodeLine{\Hypertarget{sha256_8cpp_source_l00111}00111\ \ \ \ \ memcpy(msg,\ data,\ len);}
+\DoxyCodeLine{\Hypertarget{sha256_8cpp_source_l00112}00112\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{sha256_8cpp_source_l00113}00113\ \ \ \ \ \textcolor{comment}{//\ Добавление\ бита\ '1'}}
+\DoxyCodeLine{\Hypertarget{sha256_8cpp_source_l00114}00114\ \ \ \ \ msg[len]\ =\ 0x80;}
+\DoxyCodeLine{\Hypertarget{sha256_8cpp_source_l00115}00115\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{sha256_8cpp_source_l00116}00116\ \ \ \ \ \textcolor{comment}{//\ Добавление\ длины\ сообщения\ в\ битах\ (64\ бита,\ старший\ байт\ вперед)}}
+\DoxyCodeLine{\Hypertarget{sha256_8cpp_source_l00117}00117\ \ \ \ \ uint64\_t\ bit\_len\ =\ (uint64\_t)len\ *\ 8;}
+\DoxyCodeLine{\Hypertarget{sha256_8cpp_source_l00118}00118\ \ \ \ \ uint8\_t\ *p\ =\ msg\ +\ num\_blocks*64\ -\/\ 8;}
+\DoxyCodeLine{\Hypertarget{sha256_8cpp_source_l00119}00119\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 7;\ i\ >=\ 0;\ i-\/-\/)\ \{\ }
+\DoxyCodeLine{\Hypertarget{sha256_8cpp_source_l00120}00120\ \ \ \ \ \ \ \ \ p[i]\ =\ bit\_len\ \&\ 0xFF;\ }
+\DoxyCodeLine{\Hypertarget{sha256_8cpp_source_l00121}00121\ \ \ \ \ \ \ \ \ bit\_len\ >>=\ 8;\ }
+\DoxyCodeLine{\Hypertarget{sha256_8cpp_source_l00122}00122\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{sha256_8cpp_source_l00123}00123\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{sha256_8cpp_source_l00124}00124\ \ \ \ \ \textcolor{comment}{//\ Обработка\ каждого\ 512-\/битного\ блока}}
+\DoxyCodeLine{\Hypertarget{sha256_8cpp_source_l00125}00125\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{size\_t}\ b\ =\ 0;\ b\ <\ num\_blocks;\ b++)\ \{}
+\DoxyCodeLine{\Hypertarget{sha256_8cpp_source_l00126}00126\ \ \ \ \ \ \ \ \ uint32\_t\ w[64];}
+\DoxyCodeLine{\Hypertarget{sha256_8cpp_source_l00127}00127\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ uint8\_t\ *chunk\ =\ msg\ +\ b*64;}
+\DoxyCodeLine{\Hypertarget{sha256_8cpp_source_l00128}00128\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{sha256_8cpp_source_l00129}00129\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Подготовка\ расписания\ сообщений}}
+\DoxyCodeLine{\Hypertarget{sha256_8cpp_source_l00130}00130\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ t\ =\ 0;\ t\ <\ 16;\ t++)\ \{}
+\DoxyCodeLine{\Hypertarget{sha256_8cpp_source_l00131}00131\ \ \ \ \ \ \ \ \ \ \ \ \ w[t]\ =\ (chunk[t*4]\ <<\ 24)\ |\ (chunk[t*4+1]\ <<\ 16)\ |\ }
+\DoxyCodeLine{\Hypertarget{sha256_8cpp_source_l00132}00132\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (chunk[t*4+2]\ <<\ 8)\ |\ (chunk[t*4+3]);}
+\DoxyCodeLine{\Hypertarget{sha256_8cpp_source_l00133}00133\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{sha256_8cpp_source_l00134}00134\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{sha256_8cpp_source_l00135}00135\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ t\ =\ 16;\ t\ <\ 64;\ t++)\ \{}
+\DoxyCodeLine{\Hypertarget{sha256_8cpp_source_l00136}00136\ \ \ \ \ \ \ \ \ \ \ \ \ w[t]\ =\ \mbox{\hyperlink{sha256_8cpp_a9ca9d883ddb1c51b2213ac5be7d8c0a0}{ssig1}}(w[t-\/2])\ +\ w[t-\/7]\ +\ \mbox{\hyperlink{sha256_8cpp_ab236748de6063427c3c99d4bc02551c2}{ssig0}}(w[t-\/15])\ +\ w[t-\/16];}
+\DoxyCodeLine{\Hypertarget{sha256_8cpp_source_l00137}00137\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{sha256_8cpp_source_l00138}00138\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{sha256_8cpp_source_l00139}00139\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Инициализация\ рабочих\ переменных}}
+\DoxyCodeLine{\Hypertarget{sha256_8cpp_source_l00140}00140\ \ \ \ \ \ \ \ \ uint32\_t\ a\ =\ h[0];}
+\DoxyCodeLine{\Hypertarget{sha256_8cpp_source_l00141}00141\ \ \ \ \ \ \ \ \ uint32\_t\ b0\ =\ h[1];}
+\DoxyCodeLine{\Hypertarget{sha256_8cpp_source_l00142}00142\ \ \ \ \ \ \ \ \ uint32\_t\ c\ =\ h[2];}
+\DoxyCodeLine{\Hypertarget{sha256_8cpp_source_l00143}00143\ \ \ \ \ \ \ \ \ uint32\_t\ d\ =\ h[3];}
+\DoxyCodeLine{\Hypertarget{sha256_8cpp_source_l00144}00144\ \ \ \ \ \ \ \ \ uint32\_t\ e\ =\ h[4];}
+\DoxyCodeLine{\Hypertarget{sha256_8cpp_source_l00145}00145\ \ \ \ \ \ \ \ \ uint32\_t\ f\ =\ h[5];}
+\DoxyCodeLine{\Hypertarget{sha256_8cpp_source_l00146}00146\ \ \ \ \ \ \ \ \ uint32\_t\ g\ =\ h[6];}
+\DoxyCodeLine{\Hypertarget{sha256_8cpp_source_l00147}00147\ \ \ \ \ \ \ \ \ uint32\_t\ hh\ =\ h[7];}
+\DoxyCodeLine{\Hypertarget{sha256_8cpp_source_l00148}00148\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{sha256_8cpp_source_l00149}00149\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Основной\ цикл\ сжатия}}
+\DoxyCodeLine{\Hypertarget{sha256_8cpp_source_l00150}00150\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ t\ =\ 0;\ t\ <\ 64;\ t++)\ \{}
+\DoxyCodeLine{\Hypertarget{sha256_8cpp_source_l00151}00151\ \ \ \ \ \ \ \ \ \ \ \ \ uint32\_t\ T1\ =\ hh\ +\ \mbox{\hyperlink{sha256_8cpp_a0c5fc8476f55a0ac52dda6e1fcfe375d}{bsig1}}(e)\ +\ \mbox{\hyperlink{sha256_8cpp_a040629ce734f8c5b8c1b917ee7330a7b}{ch}}(e,\ f,\ g)\ +\ \mbox{\hyperlink{sha256_8cpp_af11ea3cdbca7345eb6a4a8ac5ce0434d}{k}}[t]\ +\ w[t];}
+\DoxyCodeLine{\Hypertarget{sha256_8cpp_source_l00152}00152\ \ \ \ \ \ \ \ \ \ \ \ \ uint32\_t\ T2\ =\ \mbox{\hyperlink{sha256_8cpp_a4cb1ce9ef76f0553934e86366af15f9d}{bsig0}}(a)\ +\ \mbox{\hyperlink{sha256_8cpp_adf3fc35e01f72808b97bb5fbc8d525e1}{maj}}(a,\ b0,\ c);}
+\DoxyCodeLine{\Hypertarget{sha256_8cpp_source_l00153}00153\ \ \ \ \ \ \ \ \ \ \ \ \ hh\ =\ g;\ }
+\DoxyCodeLine{\Hypertarget{sha256_8cpp_source_l00154}00154\ \ \ \ \ \ \ \ \ \ \ \ \ g\ =\ f;\ }
+\DoxyCodeLine{\Hypertarget{sha256_8cpp_source_l00155}00155\ \ \ \ \ \ \ \ \ \ \ \ \ f\ =\ e;\ }
+\DoxyCodeLine{\Hypertarget{sha256_8cpp_source_l00156}00156\ \ \ \ \ \ \ \ \ \ \ \ \ e\ =\ d\ +\ T1;\ }
+\DoxyCodeLine{\Hypertarget{sha256_8cpp_source_l00157}00157\ \ \ \ \ \ \ \ \ \ \ \ \ d\ =\ c;\ }
+\DoxyCodeLine{\Hypertarget{sha256_8cpp_source_l00158}00158\ \ \ \ \ \ \ \ \ \ \ \ \ c\ =\ b0;\ }
+\DoxyCodeLine{\Hypertarget{sha256_8cpp_source_l00159}00159\ \ \ \ \ \ \ \ \ \ \ \ \ b0\ =\ a;\ }
+\DoxyCodeLine{\Hypertarget{sha256_8cpp_source_l00160}00160\ \ \ \ \ \ \ \ \ \ \ \ \ a\ =\ T1\ +\ T2;}
+\DoxyCodeLine{\Hypertarget{sha256_8cpp_source_l00161}00161\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{sha256_8cpp_source_l00162}00162\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{sha256_8cpp_source_l00163}00163\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Обновление\ хэш-\/значений}}
+\DoxyCodeLine{\Hypertarget{sha256_8cpp_source_l00164}00164\ \ \ \ \ \ \ \ \ h[0]\ +=\ a;\ }
+\DoxyCodeLine{\Hypertarget{sha256_8cpp_source_l00165}00165\ \ \ \ \ \ \ \ \ h[1]\ +=\ b0;\ }
+\DoxyCodeLine{\Hypertarget{sha256_8cpp_source_l00166}00166\ \ \ \ \ \ \ \ \ h[2]\ +=\ c;\ }
+\DoxyCodeLine{\Hypertarget{sha256_8cpp_source_l00167}00167\ \ \ \ \ \ \ \ \ h[3]\ +=\ d;\ }
+\DoxyCodeLine{\Hypertarget{sha256_8cpp_source_l00168}00168\ \ \ \ \ \ \ \ \ h[4]\ +=\ e;\ }
+\DoxyCodeLine{\Hypertarget{sha256_8cpp_source_l00169}00169\ \ \ \ \ \ \ \ \ h[5]\ +=\ f;\ }
+\DoxyCodeLine{\Hypertarget{sha256_8cpp_source_l00170}00170\ \ \ \ \ \ \ \ \ h[6]\ +=\ g;\ }
+\DoxyCodeLine{\Hypertarget{sha256_8cpp_source_l00171}00171\ \ \ \ \ \ \ \ \ h[7]\ +=\ hh;}
+\DoxyCodeLine{\Hypertarget{sha256_8cpp_source_l00172}00172\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{sha256_8cpp_source_l00173}00173\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{sha256_8cpp_source_l00174}00174\ \ \ \ \ \textcolor{comment}{//\ Освобождение\ памяти}}
+\DoxyCodeLine{\Hypertarget{sha256_8cpp_source_l00175}00175\ \ \ \ \ free(msg);}
+\DoxyCodeLine{\Hypertarget{sha256_8cpp_source_l00176}00176\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{sha256_8cpp_source_l00177}00177\ \ \ \ \ \textcolor{comment}{//\ Преобразование\ хэш-\/значений\ в\ байтовый\ массив\ (big-\/endian)}}
+\DoxyCodeLine{\Hypertarget{sha256_8cpp_source_l00178}00178\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ 8;\ i++)\ \{}
+\DoxyCodeLine{\Hypertarget{sha256_8cpp_source_l00179}00179\ \ \ \ \ \ \ \ \ out[i*4]\ =\ (h[i]\ >>\ 24)\ \&\ 0xFF;}
+\DoxyCodeLine{\Hypertarget{sha256_8cpp_source_l00180}00180\ \ \ \ \ \ \ \ \ out[i*4+1]\ =\ (h[i]\ >>\ 16)\ \&\ 0xFF;}
+\DoxyCodeLine{\Hypertarget{sha256_8cpp_source_l00181}00181\ \ \ \ \ \ \ \ \ out[i*4+2]\ =\ (h[i]\ >>\ 8)\ \&\ 0xFF;}
+\DoxyCodeLine{\Hypertarget{sha256_8cpp_source_l00182}00182\ \ \ \ \ \ \ \ \ out[i*4+3]\ =\ (h[i])\ \&\ 0xFF;}
+\DoxyCodeLine{\Hypertarget{sha256_8cpp_source_l00183}00183\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{sha256_8cpp_source_l00184}00184\ \}}
+
+\end{DoxyCode}

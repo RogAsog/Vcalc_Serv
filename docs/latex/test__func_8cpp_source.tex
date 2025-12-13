@@ -1,0 +1,210 @@
+\doxysection{test\+\_\+func.\+cpp}
+\hypertarget{test__func_8cpp_source}{}\label{test__func_8cpp_source}\index{tests/test\_func.cpp@{tests/test\_func.cpp}}
+\mbox{\hyperlink{test__func_8cpp}{См. документацию.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{test__func_8cpp_source_l00001}00001\ }
+\DoxyCodeLine{\Hypertarget{test__func_8cpp_source_l00006}00006\ \textcolor{preprocessor}{\#include\ <UnitTest++/UnitTest++.h>}}
+\DoxyCodeLine{\Hypertarget{test__func_8cpp_source_l00007}00007\ \textcolor{preprocessor}{\#include\ <iostream>}}
+\DoxyCodeLine{\Hypertarget{test__func_8cpp_source_l00008}00008\ \textcolor{preprocessor}{\#include\ <cstdlib>}}
+\DoxyCodeLine{\Hypertarget{test__func_8cpp_source_l00009}00009\ \textcolor{preprocessor}{\#include\ <string>}}
+\DoxyCodeLine{\Hypertarget{test__func_8cpp_source_l00010}00010\ \textcolor{preprocessor}{\#include\ <fstream>}}
+\DoxyCodeLine{\Hypertarget{test__func_8cpp_source_l00011}00011\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{\Hypertarget{test__func_8cpp_source_l00012}00012\ \textcolor{preprocessor}{\#include\ <thread>}}
+\DoxyCodeLine{\Hypertarget{test__func_8cpp_source_l00013}00013\ \textcolor{preprocessor}{\#include\ <chrono>}}
+\DoxyCodeLine{\Hypertarget{test__func_8cpp_source_l00014}00014\ }
+\DoxyCodeLine{\Hypertarget{test__func_8cpp_source_l00015}00015\ \textcolor{keyword}{using\ namespace\ }std;}
+\DoxyCodeLine{\Hypertarget{test__func_8cpp_source_l00016}00016\ \textcolor{keyword}{using\ namespace\ }std::chrono;}
+\DoxyCodeLine{\Hypertarget{test__func_8cpp_source_l00017}00017\ }
+\DoxyCodeLine{\Hypertarget{test__func_8cpp_source_l00018}00018\ \textcolor{comment}{//\ Запуск\ команды\ с\ таймаутом}}
+\DoxyCodeLine{\Hypertarget{test__func_8cpp_source_l00019}\mbox{\hyperlink{test__func_8cpp_a5978dfe588c7ad1133f3eab4b097d731}{00019}}\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{test__func_8cpp_a5978dfe588c7ad1133f3eab4b097d731}{run\_command}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\&\ cmd,\ \textcolor{keywordtype}{int}\ timeout\_seconds\ =\ 5)\ \{}
+\DoxyCodeLine{\Hypertarget{test__func_8cpp_source_l00020}00020\ \ \ \ \ \textcolor{keywordtype}{string}\ timed\_cmd\ =\ \textcolor{stringliteral}{"{}timeout\ "{}}\ +\ to\_string(timeout\_seconds)\ +\ \textcolor{stringliteral}{"{}\ "{}}\ +\ cmd;}
+\DoxyCodeLine{\Hypertarget{test__func_8cpp_source_l00021}00021\ \ \ \ \ \textcolor{keywordflow}{return}\ system(timed\_cmd.c\_str());}
+\DoxyCodeLine{\Hypertarget{test__func_8cpp_source_l00022}00022\ \}}
+\DoxyCodeLine{\Hypertarget{test__func_8cpp_source_l00023}00023\ }
+\DoxyCodeLine{\Hypertarget{test__func_8cpp_source_l00024}00024\ \textcolor{comment}{//\ Проверка\ занятости\ порта}}
+\DoxyCodeLine{\Hypertarget{test__func_8cpp_source_l00025}\mbox{\hyperlink{test__func_8cpp_aade7cf33ba1b69568021e14f514f8a26}{00025}}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{test__func_8cpp_aade7cf33ba1b69568021e14f514f8a26}{check\_server\_running}}(\textcolor{keywordtype}{int}\ port)\ \{}
+\DoxyCodeLine{\Hypertarget{test__func_8cpp_source_l00026}00026\ \ \ \ \ \textcolor{keywordtype}{string}\ cmd\ =\ \textcolor{stringliteral}{"{}lsof\ -\/ti:"{}}\ +\ to\_string(port)\ +\ \textcolor{stringliteral}{"{}\ 2>/dev/null\ |\ wc\ -\/l"{}};}
+\DoxyCodeLine{\Hypertarget{test__func_8cpp_source_l00027}00027\ \ \ \ \ FILE*\ pipe\ =\ popen(cmd.c\_str(),\ \textcolor{stringliteral}{"{}r"{}});}
+\DoxyCodeLine{\Hypertarget{test__func_8cpp_source_l00028}00028\ \ \ \ \ \textcolor{keywordflow}{if}\ (!pipe)\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{test__func_8cpp_source_l00029}00029\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{test__func_8cpp_source_l00030}00030\ \ \ \ \ \textcolor{keywordtype}{char}\ buffer[16];}
+\DoxyCodeLine{\Hypertarget{test__func_8cpp_source_l00031}00031\ \ \ \ \ \textcolor{keywordflow}{if}\ (fgets(buffer,\ \textcolor{keyword}{sizeof}(buffer),\ pipe)\ !=\ \textcolor{keyword}{nullptr})\ \{}
+\DoxyCodeLine{\Hypertarget{test__func_8cpp_source_l00032}00032\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ ignore}}
+\DoxyCodeLine{\Hypertarget{test__func_8cpp_source_l00033}00033\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{test__func_8cpp_source_l00034}00034\ \ \ \ \ pclose(pipe);}
+\DoxyCodeLine{\Hypertarget{test__func_8cpp_source_l00035}00035\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{test__func_8cpp_source_l00036}00036\ \ \ \ \ \textcolor{keywordflow}{return}\ atoi(buffer)\ >\ 0;}
+\DoxyCodeLine{\Hypertarget{test__func_8cpp_source_l00037}00037\ \}}
+\DoxyCodeLine{\Hypertarget{test__func_8cpp_source_l00038}00038\ }
+\DoxyCodeLine{\Hypertarget{test__func_8cpp_source_l00039}00039\ \textcolor{comment}{//\ Остановка\ сервера\ на\ порту}}
+\DoxyCodeLine{\Hypertarget{test__func_8cpp_source_l00040}\mbox{\hyperlink{test__func_8cpp_aa0e15e5175f37cdb98db4d37c1e86068}{00040}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{test__func_8cpp_aa0e15e5175f37cdb98db4d37c1e86068}{stop\_server}}(\textcolor{keywordtype}{int}\ port)\ \{}
+\DoxyCodeLine{\Hypertarget{test__func_8cpp_source_l00041}00041\ \ \ \ \ \textcolor{keywordtype}{string}\ cmd\ =\ \textcolor{stringliteral}{"{}pkill\ -\/f\ './server.*-\/p\ "{}}\ +\ to\_string(port)\ +\ \textcolor{stringliteral}{"{}'\ 2>/dev/null"{}};}
+\DoxyCodeLine{\Hypertarget{test__func_8cpp_source_l00042}00042\ \ \ \ \ \textcolor{keywordtype}{int}\ result\ =\ system(cmd.c\_str());}
+\DoxyCodeLine{\Hypertarget{test__func_8cpp_source_l00043}00043\ \ \ \ \ (void)result;}
+\DoxyCodeLine{\Hypertarget{test__func_8cpp_source_l00044}00044\ \ \ \ \ this\_thread::sleep\_for(seconds(1));}
+\DoxyCodeLine{\Hypertarget{test__func_8cpp_source_l00045}00045\ \}}
+\DoxyCodeLine{\Hypertarget{test__func_8cpp_source_l00046}00046\ }
+\DoxyCodeLine{\Hypertarget{test__func_8cpp_source_l00047}00047\ \textcolor{comment}{//\ Создание\ тестового\ файла\ пользователей}}
+\DoxyCodeLine{\Hypertarget{test__func_8cpp_source_l00048}\mbox{\hyperlink{test__func_8cpp_a6044becf0e76929a4e8a1d5d54af9f5d}{00048}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{test__func_8cpp_a6044becf0e76929a4e8a1d5d54af9f5d}{create\_test\_users}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\&\ filename)\ \{}
+\DoxyCodeLine{\Hypertarget{test__func_8cpp_source_l00049}00049\ \ \ \ \ ofstream\ file(filename);}
+\DoxyCodeLine{\Hypertarget{test__func_8cpp_source_l00050}00050\ \ \ \ \ file\ <<\ \textcolor{stringliteral}{"{}user1:password1"{}}\ <<\ endl;}
+\DoxyCodeLine{\Hypertarget{test__func_8cpp_source_l00051}00051\ \ \ \ \ file\ <<\ \textcolor{stringliteral}{"{}user2:password2"{}}\ <<\ endl;}
+\DoxyCodeLine{\Hypertarget{test__func_8cpp_source_l00052}00052\ \ \ \ \ file\ <<\ \textcolor{stringliteral}{"{}admin:admin123"{}}\ <<\ endl;}
+\DoxyCodeLine{\Hypertarget{test__func_8cpp_source_l00053}00053\ \ \ \ \ file.close();}
+\DoxyCodeLine{\Hypertarget{test__func_8cpp_source_l00054}00054\ \}}
+\DoxyCodeLine{\Hypertarget{test__func_8cpp_source_l00055}00055\ }
+\DoxyCodeLine{\Hypertarget{test__func_8cpp_source_l00056}\mbox{\hyperlink{test__func_8cpp_a1dc7b641b73ec32767b5e74140969ea0}{00056}}\ \mbox{\hyperlink{test__func_8cpp_a1dc7b641b73ec32767b5e74140969ea0}{SUITE}}(SimpleFunctionalTests)\ \{}
+\DoxyCodeLine{\Hypertarget{test__func_8cpp_source_l00057}00057\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{test__func_8cpp_source_l00058}00058\ \ \ \ \ TEST(ServerStartStop)\ \{}
+\DoxyCodeLine{\Hypertarget{test__func_8cpp_source_l00059}00059\ \ \ \ \ \ \ \ \ cout\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)n[1]\ Тест\ запуска\ и\ остановки\ сервера"{}}\ <<\ endl;}
+\DoxyCodeLine{\Hypertarget{test__func_8cpp_source_l00060}00060\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{test__func_8cpp_source_l00061}00061\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ port\ =\ 33444;}
+\DoxyCodeLine{\Hypertarget{test__func_8cpp_source_l00062}00062\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{test__func_8cpp_source_l00063}00063\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{test__func_8cpp_a6044becf0e76929a4e8a1d5d54af9f5d}{create\_test\_users}}(\textcolor{stringliteral}{"{}test\_users.txt"{}});}
+\DoxyCodeLine{\Hypertarget{test__func_8cpp_source_l00064}00064\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{test__func_8cpp_source_l00065}00065\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{string}\ start\_cmd\ =\ \textcolor{stringliteral}{"{}./server\ -\/d\ test\_users.txt\ -\/l\ test.log\ -\/p\ "{}}\ +\ to\_string(port)\ +\ \textcolor{stringliteral}{"{}\ 2>\&1"{}};}
+\DoxyCodeLine{\Hypertarget{test__func_8cpp_source_l00066}00066\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{test__func_8cpp_source_l00067}00067\ \ \ \ \ \ \ \ \ pid\_t\ pid\ =\ fork();}
+\DoxyCodeLine{\Hypertarget{test__func_8cpp_source_l00068}00068\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (pid\ ==\ 0)\ \{}
+\DoxyCodeLine{\Hypertarget{test__func_8cpp_source_l00069}00069\ \ \ \ \ \ \ \ \ \ \ \ \ execl(\textcolor{stringliteral}{"{}/bin/sh"{}},\ \textcolor{stringliteral}{"{}sh"{}},\ \textcolor{stringliteral}{"{}-\/c"{}},\ start\_cmd.c\_str(),\ NULL);}
+\DoxyCodeLine{\Hypertarget{test__func_8cpp_source_l00070}00070\ \ \ \ \ \ \ \ \ \ \ \ \ exit(0);}
+\DoxyCodeLine{\Hypertarget{test__func_8cpp_source_l00071}00071\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{test__func_8cpp_source_l00072}00072\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{test__func_8cpp_source_l00073}00073\ \ \ \ \ \ \ \ \ this\_thread::sleep\_for(seconds(2));}
+\DoxyCodeLine{\Hypertarget{test__func_8cpp_source_l00074}00074\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{test__func_8cpp_source_l00075}00075\ \ \ \ \ \ \ \ \ CHECK(\mbox{\hyperlink{test__func_8cpp_aade7cf33ba1b69568021e14f514f8a26}{check\_server\_running}}(port));}
+\DoxyCodeLine{\Hypertarget{test__func_8cpp_source_l00076}00076\ \ \ \ \ \ \ \ \ cout\ <<\ \textcolor{stringliteral}{"{}\ \ ✓\ Сервер\ запущен\ на\ порту\ "{}}\ <<\ port\ <<\ endl;}
+\DoxyCodeLine{\Hypertarget{test__func_8cpp_source_l00077}00077\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{test__func_8cpp_source_l00078}00078\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{test__func_8cpp_aa0e15e5175f37cdb98db4d37c1e86068}{stop\_server}}(port);}
+\DoxyCodeLine{\Hypertarget{test__func_8cpp_source_l00079}00079\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{test__func_8cpp_source_l00080}00080\ \ \ \ \ \ \ \ \ CHECK(!\mbox{\hyperlink{test__func_8cpp_aade7cf33ba1b69568021e14f514f8a26}{check\_server\_running}}(port));}
+\DoxyCodeLine{\Hypertarget{test__func_8cpp_source_l00081}00081\ \ \ \ \ \ \ \ \ cout\ <<\ \textcolor{stringliteral}{"{}\ \ ✓\ Сервер\ корректно\ остановлен"{}}\ <<\ endl;}
+\DoxyCodeLine{\Hypertarget{test__func_8cpp_source_l00082}00082\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{test__func_8cpp_source_l00083}00083\ \ \ \ \ \ \ \ \ system(\textcolor{stringliteral}{"{}rm\ -\/f\ test\_users.txt\ test.log\ 2>/dev/null"{}});}
+\DoxyCodeLine{\Hypertarget{test__func_8cpp_source_l00084}00084\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{test__func_8cpp_source_l00085}00085\ \ \ \ }
+\DoxyCodeLine{\Hypertarget{test__func_8cpp_source_l00086}00086\ \ \ \ \ TEST(InvalidArgumentsNoCrash)\ \{}
+\DoxyCodeLine{\Hypertarget{test__func_8cpp_source_l00087}00087\ \ \ \ \ \ \ \ \ cout\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)n[2]\ Тест\ некорректных\ аргументов"{}}\ <<\ endl;}
+\DoxyCodeLine{\Hypertarget{test__func_8cpp_source_l00088}00088\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{test__func_8cpp_source_l00089}00089\ \ \ \ \ \ \ \ \ vector<string>\ bad\_args\ =\ \{}
+\DoxyCodeLine{\Hypertarget{test__func_8cpp_source_l00090}00090\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}./server\ -\/-\/invalid-\/option"{}},}
+\DoxyCodeLine{\Hypertarget{test__func_8cpp_source_l00091}00091\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}./server\ -\/p\ not\_a\_number"{}},\ }
+\DoxyCodeLine{\Hypertarget{test__func_8cpp_source_l00092}00092\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}./server\ -\/p\ 0"{}},}
+\DoxyCodeLine{\Hypertarget{test__func_8cpp_source_l00093}00093\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}./server\ -\/p\ -\/100"{}},}
+\DoxyCodeLine{\Hypertarget{test__func_8cpp_source_l00094}00094\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}./server\ -\/d\ nonexistent\_file.txt"{}}}
+\DoxyCodeLine{\Hypertarget{test__func_8cpp_source_l00095}00095\ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{test__func_8cpp_source_l00096}00096\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{test__func_8cpp_source_l00097}00097\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{const}\ \textcolor{keyword}{auto}\&\ cmd\ :\ bad\_args)\ \{}
+\DoxyCodeLine{\Hypertarget{test__func_8cpp_source_l00098}00098\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{string}\ full\_cmd\ =\ cmd\ +\ \textcolor{stringliteral}{"{}\ 2>\&1"{}};}
+\DoxyCodeLine{\Hypertarget{test__func_8cpp_source_l00099}00099\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ result\ =\ \mbox{\hyperlink{test__func_8cpp_a5978dfe588c7ad1133f3eab4b097d731}{run\_command}}(full\_cmd,\ 2);}
+\DoxyCodeLine{\Hypertarget{test__func_8cpp_source_l00100}00100\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{test__func_8cpp_source_l00101}00101\ \ \ \ \ \ \ \ \ \ \ \ \ CHECK(result\ !=\ 124);\ \textcolor{comment}{//\ Код\ таймаута}}
+\DoxyCodeLine{\Hypertarget{test__func_8cpp_source_l00102}00102\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{test__func_8cpp_source_l00103}00103\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (result\ !=\ 124)\ \{}
+\DoxyCodeLine{\Hypertarget{test__func_8cpp_source_l00104}00104\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ cout\ <<\ \textcolor{stringliteral}{"{}\ \ ✓\ Команда\ '"{}}\ <<\ cmd\ <<\ \textcolor{stringliteral}{"{}'\ обработана\ без\ падения"{}}\ <<\ endl;}
+\DoxyCodeLine{\Hypertarget{test__func_8cpp_source_l00105}00105\ \ \ \ \ \ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{\Hypertarget{test__func_8cpp_source_l00106}00106\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ cout\ <<\ \textcolor{stringliteral}{"{}\ \ ✗\ Команда\ '"{}}\ <<\ cmd\ <<\ \textcolor{stringliteral}{"{}'\ зависла"{}}\ <<\ endl;}
+\DoxyCodeLine{\Hypertarget{test__func_8cpp_source_l00107}00107\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{test__func_8cpp_source_l00108}00108\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{test__func_8cpp_source_l00109}00109\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{test__func_8cpp_source_l00110}00110\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{test__func_8cpp_source_l00111}00111\ \ \ \ }
+\DoxyCodeLine{\Hypertarget{test__func_8cpp_source_l00112}00112\ \ \ \ \ TEST(HelpOption)\ \{}
+\DoxyCodeLine{\Hypertarget{test__func_8cpp_source_l00113}00113\ \ \ \ \ \ \ \ \ cout\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)n[3]\ Тест\ справки"{}}\ <<\ endl;}
+\DoxyCodeLine{\Hypertarget{test__func_8cpp_source_l00114}00114\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{test__func_8cpp_source_l00115}00115\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{string}\ cmd\ =\ \textcolor{stringliteral}{"{}./server\ -\/-\/help\ 2>\&1"{}};}
+\DoxyCodeLine{\Hypertarget{test__func_8cpp_source_l00116}00116\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ result\ =\ \mbox{\hyperlink{test__func_8cpp_a5978dfe588c7ad1133f3eab4b097d731}{run\_command}}(cmd,\ 2);}
+\DoxyCodeLine{\Hypertarget{test__func_8cpp_source_l00117}00117\ \ \ \ \ \ \ \ \ CHECK\_EQUAL(0,\ result);}
+\DoxyCodeLine{\Hypertarget{test__func_8cpp_source_l00118}00118\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{test__func_8cpp_source_l00119}00119\ \ \ \ \ \ \ \ \ cout\ <<\ \textcolor{stringliteral}{"{}\ \ ✓\ Справка\ отображается\ корректно"{}}\ <<\ endl;}
+\DoxyCodeLine{\Hypertarget{test__func_8cpp_source_l00120}00120\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{test__func_8cpp_source_l00121}00121\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{test__func_8cpp_source_l00122}00122\ \ \ \ }
+\DoxyCodeLine{\Hypertarget{test__func_8cpp_source_l00123}00123\ \ \ \ \ TEST(DifferentPorts)\ \{}
+\DoxyCodeLine{\Hypertarget{test__func_8cpp_source_l00124}00124\ \ \ \ \ \ \ \ \ cout\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)n[4]\ Тест\ разных\ портов"{}}\ <<\ endl;}
+\DoxyCodeLine{\Hypertarget{test__func_8cpp_source_l00125}00125\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{test__func_8cpp_source_l00126}00126\ \ \ \ \ \ \ \ \ vector<int>\ ports\ =\ \{33555,\ 33666,\ 33777\};}
+\DoxyCodeLine{\Hypertarget{test__func_8cpp_source_l00127}00127\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{test__func_8cpp_source_l00128}00128\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ port\ :\ ports)\ \{}
+\DoxyCodeLine{\Hypertarget{test__func_8cpp_source_l00129}00129\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{string}\ user\_file\ =\ \textcolor{stringliteral}{"{}test\_users\_"{}}\ +\ to\_string(port)\ +\ \textcolor{stringliteral}{"{}.txt"{}};}
+\DoxyCodeLine{\Hypertarget{test__func_8cpp_source_l00130}00130\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{string}\ log\_file\ =\ \textcolor{stringliteral}{"{}test\_"{}}\ +\ to\_string(port)\ +\ \textcolor{stringliteral}{"{}.log"{}};}
+\DoxyCodeLine{\Hypertarget{test__func_8cpp_source_l00131}00131\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{test__func_8cpp_source_l00132}00132\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{test__func_8cpp_a6044becf0e76929a4e8a1d5d54af9f5d}{create\_test\_users}}(user\_file);}
+\DoxyCodeLine{\Hypertarget{test__func_8cpp_source_l00133}00133\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{test__func_8cpp_source_l00134}00134\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{string}\ start\_cmd\ =\ \textcolor{stringliteral}{"{}./server\ -\/d\ "{}}\ +\ user\_file\ +\ \textcolor{stringliteral}{"{}\ -\/l\ "{}}\ +\ log\_file\ +\ }
+\DoxyCodeLine{\Hypertarget{test__func_8cpp_source_l00135}00135\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}\ -\/p\ "{}}\ +\ to\_string(port)\ +\ \textcolor{stringliteral}{"{}\ 2>\&1\ \&"{}};}
+\DoxyCodeLine{\Hypertarget{test__func_8cpp_source_l00136}00136\ \ \ \ \ \ \ \ \ \ \ \ \ system(start\_cmd.c\_str());}
+\DoxyCodeLine{\Hypertarget{test__func_8cpp_source_l00137}00137\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{test__func_8cpp_source_l00138}00138\ \ \ \ \ \ \ \ \ \ \ \ \ this\_thread::sleep\_for(seconds(2));}
+\DoxyCodeLine{\Hypertarget{test__func_8cpp_source_l00139}00139\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{test__func_8cpp_source_l00140}00140\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ running\ =\ \mbox{\hyperlink{test__func_8cpp_aade7cf33ba1b69568021e14f514f8a26}{check\_server\_running}}(port);}
+\DoxyCodeLine{\Hypertarget{test__func_8cpp_source_l00141}00141\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (running)\ \{}
+\DoxyCodeLine{\Hypertarget{test__func_8cpp_source_l00142}00142\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ cout\ <<\ \textcolor{stringliteral}{"{}\ \ ✓\ Сервер\ запущен\ на\ порту\ "{}}\ <<\ port\ <<\ endl;}
+\DoxyCodeLine{\Hypertarget{test__func_8cpp_source_l00143}00143\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{test__func_8cpp_source_l00144}00144\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{test__func_8cpp_aa0e15e5175f37cdb98db4d37c1e86068}{stop\_server}}(port);}
+\DoxyCodeLine{\Hypertarget{test__func_8cpp_source_l00145}00145\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ CHECK(!\mbox{\hyperlink{test__func_8cpp_aade7cf33ba1b69568021e14f514f8a26}{check\_server\_running}}(port));}
+\DoxyCodeLine{\Hypertarget{test__func_8cpp_source_l00146}00146\ \ \ \ \ \ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{\Hypertarget{test__func_8cpp_source_l00147}00147\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ cout\ <<\ \textcolor{stringliteral}{"{}\ \ ✗\ Сервер\ не\ запустился\ на\ порту\ "{}}\ <<\ port\ <<\ endl;}
+\DoxyCodeLine{\Hypertarget{test__func_8cpp_source_l00148}00148\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{test__func_8cpp_source_l00149}00149\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{test__func_8cpp_source_l00150}00150\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{string}\ cleanup\ =\ \textcolor{stringliteral}{"{}rm\ -\/f\ "{}}\ +\ user\_file\ +\ \textcolor{stringliteral}{"{}\ "{}}\ +\ log\_file\ +\ \textcolor{stringliteral}{"{}\ 2>/dev/null"{}};}
+\DoxyCodeLine{\Hypertarget{test__func_8cpp_source_l00151}00151\ \ \ \ \ \ \ \ \ \ \ \ \ system(cleanup.c\_str());}
+\DoxyCodeLine{\Hypertarget{test__func_8cpp_source_l00152}00152\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{test__func_8cpp_source_l00153}00153\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{test__func_8cpp_source_l00154}00154\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{test__func_8cpp_source_l00155}00155\ \ \ \ }
+\DoxyCodeLine{\Hypertarget{test__func_8cpp_source_l00156}00156\ \ \ \ \ TEST(MultipleServers)\ \{}
+\DoxyCodeLine{\Hypertarget{test__func_8cpp_source_l00157}00157\ \ \ \ \ \ \ \ \ cout\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)n[5]\ Тест\ нескольких\ серверов\ одновременно"{}}\ <<\ endl;}
+\DoxyCodeLine{\Hypertarget{test__func_8cpp_source_l00158}00158\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{test__func_8cpp_source_l00159}00159\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ port1\ =\ 33888;}
+\DoxyCodeLine{\Hypertarget{test__func_8cpp_source_l00160}00160\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ port2\ =\ 33999;}
+\DoxyCodeLine{\Hypertarget{test__func_8cpp_source_l00161}00161\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{test__func_8cpp_source_l00162}00162\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{test__func_8cpp_a6044becf0e76929a4e8a1d5d54af9f5d}{create\_test\_users}}(\textcolor{stringliteral}{"{}multi1.txt"{}});}
+\DoxyCodeLine{\Hypertarget{test__func_8cpp_source_l00163}00163\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{string}\ cmd1\ =\ \textcolor{stringliteral}{"{}./server\ -\/d\ multi1.txt\ -\/l\ multi1.log\ -\/p\ "{}}\ +\ }
+\DoxyCodeLine{\Hypertarget{test__func_8cpp_source_l00164}00164\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ to\_string(port1)\ +\ \textcolor{stringliteral}{"{}\ 2>\&1\ \&"{}};}
+\DoxyCodeLine{\Hypertarget{test__func_8cpp_source_l00165}00165\ \ \ \ \ \ \ \ \ system(cmd1.c\_str());}
+\DoxyCodeLine{\Hypertarget{test__func_8cpp_source_l00166}00166\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{test__func_8cpp_source_l00167}00167\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{test__func_8cpp_a6044becf0e76929a4e8a1d5d54af9f5d}{create\_test\_users}}(\textcolor{stringliteral}{"{}multi2.txt"{}});}
+\DoxyCodeLine{\Hypertarget{test__func_8cpp_source_l00168}00168\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{string}\ cmd2\ =\ \textcolor{stringliteral}{"{}./server\ -\/d\ multi2.txt\ -\/l\ multi2.log\ -\/p\ "{}}\ +\ }
+\DoxyCodeLine{\Hypertarget{test__func_8cpp_source_l00169}00169\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ to\_string(port2)\ +\ \textcolor{stringliteral}{"{}\ 2>\&1\ \&"{}};}
+\DoxyCodeLine{\Hypertarget{test__func_8cpp_source_l00170}00170\ \ \ \ \ \ \ \ \ system(cmd2.c\_str());}
+\DoxyCodeLine{\Hypertarget{test__func_8cpp_source_l00171}00171\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{test__func_8cpp_source_l00172}00172\ \ \ \ \ \ \ \ \ this\_thread::sleep\_for(seconds(3));}
+\DoxyCodeLine{\Hypertarget{test__func_8cpp_source_l00173}00173\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{test__func_8cpp_source_l00174}00174\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ running1\ =\ \mbox{\hyperlink{test__func_8cpp_aade7cf33ba1b69568021e14f514f8a26}{check\_server\_running}}(port1);}
+\DoxyCodeLine{\Hypertarget{test__func_8cpp_source_l00175}00175\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ running2\ =\ \mbox{\hyperlink{test__func_8cpp_aade7cf33ba1b69568021e14f514f8a26}{check\_server\_running}}(port2);}
+\DoxyCodeLine{\Hypertarget{test__func_8cpp_source_l00176}00176\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{test__func_8cpp_source_l00177}00177\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (running1\ \&\&\ running2)\ \{}
+\DoxyCodeLine{\Hypertarget{test__func_8cpp_source_l00178}00178\ \ \ \ \ \ \ \ \ \ \ \ \ cout\ <<\ \textcolor{stringliteral}{"{}\ \ ✓\ Два\ сервера\ запущены\ одновременно"{}}\ <<\ endl;}
+\DoxyCodeLine{\Hypertarget{test__func_8cpp_source_l00179}00179\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{test__func_8cpp_source_l00180}00180\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{test__func_8cpp_aa0e15e5175f37cdb98db4d37c1e86068}{stop\_server}}(port1);}
+\DoxyCodeLine{\Hypertarget{test__func_8cpp_source_l00181}00181\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{test__func_8cpp_aa0e15e5175f37cdb98db4d37c1e86068}{stop\_server}}(port2);}
+\DoxyCodeLine{\Hypertarget{test__func_8cpp_source_l00182}00182\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{test__func_8cpp_source_l00183}00183\ \ \ \ \ \ \ \ \ \ \ \ \ CHECK(!\mbox{\hyperlink{test__func_8cpp_aade7cf33ba1b69568021e14f514f8a26}{check\_server\_running}}(port1));}
+\DoxyCodeLine{\Hypertarget{test__func_8cpp_source_l00184}00184\ \ \ \ \ \ \ \ \ \ \ \ \ CHECK(!\mbox{\hyperlink{test__func_8cpp_aade7cf33ba1b69568021e14f514f8a26}{check\_server\_running}}(port2));}
+\DoxyCodeLine{\Hypertarget{test__func_8cpp_source_l00185}00185\ \ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{\Hypertarget{test__func_8cpp_source_l00186}00186\ \ \ \ \ \ \ \ \ \ \ \ \ cout\ <<\ \textcolor{stringliteral}{"{}\ \ ✗\ Не\ все\ серверы\ запустились"{}}\ <<\ endl;}
+\DoxyCodeLine{\Hypertarget{test__func_8cpp_source_l00187}00187\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{test__func_8cpp_source_l00188}00188\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{test__func_8cpp_source_l00189}00189\ \ \ \ \ \ \ \ \ system(\textcolor{stringliteral}{"{}rm\ -\/f\ multi1.txt\ multi2.txt\ multi1.log\ multi2.log\ 2>/dev/null"{}});}
+\DoxyCodeLine{\Hypertarget{test__func_8cpp_source_l00190}00190\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{test__func_8cpp_source_l00191}00191\ \}}
+\DoxyCodeLine{\Hypertarget{test__func_8cpp_source_l00192}00192\ }
+\DoxyCodeLine{\Hypertarget{test__func_8cpp_source_l00193}00193\ }
+\DoxyCodeLine{\Hypertarget{test__func_8cpp_source_l00194}\mbox{\hyperlink{test__func_8cpp_ae66f6b31b5ad750f1fe042a706a4e3d4}{00194}}\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{test__func_8cpp_ae66f6b31b5ad750f1fe042a706a4e3d4}{main}}()\ \{}
+\DoxyCodeLine{\Hypertarget{test__func_8cpp_source_l00195}00195\ \ \ \ \ cout\ <<\ \textcolor{stringliteral}{"{}========================================"{}}\ <<\ endl;}
+\DoxyCodeLine{\Hypertarget{test__func_8cpp_source_l00196}00196\ \ \ \ \ cout\ <<\ \textcolor{stringliteral}{"{}ФУНКЦИОНАЛЬНОЕ\ ТЕСТИРОВАНИЕ\ СЕРВЕРА\ VCALC"{}}\ <<\ endl;}
+\DoxyCodeLine{\Hypertarget{test__func_8cpp_source_l00197}00197\ \ \ \ \ cout\ <<\ \textcolor{stringliteral}{"{}========================================"{}}\ <<\ endl;}
+\DoxyCodeLine{\Hypertarget{test__func_8cpp_source_l00198}00198\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{test__func_8cpp_source_l00199}00199\ \ \ \ \ \textcolor{keywordflow}{if}\ (system(\textcolor{stringliteral}{"{}test\ -\/f\ ./server\ 2>/dev/null"{}})\ !=\ 0)\ \{}
+\DoxyCodeLine{\Hypertarget{test__func_8cpp_source_l00200}00200\ \ \ \ \ \ \ \ \ cerr\ <<\ \textcolor{stringliteral}{"{}ОШИБКА:\ Сначала\ соберите\ сервер\ (make\ all)"{}}\ <<\ endl;}
+\DoxyCodeLine{\Hypertarget{test__func_8cpp_source_l00201}00201\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ 1;}
+\DoxyCodeLine{\Hypertarget{test__func_8cpp_source_l00202}00202\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{test__func_8cpp_source_l00203}00203\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{test__func_8cpp_source_l00204}00204\ \ \ \ \ system(\textcolor{stringliteral}{"{}pkill\ -\/f\ './server'\ 2>/dev/null"{}});}
+\DoxyCodeLine{\Hypertarget{test__func_8cpp_source_l00205}00205\ \ \ \ \ this\_thread::sleep\_for(seconds(2));}
+\DoxyCodeLine{\Hypertarget{test__func_8cpp_source_l00206}00206\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{test__func_8cpp_source_l00207}00207\ \ \ \ \ \textcolor{keywordflow}{return}\ UnitTest::RunAllTests();}
+\DoxyCodeLine{\Hypertarget{test__func_8cpp_source_l00208}00208\ \}}
+
+\end{DoxyCode}

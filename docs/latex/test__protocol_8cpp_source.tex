@@ -1,0 +1,118 @@
+\doxysection{test\+\_\+protocol.\+cpp}
+\hypertarget{test__protocol_8cpp_source}{}\label{test__protocol_8cpp_source}\index{tests/test\_protocol.cpp@{tests/test\_protocol.cpp}}
+\mbox{\hyperlink{test__protocol_8cpp}{См. документацию.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{test__protocol_8cpp_source_l00001}00001\ }
+\DoxyCodeLine{\Hypertarget{test__protocol_8cpp_source_l00006}00006\ \textcolor{preprocessor}{\#include\ <UnitTest++/UnitTest++.h>}}
+\DoxyCodeLine{\Hypertarget{test__protocol_8cpp_source_l00007}00007\ \textcolor{preprocessor}{\#include\ <string>}}
+\DoxyCodeLine{\Hypertarget{test__protocol_8cpp_source_l00008}00008\ \textcolor{preprocessor}{\#include\ <cstring>}}
+\DoxyCodeLine{\Hypertarget{test__protocol_8cpp_source_l00009}00009\ \textcolor{preprocessor}{\#include\ <cstdint>}}
+\DoxyCodeLine{\Hypertarget{test__protocol_8cpp_source_l00010}00010\ }
+\DoxyCodeLine{\Hypertarget{test__protocol_8cpp_source_l00011}\mbox{\hyperlink{test__protocol_8cpp_aaef0c0266c61a013c86e06e2b14b9b63}{00011}}\ \mbox{\hyperlink{test__protocol_8cpp_aaef0c0266c61a013c86e06e2b14b9b63}{SUITE}}(ProtocolTests)\ \{}
+\DoxyCodeLine{\Hypertarget{test__protocol_8cpp_source_l00012}00012\ \ \ \ \ \textcolor{comment}{//\ Тест\ 1:\ Формат\ сообщения\ аутентификации}}
+\DoxyCodeLine{\Hypertarget{test__protocol_8cpp_source_l00013}00013\ \ \ \ \ TEST(AuthMessageFormat)\ \{}
+\DoxyCodeLine{\Hypertarget{test__protocol_8cpp_source_l00014}00014\ \ \ \ \ \ \ \ \ std::string\ login\ =\ \textcolor{stringliteral}{"{}user"{}};}
+\DoxyCodeLine{\Hypertarget{test__protocol_8cpp_source_l00015}00015\ \ \ \ \ \ \ \ \ std::string\ salt\ =\ \textcolor{stringliteral}{"{}A1B2C3D4E5F67890"{}};}
+\DoxyCodeLine{\Hypertarget{test__protocol_8cpp_source_l00016}00016\ \ \ \ \ \ \ \ \ std::string\ hash(64,\ \textcolor{charliteral}{'A'});}
+\DoxyCodeLine{\Hypertarget{test__protocol_8cpp_source_l00017}00017\ \ \ \ \ \ \ \ \ std::string\ auth\_msg\ =\ login\ +\ salt\ +\ hash;}
+\DoxyCodeLine{\Hypertarget{test__protocol_8cpp_source_l00018}00018\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{test__protocol_8cpp_source_l00019}00019\ \ \ \ \ \ \ \ \ CHECK\_EQUAL(4,\ login.length());}
+\DoxyCodeLine{\Hypertarget{test__protocol_8cpp_source_l00020}00020\ \ \ \ \ \ \ \ \ CHECK\_EQUAL(16,\ salt.length());}
+\DoxyCodeLine{\Hypertarget{test__protocol_8cpp_source_l00021}00021\ \ \ \ \ \ \ \ \ CHECK\_EQUAL(64,\ hash.length());}
+\DoxyCodeLine{\Hypertarget{test__protocol_8cpp_source_l00022}00022\ \ \ \ \ \ \ \ \ CHECK\_EQUAL(84,\ auth\_msg.length());}
+\DoxyCodeLine{\Hypertarget{test__protocol_8cpp_source_l00023}00023\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{test__protocol_8cpp_source_l00024}00024\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{test__protocol_8cpp_source_l00025}00025\ \ \ \ \ \textcolor{comment}{//\ Тест\ 2:\ Коды\ ответов\ сервера}}
+\DoxyCodeLine{\Hypertarget{test__protocol_8cpp_source_l00026}00026\ \ \ \ \ TEST(ServerResponseCodes)\ \{}
+\DoxyCodeLine{\Hypertarget{test__protocol_8cpp_source_l00027}00027\ \ \ \ \ \ \ \ \ std::string\ ok\ =\ \textcolor{stringliteral}{"{}OK"{}};}
+\DoxyCodeLine{\Hypertarget{test__protocol_8cpp_source_l00028}00028\ \ \ \ \ \ \ \ \ std::string\ err\ =\ \textcolor{stringliteral}{"{}ERR"{}};}
+\DoxyCodeLine{\Hypertarget{test__protocol_8cpp_source_l00029}00029\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{test__protocol_8cpp_source_l00030}00030\ \ \ \ \ \ \ \ \ CHECK\_EQUAL(2,\ ok.length());}
+\DoxyCodeLine{\Hypertarget{test__protocol_8cpp_source_l00031}00031\ \ \ \ \ \ \ \ \ CHECK\_EQUAL(3,\ err.length());}
+\DoxyCodeLine{\Hypertarget{test__protocol_8cpp_source_l00032}00032\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{test__protocol_8cpp_source_l00033}00033\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{test__protocol_8cpp_source_l00034}00034\ \ \ \ \ \textcolor{comment}{//\ Тест\ 3:\ Размеры\ данных}}
+\DoxyCodeLine{\Hypertarget{test__protocol_8cpp_source_l00035}00035\ \ \ \ \ TEST(DataSizes)\ \{}
+\DoxyCodeLine{\Hypertarget{test__protocol_8cpp_source_l00036}00036\ \ \ \ \ \ \ \ \ CHECK\_EQUAL(4,\ \textcolor{keyword}{sizeof}(uint32\_t));}
+\DoxyCodeLine{\Hypertarget{test__protocol_8cpp_source_l00037}00037\ \ \ \ \ \ \ \ \ CHECK\_EQUAL(4,\ \textcolor{keyword}{sizeof}(\textcolor{keywordtype}{float}));}
+\DoxyCodeLine{\Hypertarget{test__protocol_8cpp_source_l00038}00038\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{test__protocol_8cpp_source_l00039}00039\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{test__protocol_8cpp_source_l00040}00040\ \ \ \ \ \textcolor{comment}{//\ Тест\ 4:\ Формат\ соли}}
+\DoxyCodeLine{\Hypertarget{test__protocol_8cpp_source_l00041}00041\ \ \ \ \ TEST(SaltFormat)\ \{}
+\DoxyCodeLine{\Hypertarget{test__protocol_8cpp_source_l00042}00042\ \ \ \ \ \ \ \ \ std::string\ salt\ =\ \textcolor{stringliteral}{"{}0123456789ABCDEF"{}};}
+\DoxyCodeLine{\Hypertarget{test__protocol_8cpp_source_l00043}00043\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{test__protocol_8cpp_source_l00044}00044\ \ \ \ \ \ \ \ \ CHECK\_EQUAL(16,\ salt.length());}
+\DoxyCodeLine{\Hypertarget{test__protocol_8cpp_source_l00045}00045\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{test__protocol_8cpp_source_l00046}00046\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{char}\ c\ :\ salt)\ \{}
+\DoxyCodeLine{\Hypertarget{test__protocol_8cpp_source_l00047}00047\ \ \ \ \ \ \ \ \ \ \ \ \ CHECK((c\ >=\ \textcolor{charliteral}{'0'}\ \&\&\ c\ <=\ \textcolor{charliteral}{'9'})\ ||\ (c\ >=\ \textcolor{charliteral}{'A'}\ \&\&\ c\ <=\ \textcolor{charliteral}{'F'})\ ||\ (c\ >=\ \textcolor{charliteral}{'a'}\ \&\&\ c\ <=\ \textcolor{charliteral}{'f'}));}
+\DoxyCodeLine{\Hypertarget{test__protocol_8cpp_source_l00048}00048\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{test__protocol_8cpp_source_l00049}00049\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{test__protocol_8cpp_source_l00050}00050\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{test__protocol_8cpp_source_l00051}00051\ \ \ \ \ \textcolor{comment}{//\ Тест\ 5:\ Формат\ хэша}}
+\DoxyCodeLine{\Hypertarget{test__protocol_8cpp_source_l00052}00052\ \ \ \ \ TEST(HashFormat)\ \{}
+\DoxyCodeLine{\Hypertarget{test__protocol_8cpp_source_l00053}00053\ \ \ \ \ \ \ \ \ std::string\ hash\ =\ \textcolor{stringliteral}{"{}0123456789ABCDEF0123456789ABCDEF0123456789ABCDEF0123456789ABCDEF"{}};}
+\DoxyCodeLine{\Hypertarget{test__protocol_8cpp_source_l00054}00054\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{test__protocol_8cpp_source_l00055}00055\ \ \ \ \ \ \ \ \ CHECK\_EQUAL(64,\ hash.length());}
+\DoxyCodeLine{\Hypertarget{test__protocol_8cpp_source_l00056}00056\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{test__protocol_8cpp_source_l00057}00057\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{char}\ c\ :\ hash)\ \{}
+\DoxyCodeLine{\Hypertarget{test__protocol_8cpp_source_l00058}00058\ \ \ \ \ \ \ \ \ \ \ \ \ CHECK((c\ >=\ \textcolor{charliteral}{'0'}\ \&\&\ c\ <=\ \textcolor{charliteral}{'9'})\ ||\ (c\ >=\ \textcolor{charliteral}{'A'}\ \&\&\ c\ <=\ \textcolor{charliteral}{'F'})\ ||\ (c\ >=\ \textcolor{charliteral}{'a'}\ \&\&\ c\ <=\ \textcolor{charliteral}{'f'}));}
+\DoxyCodeLine{\Hypertarget{test__protocol_8cpp_source_l00059}00059\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{test__protocol_8cpp_source_l00060}00060\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{test__protocol_8cpp_source_l00061}00061\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{test__protocol_8cpp_source_l00062}00062\ \ \ \ \ \textcolor{comment}{//\ Тест\ 6:\ Хранение\ пароля\ в\ файле}}
+\DoxyCodeLine{\Hypertarget{test__protocol_8cpp_source_l00063}00063\ \ \ \ \ TEST(UserFileFormat)\ \{}
+\DoxyCodeLine{\Hypertarget{test__protocol_8cpp_source_l00064}00064\ \ \ \ \ \ \ \ \ std::string\ line\ =\ \textcolor{stringliteral}{"{}user:P@ssW0rd"{}};}
+\DoxyCodeLine{\Hypertarget{test__protocol_8cpp_source_l00065}00065\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ colon\_pos\ =\ line.find(\textcolor{charliteral}{':'});}
+\DoxyCodeLine{\Hypertarget{test__protocol_8cpp_source_l00066}00066\ \ \ \ \ \ \ \ \ std::string\ stored\_login\ =\ line.substr(0,\ colon\_pos);}
+\DoxyCodeLine{\Hypertarget{test__protocol_8cpp_source_l00067}00067\ \ \ \ \ \ \ \ \ std::string\ stored\_password\ =\ line.substr(colon\_pos\ +\ 1);}
+\DoxyCodeLine{\Hypertarget{test__protocol_8cpp_source_l00068}00068\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{test__protocol_8cpp_source_l00069}00069\ \ \ \ \ \ \ \ \ CHECK\_EQUAL(\textcolor{stringliteral}{"{}user"{}},\ stored\_login);}
+\DoxyCodeLine{\Hypertarget{test__protocol_8cpp_source_l00070}00070\ \ \ \ \ \ \ \ \ CHECK\_EQUAL(\textcolor{stringliteral}{"{}P@ssW0rd"{}},\ stored\_password);}
+\DoxyCodeLine{\Hypertarget{test__protocol_8cpp_source_l00071}00071\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{test__protocol_8cpp_source_l00072}00072\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{test__protocol_8cpp_source_l00073}00073\ \ \ \ \ \textcolor{comment}{//\ Тест\ 7:\ Обнаружение\ короткого\ сообщения}}
+\DoxyCodeLine{\Hypertarget{test__protocol_8cpp_source_l00074}00074\ \ \ \ \ TEST(ShortAuthMessage)\ \{}
+\DoxyCodeLine{\Hypertarget{test__protocol_8cpp_source_l00075}00075\ \ \ \ \ \ \ \ \ std::string\ wrong\_msg\ =\ \textcolor{stringliteral}{"{}short"{}};}
+\DoxyCodeLine{\Hypertarget{test__protocol_8cpp_source_l00076}00076\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ auth\_error\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{test__protocol_8cpp_source_l00077}00077\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{test__protocol_8cpp_source_l00078}00078\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (wrong\_msg.length()\ <\ 84)\ \{}
+\DoxyCodeLine{\Hypertarget{test__protocol_8cpp_source_l00079}00079\ \ \ \ \ \ \ \ \ \ \ \ \ auth\_error\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{test__protocol_8cpp_source_l00080}00080\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{test__protocol_8cpp_source_l00081}00081\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{test__protocol_8cpp_source_l00082}00082\ \ \ \ \ \ \ \ \ CHECK(auth\_error);}
+\DoxyCodeLine{\Hypertarget{test__protocol_8cpp_source_l00083}00083\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{test__protocol_8cpp_source_l00084}00084\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{test__protocol_8cpp_source_l00085}00085\ \ \ \ \ \textcolor{comment}{//\ Тест\ 8:\ Нулевое\ количество\ векторов}}
+\DoxyCodeLine{\Hypertarget{test__protocol_8cpp_source_l00086}00086\ \ \ \ \ TEST(ZeroVectors)\ \{}
+\DoxyCodeLine{\Hypertarget{test__protocol_8cpp_source_l00087}00087\ \ \ \ \ \ \ \ \ uint32\_t\ zero\_vectors\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{test__protocol_8cpp_source_l00088}00088\ \ \ \ \ \ \ \ \ CHECK\_EQUAL(4,\ \textcolor{keyword}{sizeof}(zero\_vectors));}
+\DoxyCodeLine{\Hypertarget{test__protocol_8cpp_source_l00089}00089\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{test__protocol_8cpp_source_l00090}00090\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{test__protocol_8cpp_source_l00091}00091\ \ \ \ \ \textcolor{comment}{//\ Тест\ 9:\ Последовательность\ данных\ протокола}}
+\DoxyCodeLine{\Hypertarget{test__protocol_8cpp_source_l00092}00092\ \ \ \ \ TEST(ProtocolSequence)\ \{}
+\DoxyCodeLine{\Hypertarget{test__protocol_8cpp_source_l00093}00093\ \ \ \ \ \ \ \ \ uint32\_t\ num\_vectors\ =\ 2;}
+\DoxyCodeLine{\Hypertarget{test__protocol_8cpp_source_l00094}00094\ \ \ \ \ \ \ \ \ uint32\_t\ vector\_size\ =\ 3;}
+\DoxyCodeLine{\Hypertarget{test__protocol_8cpp_source_l00095}00095\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ vector\_data[]\ =\ \{1.0f,\ 2.0f,\ 3.0f\};}
+\DoxyCodeLine{\Hypertarget{test__protocol_8cpp_source_l00096}00096\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ result\ =\ 14.0f;}
+\DoxyCodeLine{\Hypertarget{test__protocol_8cpp_source_l00097}00097\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{test__protocol_8cpp_source_l00098}00098\ \ \ \ \ \ \ \ \ CHECK\_EQUAL(4,\ \textcolor{keyword}{sizeof}(num\_vectors));}
+\DoxyCodeLine{\Hypertarget{test__protocol_8cpp_source_l00099}00099\ \ \ \ \ \ \ \ \ CHECK\_EQUAL(4,\ \textcolor{keyword}{sizeof}(vector\_size));}
+\DoxyCodeLine{\Hypertarget{test__protocol_8cpp_source_l00100}00100\ \ \ \ \ \ \ \ \ CHECK\_EQUAL(12,\ \textcolor{keyword}{sizeof}(vector\_data));}
+\DoxyCodeLine{\Hypertarget{test__protocol_8cpp_source_l00101}00101\ \ \ \ \ \ \ \ \ CHECK\_EQUAL(4,\ \textcolor{keyword}{sizeof}(result));}
+\DoxyCodeLine{\Hypertarget{test__protocol_8cpp_source_l00102}00102\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{test__protocol_8cpp_source_l00103}00103\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{test__protocol_8cpp_source_l00104}00104\ \ \ \ \ \textcolor{comment}{//\ Тест\ 10:\ Максимальные\ размеры\ данных}}
+\DoxyCodeLine{\Hypertarget{test__protocol_8cpp_source_l00105}00105\ \ \ \ \ TEST(MaxDataSizes)\ \{}
+\DoxyCodeLine{\Hypertarget{test__protocol_8cpp_source_l00106}00106\ \ \ \ \ \ \ \ \ uint32\_t\ max\_size\ =\ 1000;}
+\DoxyCodeLine{\Hypertarget{test__protocol_8cpp_source_l00107}00107\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ sample\_data[1000];}
+\DoxyCodeLine{\Hypertarget{test__protocol_8cpp_source_l00108}00108\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{test__protocol_8cpp_source_l00109}00109\ \ \ \ \ \ \ \ \ CHECK\_EQUAL(4,\ \textcolor{keyword}{sizeof}(max\_size));}
+\DoxyCodeLine{\Hypertarget{test__protocol_8cpp_source_l00110}00110\ \ \ \ \ \ \ \ \ CHECK\_EQUAL(4000,\ \textcolor{keyword}{sizeof}(sample\_data));}
+\DoxyCodeLine{\Hypertarget{test__protocol_8cpp_source_l00111}00111\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{test__protocol_8cpp_source_l00112}00112\ \}}
+\DoxyCodeLine{\Hypertarget{test__protocol_8cpp_source_l00113}00113\ }
+\DoxyCodeLine{\Hypertarget{test__protocol_8cpp_source_l00114}\mbox{\hyperlink{test__protocol_8cpp_ae66f6b31b5ad750f1fe042a706a4e3d4}{00114}}\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{test__protocol_8cpp_ae66f6b31b5ad750f1fe042a706a4e3d4}{main}}()\ \{}
+\DoxyCodeLine{\Hypertarget{test__protocol_8cpp_source_l00115}00115\ \ \ \ \ \textcolor{keywordflow}{return}\ UnitTest::RunAllTests();}
+\DoxyCodeLine{\Hypertarget{test__protocol_8cpp_source_l00116}00116\ \}}
+
+\end{DoxyCode}

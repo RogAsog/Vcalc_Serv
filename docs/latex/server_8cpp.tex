@@ -1,0 +1,142 @@
+\doxysection{Файл server.\+cpp}
+\hypertarget{server_8cpp}{}\label{server_8cpp}\index{server.cpp@{server.cpp}}
+
+
+Сервер аутентификации и вычислений vcalc.  
+
+
+{\ttfamily \#include $<$iostream$>$}\newline
+{\ttfamily \#include $<$fstream$>$}\newline
+{\ttfamily \#include $<$vector$>$}\newline
+{\ttfamily \#include $<$string$>$}\newline
+{\ttfamily \#include $<$cstring$>$}\newline
+{\ttfamily \#include $<$arpa/inet.\+h$>$}\newline
+{\ttfamily \#include $<$unistd.\+h$>$}\newline
+{\ttfamily \#include $<$sys/socket.\+h$>$}\newline
+{\ttfamily \#include $<$ctime$>$}\newline
+{\ttfamily \#include $<$iomanip$>$}\newline
+{\ttfamily \#include "{}sha256.\+hpp"{}}\newline
+{\ttfamily \#include $<$boost/program\+\_\+options.\+hpp$>$}\newline
+\doxysubsubsection*{Функции}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{server_8cpp_af27b53b8db22457a980ee54e454debfd}{log\+Msg}} (const string \&file, const string \&msg)
+\item 
+vector$<$ pair$<$ string, string $>$ $>$ \mbox{\hyperlink{server_8cpp_a61c423a906340757fe23ccfc52e6a971}{load\+Users}} (const string \&file)
+\item 
+bool \mbox{\hyperlink{server_8cpp_a6b20211fdc8cebe71bd591e89ec5828d}{check\+Auth}} (const string \&login, const string \&salt, const string \&hash, const vector$<$ pair$<$ string, string $>$ $>$ \&users)
+\item 
+bool \mbox{\hyperlink{server_8cpp_a93a3a4c80bfa758d821375de82d1a540}{read\+All}} (int sock, void \texorpdfstring{$\ast$}{*}buf, size\+\_\+t len)
+\item 
+bool \mbox{\hyperlink{server_8cpp_af44860e9f8040343cb955176f2d4acf9}{write\+All}} (int sock, const void \texorpdfstring{$\ast$}{*}buf, size\+\_\+t len)
+\item 
+uint32\+\_\+t \mbox{\hyperlink{server_8cpp_a9c710acc06d2b4ab09660e6059b457f0}{read\+Little\+Endian32}} (const uint8\+\_\+t \texorpdfstring{$\ast$}{*}bytes)
+\item 
+void \mbox{\hyperlink{server_8cpp_a9eb47aa873544d447a7f61db5de4c832}{write\+Little\+Endian32}} (uint32\+\_\+t value, uint8\+\_\+t \texorpdfstring{$\ast$}{*}bytes)
+\item 
+void \mbox{\hyperlink{server_8cpp_abd40ed2d27d9d09a21a6e4efba1fcddd}{handle\+Client}} (int sock, const vector$<$ pair$<$ string, string $>$ $>$ \&users, const string \&log\+File)
+\item 
+int \mbox{\hyperlink{server_8cpp_a0ddf1224851353fc92bfbff6f499fa97}{main}} (int argc, char \texorpdfstring{$\ast$}{*}argv\mbox{[}$\,$\mbox{]})
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Подробное описание}
+Сервер аутентификации и вычислений vcalc. 
+
+
+
+См. определение в файле \mbox{\hyperlink{server_8cpp_source}{server.\+cpp}}
+
+
+
+\doxysubsection{Функции}
+\Hypertarget{server_8cpp_a6b20211fdc8cebe71bd591e89ec5828d}\label{server_8cpp_a6b20211fdc8cebe71bd591e89ec5828d} 
+\index{server.cpp@{server.cpp}!checkAuth@{checkAuth}}
+\index{checkAuth@{checkAuth}!server.cpp@{server.cpp}}
+\doxysubsubsection{\texorpdfstring{checkAuth()}{checkAuth()}}
+{\footnotesize\ttfamily bool check\+Auth (\begin{DoxyParamCaption}\item[{const string \&}]{login,  }\item[{const string \&}]{salt,  }\item[{const string \&}]{hash,  }\item[{const vector$<$ pair$<$ string, string $>$ $>$ \&}]{users }\end{DoxyParamCaption})}
+
+
+
+См. определение в файле \mbox{\hyperlink{server_8cpp_source}{server.\+cpp}} строка \mbox{\hyperlink{server_8cpp_source_l00042}{42}}
+
+\Hypertarget{server_8cpp_abd40ed2d27d9d09a21a6e4efba1fcddd}\label{server_8cpp_abd40ed2d27d9d09a21a6e4efba1fcddd} 
+\index{server.cpp@{server.cpp}!handleClient@{handleClient}}
+\index{handleClient@{handleClient}!server.cpp@{server.cpp}}
+\doxysubsubsection{\texorpdfstring{handleClient()}{handleClient()}}
+{\footnotesize\ttfamily void handle\+Client (\begin{DoxyParamCaption}\item[{int}]{sock,  }\item[{const vector$<$ pair$<$ string, string $>$ $>$ \&}]{users,  }\item[{const string \&}]{log\+File }\end{DoxyParamCaption})}
+
+
+
+См. определение в файле \mbox{\hyperlink{server_8cpp_source}{server.\+cpp}} строка \mbox{\hyperlink{server_8cpp_source_l00091}{91}}
+
+\Hypertarget{server_8cpp_a61c423a906340757fe23ccfc52e6a971}\label{server_8cpp_a61c423a906340757fe23ccfc52e6a971} 
+\index{server.cpp@{server.cpp}!loadUsers@{loadUsers}}
+\index{loadUsers@{loadUsers}!server.cpp@{server.cpp}}
+\doxysubsubsection{\texorpdfstring{loadUsers()}{loadUsers()}}
+{\footnotesize\ttfamily vector$<$ pair$<$ string, string $>$ $>$ load\+Users (\begin{DoxyParamCaption}\item[{const string \&}]{file }\end{DoxyParamCaption})}
+
+
+
+См. определение в файле \mbox{\hyperlink{server_8cpp_source}{server.\+cpp}} строка \mbox{\hyperlink{server_8cpp_source_l00030}{30}}
+
+\Hypertarget{server_8cpp_af27b53b8db22457a980ee54e454debfd}\label{server_8cpp_af27b53b8db22457a980ee54e454debfd} 
+\index{server.cpp@{server.cpp}!logMsg@{logMsg}}
+\index{logMsg@{logMsg}!server.cpp@{server.cpp}}
+\doxysubsubsection{\texorpdfstring{logMsg()}{logMsg()}}
+{\footnotesize\ttfamily void log\+Msg (\begin{DoxyParamCaption}\item[{const string \&}]{file,  }\item[{const string \&}]{msg }\end{DoxyParamCaption})}
+
+
+
+См. определение в файле \mbox{\hyperlink{server_8cpp_source}{server.\+cpp}} строка \mbox{\hyperlink{server_8cpp_source_l00022}{22}}
+
+\Hypertarget{server_8cpp_a0ddf1224851353fc92bfbff6f499fa97}\label{server_8cpp_a0ddf1224851353fc92bfbff6f499fa97} 
+\index{server.cpp@{server.cpp}!main@{main}}
+\index{main@{main}!server.cpp@{server.cpp}}
+\doxysubsubsection{\texorpdfstring{main()}{main()}}
+{\footnotesize\ttfamily int main (\begin{DoxyParamCaption}\item[{int}]{argc,  }\item[{char \texorpdfstring{$\ast$}{*}}]{argv\mbox{[}$\,$\mbox{]} }\end{DoxyParamCaption})}
+
+
+
+См. определение в файле \mbox{\hyperlink{server_8cpp_source}{server.\+cpp}} строка \mbox{\hyperlink{server_8cpp_source_l00182}{182}}
+
+\Hypertarget{server_8cpp_a93a3a4c80bfa758d821375de82d1a540}\label{server_8cpp_a93a3a4c80bfa758d821375de82d1a540} 
+\index{server.cpp@{server.cpp}!readAll@{readAll}}
+\index{readAll@{readAll}!server.cpp@{server.cpp}}
+\doxysubsubsection{\texorpdfstring{readAll()}{readAll()}}
+{\footnotesize\ttfamily bool read\+All (\begin{DoxyParamCaption}\item[{int}]{sock,  }\item[{void \texorpdfstring{$\ast$}{*}}]{buf,  }\item[{size\+\_\+t}]{len }\end{DoxyParamCaption})}
+
+
+
+См. определение в файле \mbox{\hyperlink{server_8cpp_source}{server.\+cpp}} строка \mbox{\hyperlink{server_8cpp_source_l00060}{60}}
+
+\Hypertarget{server_8cpp_a9c710acc06d2b4ab09660e6059b457f0}\label{server_8cpp_a9c710acc06d2b4ab09660e6059b457f0} 
+\index{server.cpp@{server.cpp}!readLittleEndian32@{readLittleEndian32}}
+\index{readLittleEndian32@{readLittleEndian32}!server.cpp@{server.cpp}}
+\doxysubsubsection{\texorpdfstring{readLittleEndian32()}{readLittleEndian32()}}
+{\footnotesize\ttfamily uint32\+\_\+t read\+Little\+Endian32 (\begin{DoxyParamCaption}\item[{const uint8\+\_\+t \texorpdfstring{$\ast$}{*}}]{bytes }\end{DoxyParamCaption})}
+
+
+
+См. определение в файле \mbox{\hyperlink{server_8cpp_source}{server.\+cpp}} строка \mbox{\hyperlink{server_8cpp_source_l00080}{80}}
+
+\Hypertarget{server_8cpp_af44860e9f8040343cb955176f2d4acf9}\label{server_8cpp_af44860e9f8040343cb955176f2d4acf9} 
+\index{server.cpp@{server.cpp}!writeAll@{writeAll}}
+\index{writeAll@{writeAll}!server.cpp@{server.cpp}}
+\doxysubsubsection{\texorpdfstring{writeAll()}{writeAll()}}
+{\footnotesize\ttfamily bool write\+All (\begin{DoxyParamCaption}\item[{int}]{sock,  }\item[{const void \texorpdfstring{$\ast$}{*}}]{buf,  }\item[{size\+\_\+t}]{len }\end{DoxyParamCaption})}
+
+
+
+См. определение в файле \mbox{\hyperlink{server_8cpp_source}{server.\+cpp}} строка \mbox{\hyperlink{server_8cpp_source_l00070}{70}}
+
+\Hypertarget{server_8cpp_a9eb47aa873544d447a7f61db5de4c832}\label{server_8cpp_a9eb47aa873544d447a7f61db5de4c832} 
+\index{server.cpp@{server.cpp}!writeLittleEndian32@{writeLittleEndian32}}
+\index{writeLittleEndian32@{writeLittleEndian32}!server.cpp@{server.cpp}}
+\doxysubsubsection{\texorpdfstring{writeLittleEndian32()}{writeLittleEndian32()}}
+{\footnotesize\ttfamily void write\+Little\+Endian32 (\begin{DoxyParamCaption}\item[{uint32\+\_\+t}]{value,  }\item[{uint8\+\_\+t \texorpdfstring{$\ast$}{*}}]{bytes }\end{DoxyParamCaption})}
+
+
+
+См. определение в файле \mbox{\hyperlink{server_8cpp_source}{server.\+cpp}} строка \mbox{\hyperlink{server_8cpp_source_l00084}{84}}
+

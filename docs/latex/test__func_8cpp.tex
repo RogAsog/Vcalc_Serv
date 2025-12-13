@@ -1,0 +1,102 @@
+\doxysection{Файл tests/test\+\_\+func.cpp}
+\hypertarget{test__func_8cpp}{}\label{test__func_8cpp}\index{tests/test\_func.cpp@{tests/test\_func.cpp}}
+
+
+Функциональные тесты сервера vcalc.  
+
+
+{\ttfamily \#include $<$Unit\+Test++/\+Unit\+Test++.\+h$>$}\newline
+{\ttfamily \#include $<$iostream$>$}\newline
+{\ttfamily \#include $<$cstdlib$>$}\newline
+{\ttfamily \#include $<$string$>$}\newline
+{\ttfamily \#include $<$fstream$>$}\newline
+{\ttfamily \#include $<$vector$>$}\newline
+{\ttfamily \#include $<$thread$>$}\newline
+{\ttfamily \#include $<$chrono$>$}\newline
+\doxysubsubsection*{Функции}
+\begin{DoxyCompactItemize}
+\item 
+int \mbox{\hyperlink{test__func_8cpp_a5978dfe588c7ad1133f3eab4b097d731}{run\+\_\+command}} (const string \&cmd, int timeout\+\_\+seconds=5)
+\item 
+bool \mbox{\hyperlink{test__func_8cpp_aade7cf33ba1b69568021e14f514f8a26}{check\+\_\+server\+\_\+running}} (int port)
+\item 
+void \mbox{\hyperlink{test__func_8cpp_aa0e15e5175f37cdb98db4d37c1e86068}{stop\+\_\+server}} (int port)
+\item 
+void \mbox{\hyperlink{test__func_8cpp_a6044becf0e76929a4e8a1d5d54af9f5d}{create\+\_\+test\+\_\+users}} (const string \&filename)
+\item 
+\mbox{\hyperlink{test__func_8cpp_a1dc7b641b73ec32767b5e74140969ea0}{SUITE}} (Simple\+Functional\+Tests)
+\item 
+int \mbox{\hyperlink{test__func_8cpp_ae66f6b31b5ad750f1fe042a706a4e3d4}{main}} ()
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Подробное описание}
+Функциональные тесты сервера vcalc. 
+
+
+
+См. определение в файле \mbox{\hyperlink{test__func_8cpp_source}{test\+\_\+func.\+cpp}}
+
+
+
+\doxysubsection{Функции}
+\Hypertarget{test__func_8cpp_aade7cf33ba1b69568021e14f514f8a26}\label{test__func_8cpp_aade7cf33ba1b69568021e14f514f8a26} 
+\index{test\_func.cpp@{test\_func.cpp}!check\_server\_running@{check\_server\_running}}
+\index{check\_server\_running@{check\_server\_running}!test\_func.cpp@{test\_func.cpp}}
+\doxysubsubsection{\texorpdfstring{check\_server\_running()}{check\_server\_running()}}
+{\footnotesize\ttfamily bool check\+\_\+server\+\_\+running (\begin{DoxyParamCaption}\item[{int}]{port }\end{DoxyParamCaption})}
+
+
+
+См. определение в файле \mbox{\hyperlink{test__func_8cpp_source}{test\+\_\+func.\+cpp}} строка \mbox{\hyperlink{test__func_8cpp_source_l00025}{25}}
+
+\Hypertarget{test__func_8cpp_a6044becf0e76929a4e8a1d5d54af9f5d}\label{test__func_8cpp_a6044becf0e76929a4e8a1d5d54af9f5d} 
+\index{test\_func.cpp@{test\_func.cpp}!create\_test\_users@{create\_test\_users}}
+\index{create\_test\_users@{create\_test\_users}!test\_func.cpp@{test\_func.cpp}}
+\doxysubsubsection{\texorpdfstring{create\_test\_users()}{create\_test\_users()}}
+{\footnotesize\ttfamily void create\+\_\+test\+\_\+users (\begin{DoxyParamCaption}\item[{const string \&}]{filename }\end{DoxyParamCaption})}
+
+
+
+См. определение в файле \mbox{\hyperlink{test__func_8cpp_source}{test\+\_\+func.\+cpp}} строка \mbox{\hyperlink{test__func_8cpp_source_l00048}{48}}
+
+\Hypertarget{test__func_8cpp_ae66f6b31b5ad750f1fe042a706a4e3d4}\label{test__func_8cpp_ae66f6b31b5ad750f1fe042a706a4e3d4} 
+\index{test\_func.cpp@{test\_func.cpp}!main@{main}}
+\index{main@{main}!test\_func.cpp@{test\_func.cpp}}
+\doxysubsubsection{\texorpdfstring{main()}{main()}}
+{\footnotesize\ttfamily int main (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+См. определение в файле \mbox{\hyperlink{test__func_8cpp_source}{test\+\_\+func.\+cpp}} строка \mbox{\hyperlink{test__func_8cpp_source_l00194}{194}}
+
+\Hypertarget{test__func_8cpp_a5978dfe588c7ad1133f3eab4b097d731}\label{test__func_8cpp_a5978dfe588c7ad1133f3eab4b097d731} 
+\index{test\_func.cpp@{test\_func.cpp}!run\_command@{run\_command}}
+\index{run\_command@{run\_command}!test\_func.cpp@{test\_func.cpp}}
+\doxysubsubsection{\texorpdfstring{run\_command()}{run\_command()}}
+{\footnotesize\ttfamily int run\+\_\+command (\begin{DoxyParamCaption}\item[{const string \&}]{cmd,  }\item[{int}]{timeout\+\_\+seconds = {\ttfamily 5} }\end{DoxyParamCaption})}
+
+
+
+См. определение в файле \mbox{\hyperlink{test__func_8cpp_source}{test\+\_\+func.\+cpp}} строка \mbox{\hyperlink{test__func_8cpp_source_l00019}{19}}
+
+\Hypertarget{test__func_8cpp_aa0e15e5175f37cdb98db4d37c1e86068}\label{test__func_8cpp_aa0e15e5175f37cdb98db4d37c1e86068} 
+\index{test\_func.cpp@{test\_func.cpp}!stop\_server@{stop\_server}}
+\index{stop\_server@{stop\_server}!test\_func.cpp@{test\_func.cpp}}
+\doxysubsubsection{\texorpdfstring{stop\_server()}{stop\_server()}}
+{\footnotesize\ttfamily void stop\+\_\+server (\begin{DoxyParamCaption}\item[{int}]{port }\end{DoxyParamCaption})}
+
+
+
+См. определение в файле \mbox{\hyperlink{test__func_8cpp_source}{test\+\_\+func.\+cpp}} строка \mbox{\hyperlink{test__func_8cpp_source_l00040}{40}}
+
+\Hypertarget{test__func_8cpp_a1dc7b641b73ec32767b5e74140969ea0}\label{test__func_8cpp_a1dc7b641b73ec32767b5e74140969ea0} 
+\index{test\_func.cpp@{test\_func.cpp}!SUITE@{SUITE}}
+\index{SUITE@{SUITE}!test\_func.cpp@{test\_func.cpp}}
+\doxysubsubsection{\texorpdfstring{SUITE()}{SUITE()}}
+{\footnotesize\ttfamily SUITE (\begin{DoxyParamCaption}\item[{Simple\+Functional\+Tests}]{ }\end{DoxyParamCaption})}
+
+
+
+См. определение в файле \mbox{\hyperlink{test__func_8cpp_source}{test\+\_\+func.\+cpp}} строка \mbox{\hyperlink{test__func_8cpp_source_l00056}{56}}
+

@@ -1,0 +1,234 @@
+\doxysection{Файл sha256.\+cpp}
+\hypertarget{sha256_8cpp}{}\label{sha256_8cpp}\index{sha256.cpp@{sha256.cpp}}
+
+
+Реализация алгоритма SHA-\/256.  
+
+
+{\ttfamily \#include "{}sha256.\+hpp"{}}\newline
+{\ttfamily \#include $<$cstdint$>$}\newline
+{\ttfamily \#include $<$cstdlib$>$}\newline
+{\ttfamily \#include $<$cstring$>$}\newline
+\doxysubsubsection*{Функции}
+\begin{DoxyCompactItemize}
+\item 
+static uint32\+\_\+t \mbox{\hyperlink{sha256_8cpp_aea65645ba9fb49eefab0abab58f24237}{ROTR}} (uint32\+\_\+t x, int n)
+\begin{DoxyCompactList}\small\item\em Циклический сдвиг вправо \end{DoxyCompactList}\item 
+static uint32\+\_\+t \mbox{\hyperlink{sha256_8cpp_a016d721de53fa58c497bc1fb1f28ee41}{SHR}} (uint32\+\_\+t x, int n)
+\begin{DoxyCompactList}\small\item\em Логический сдвиг вправо \end{DoxyCompactList}\item 
+static uint32\+\_\+t \mbox{\hyperlink{sha256_8cpp_a040629ce734f8c5b8c1b917ee7330a7b}{ch}} (uint32\+\_\+t x, uint32\+\_\+t y, uint32\+\_\+t z)
+\begin{DoxyCompactList}\small\item\em Функция Ch(x, y, z) \end{DoxyCompactList}\item 
+static uint32\+\_\+t \mbox{\hyperlink{sha256_8cpp_adf3fc35e01f72808b97bb5fbc8d525e1}{maj}} (uint32\+\_\+t x, uint32\+\_\+t y, uint32\+\_\+t z)
+\begin{DoxyCompactList}\small\item\em Функция Maj(x, y, z) \end{DoxyCompactList}\item 
+static uint32\+\_\+t \mbox{\hyperlink{sha256_8cpp_a4cb1ce9ef76f0553934e86366af15f9d}{bsig0}} (uint32\+\_\+t x)
+\begin{DoxyCompactList}\small\item\em Функция Sigma0(x) \end{DoxyCompactList}\item 
+static uint32\+\_\+t \mbox{\hyperlink{sha256_8cpp_a0c5fc8476f55a0ac52dda6e1fcfe375d}{bsig1}} (uint32\+\_\+t x)
+\begin{DoxyCompactList}\small\item\em Функция Sigma1(x) \end{DoxyCompactList}\item 
+static uint32\+\_\+t \mbox{\hyperlink{sha256_8cpp_ab236748de6063427c3c99d4bc02551c2}{ssig0}} (uint32\+\_\+t x)
+\begin{DoxyCompactList}\small\item\em Функция sigma0(x) \end{DoxyCompactList}\item 
+static uint32\+\_\+t \mbox{\hyperlink{sha256_8cpp_a9ca9d883ddb1c51b2213ac5be7d8c0a0}{ssig1}} (uint32\+\_\+t x)
+\begin{DoxyCompactList}\small\item\em Функция sigma1(x) \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{sha256_8cpp_a7133cfeac4cf97ed0425937e65f6a6d5}{sha256}} (const uint8\+\_\+t \texorpdfstring{$\ast$}{*}data, size\+\_\+t len, uint8\+\_\+t out\mbox{[}32\mbox{]})
+\begin{DoxyCompactList}\small\item\em Вычисляет хэш SHA-\/256 для входных данных \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Переменные}
+\begin{DoxyCompactItemize}
+\item 
+static const uint32\+\_\+t \mbox{\hyperlink{sha256_8cpp_af11ea3cdbca7345eb6a4a8ac5ce0434d}{k}} \mbox{[}64\mbox{]}
+\begin{DoxyCompactList}\small\item\em Константы SHA-\/256 (первые 32 бита дробных частей кубических корней первых 64 простых чисел) \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Подробное описание}
+Реализация алгоритма SHA-\/256. 
+
+\begin{DoxyAuthor}{Автор}
+\mbox{[}Ваше имя\mbox{]} 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Дата}
+2024
+\end{DoxyDate}
+Алгоритм хеширования SHA-\/256 согласно стандарту FIPS 180-\/4. Используется для аутентификации пользователей. 
+
+См. определение в файле \mbox{\hyperlink{sha256_8cpp_source}{sha256.\+cpp}}
+
+
+
+\doxysubsection{Функции}
+\Hypertarget{sha256_8cpp_a4cb1ce9ef76f0553934e86366af15f9d}\label{sha256_8cpp_a4cb1ce9ef76f0553934e86366af15f9d} 
+\index{sha256.cpp@{sha256.cpp}!bsig0@{bsig0}}
+\index{bsig0@{bsig0}!sha256.cpp@{sha256.cpp}}
+\doxysubsubsection{\texorpdfstring{bsig0()}{bsig0()}}
+{\footnotesize\ttfamily static uint32\+\_\+t bsig0 (\begin{DoxyParamCaption}\item[{uint32\+\_\+t}]{x }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+
+
+Функция Sigma0(x) 
+
+
+
+См. определение в файле \mbox{\hyperlink{sha256_8cpp_source}{sha256.\+cpp}} строка \mbox{\hyperlink{sha256_8cpp_source_l00061}{61}}
+
+\Hypertarget{sha256_8cpp_a0c5fc8476f55a0ac52dda6e1fcfe375d}\label{sha256_8cpp_a0c5fc8476f55a0ac52dda6e1fcfe375d} 
+\index{sha256.cpp@{sha256.cpp}!bsig1@{bsig1}}
+\index{bsig1@{bsig1}!sha256.cpp@{sha256.cpp}}
+\doxysubsubsection{\texorpdfstring{bsig1()}{bsig1()}}
+{\footnotesize\ttfamily static uint32\+\_\+t bsig1 (\begin{DoxyParamCaption}\item[{uint32\+\_\+t}]{x }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+
+
+Функция Sigma1(x) 
+
+
+
+См. определение в файле \mbox{\hyperlink{sha256_8cpp_source}{sha256.\+cpp}} строка \mbox{\hyperlink{sha256_8cpp_source_l00068}{68}}
+
+\Hypertarget{sha256_8cpp_a040629ce734f8c5b8c1b917ee7330a7b}\label{sha256_8cpp_a040629ce734f8c5b8c1b917ee7330a7b} 
+\index{sha256.cpp@{sha256.cpp}!ch@{ch}}
+\index{ch@{ch}!sha256.cpp@{sha256.cpp}}
+\doxysubsubsection{\texorpdfstring{ch()}{ch()}}
+{\footnotesize\ttfamily static uint32\+\_\+t ch (\begin{DoxyParamCaption}\item[{uint32\+\_\+t}]{x,  }\item[{uint32\+\_\+t}]{y,  }\item[{uint32\+\_\+t}]{z }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+
+
+Функция Ch(x, y, z) 
+
+
+
+См. определение в файле \mbox{\hyperlink{sha256_8cpp_source}{sha256.\+cpp}} строка \mbox{\hyperlink{sha256_8cpp_source_l00047}{47}}
+
+\Hypertarget{sha256_8cpp_adf3fc35e01f72808b97bb5fbc8d525e1}\label{sha256_8cpp_adf3fc35e01f72808b97bb5fbc8d525e1} 
+\index{sha256.cpp@{sha256.cpp}!maj@{maj}}
+\index{maj@{maj}!sha256.cpp@{sha256.cpp}}
+\doxysubsubsection{\texorpdfstring{maj()}{maj()}}
+{\footnotesize\ttfamily static uint32\+\_\+t maj (\begin{DoxyParamCaption}\item[{uint32\+\_\+t}]{x,  }\item[{uint32\+\_\+t}]{y,  }\item[{uint32\+\_\+t}]{z }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+
+
+Функция Maj(x, y, z) 
+
+
+
+См. определение в файле \mbox{\hyperlink{sha256_8cpp_source}{sha256.\+cpp}} строка \mbox{\hyperlink{sha256_8cpp_source_l00054}{54}}
+
+\Hypertarget{sha256_8cpp_aea65645ba9fb49eefab0abab58f24237}\label{sha256_8cpp_aea65645ba9fb49eefab0abab58f24237} 
+\index{sha256.cpp@{sha256.cpp}!ROTR@{ROTR}}
+\index{ROTR@{ROTR}!sha256.cpp@{sha256.cpp}}
+\doxysubsubsection{\texorpdfstring{ROTR()}{ROTR()}}
+{\footnotesize\ttfamily static uint32\+\_\+t ROTR (\begin{DoxyParamCaption}\item[{uint32\+\_\+t}]{x,  }\item[{int}]{n }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+
+
+Циклический сдвиг вправо 
+
+
+
+См. определение в файле \mbox{\hyperlink{sha256_8cpp_source}{sha256.\+cpp}} строка \mbox{\hyperlink{sha256_8cpp_source_l00019}{19}}
+
+\Hypertarget{sha256_8cpp_a7133cfeac4cf97ed0425937e65f6a6d5}\label{sha256_8cpp_a7133cfeac4cf97ed0425937e65f6a6d5} 
+\index{sha256.cpp@{sha256.cpp}!sha256@{sha256}}
+\index{sha256@{sha256}!sha256.cpp@{sha256.cpp}}
+\doxysubsubsection{\texorpdfstring{sha256()}{sha256()}}
+{\footnotesize\ttfamily void sha256 (\begin{DoxyParamCaption}\item[{const uint8\+\_\+t \texorpdfstring{$\ast$}{*}}]{data,  }\item[{size\+\_\+t}]{len,  }\item[{uint8\+\_\+t}]{out\mbox{[}32\mbox{]} }\end{DoxyParamCaption})}
+
+
+
+Вычисляет хэш SHA-\/256 для входных данных 
+
+Вычисляет хэш SHA-\/256 для данных
+
+
+\begin{DoxyParams}{Аргументы}
+{\em data} & Входные данные для хеширования \\
+\hline
+{\em len} & Длина входных данных в байтах \\
+\hline
+{\em out} & Выходной массив для хэша (32 байта)\\
+\hline
+\end{DoxyParams}
+Реализация алгоритма SHA-\/256\+:
+\begin{DoxyEnumerate}
+\item Инициализация хэш-\/значений
+\item Подготовка сообщения с дополнением
+\item Обработка блоков по 512 бит
+\item Генерация итогового хэша
+\end{DoxyEnumerate}
+
+\begin{DoxyNote}{Заметки}
+Функция выделяет динамическую память для временного буфера 
+\end{DoxyNote}
+
+
+См. определение в файле \mbox{\hyperlink{sha256_8cpp_source}{sha256.\+cpp}} строка \mbox{\hyperlink{sha256_8cpp_source_l00101}{101}}
+
+\Hypertarget{sha256_8cpp_a016d721de53fa58c497bc1fb1f28ee41}\label{sha256_8cpp_a016d721de53fa58c497bc1fb1f28ee41} 
+\index{sha256.cpp@{sha256.cpp}!SHR@{SHR}}
+\index{SHR@{SHR}!sha256.cpp@{sha256.cpp}}
+\doxysubsubsection{\texorpdfstring{SHR()}{SHR()}}
+{\footnotesize\ttfamily static uint32\+\_\+t SHR (\begin{DoxyParamCaption}\item[{uint32\+\_\+t}]{x,  }\item[{int}]{n }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+
+
+Логический сдвиг вправо 
+
+
+
+См. определение в файле \mbox{\hyperlink{sha256_8cpp_source}{sha256.\+cpp}} строка \mbox{\hyperlink{sha256_8cpp_source_l00026}{26}}
+
+\Hypertarget{sha256_8cpp_ab236748de6063427c3c99d4bc02551c2}\label{sha256_8cpp_ab236748de6063427c3c99d4bc02551c2} 
+\index{sha256.cpp@{sha256.cpp}!ssig0@{ssig0}}
+\index{ssig0@{ssig0}!sha256.cpp@{sha256.cpp}}
+\doxysubsubsection{\texorpdfstring{ssig0()}{ssig0()}}
+{\footnotesize\ttfamily static uint32\+\_\+t ssig0 (\begin{DoxyParamCaption}\item[{uint32\+\_\+t}]{x }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+
+
+Функция sigma0(x) 
+
+
+
+См. определение в файле \mbox{\hyperlink{sha256_8cpp_source}{sha256.\+cpp}} строка \mbox{\hyperlink{sha256_8cpp_source_l00075}{75}}
+
+\Hypertarget{sha256_8cpp_a9ca9d883ddb1c51b2213ac5be7d8c0a0}\label{sha256_8cpp_a9ca9d883ddb1c51b2213ac5be7d8c0a0} 
+\index{sha256.cpp@{sha256.cpp}!ssig1@{ssig1}}
+\index{ssig1@{ssig1}!sha256.cpp@{sha256.cpp}}
+\doxysubsubsection{\texorpdfstring{ssig1()}{ssig1()}}
+{\footnotesize\ttfamily static uint32\+\_\+t ssig1 (\begin{DoxyParamCaption}\item[{uint32\+\_\+t}]{x }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+
+
+Функция sigma1(x) 
+
+
+
+См. определение в файле \mbox{\hyperlink{sha256_8cpp_source}{sha256.\+cpp}} строка \mbox{\hyperlink{sha256_8cpp_source_l00082}{82}}
+
+
+
+\doxysubsection{Переменные}
+\Hypertarget{sha256_8cpp_af11ea3cdbca7345eb6a4a8ac5ce0434d}\label{sha256_8cpp_af11ea3cdbca7345eb6a4a8ac5ce0434d} 
+\index{sha256.cpp@{sha256.cpp}!k@{k}}
+\index{k@{k}!sha256.cpp@{sha256.cpp}}
+\doxysubsubsection{\texorpdfstring{k}{k}}
+{\footnotesize\ttfamily const uint32\+\_\+t k\mbox{[}64\mbox{]}\hspace{0.3cm}{\ttfamily [static]}}
+
+{\bfseries Инициализатор}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{=\ \{}
+\DoxyCodeLine{\ \ 0x428a2f98,0x71374491,0xb5c0fbcf,0xe9b5dba5,0x3956c25b,0x59f111f1,0x923f82a4,0xab1c5ed5,}
+\DoxyCodeLine{\ \ 0xd807aa98,0x12835b01,0x243185be,0x550c7dc3,0x72be5d74,0x80deb1fe,0x9bdc06a7,0xc19bf174,}
+\DoxyCodeLine{\ \ 0xe49b69c1,0xefbe4786,0x0fc19dc6,0x240ca1cc,0x2de92c6f,0x4a7484aa,0x5cb0a9dc,0x76f988da,}
+\DoxyCodeLine{\ \ 0x983e5152,0xa831c66d,0xb00327c8,0xbf597fc7,0xc6e00bf3,0xd5a79147,0x06ca6351,0x14292967,}
+\DoxyCodeLine{\ \ 0x27b70a85,0x2e1b2138,0x4d2c6dfc,0x53380d13,0x650a7354,0x766a0abb,0x81c2c92e,0x92722c85,}
+\DoxyCodeLine{\ \ 0xa2bfe8a1,0xa81a664b,0xc24b8b70,0xc76c51a3,0xd192e819,0xd6990624,0xf40e3585,0x106aa070,}
+\DoxyCodeLine{\ \ 0x19a4c116,0x1e376c08,0x2748774c,0x34b0bcb5,0x391c0cb3,0x4ed8aa4a,0x5b9cca4f,0x682e6ff3,}
+\DoxyCodeLine{\ \ 0x748f82ee,0x78a5636f,0x84c87814,0x8cc70208,0x90befffa,0xa4506ceb,0xbef9a3f7,0xc67178f2}
+\DoxyCodeLine{\}}
+
+\end{DoxyCode}
+
+
+Константы SHA-\/256 (первые 32 бита дробных частей кубических корней первых 64 простых чисел) 
+
+
+
+См. определение в файле \mbox{\hyperlink{sha256_8cpp_source}{sha256.\+cpp}} строка \mbox{\hyperlink{sha256_8cpp_source_l00033}{33}}
+

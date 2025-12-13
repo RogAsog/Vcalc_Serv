@@ -1,0 +1,165 @@
+\doxysection{test\+\_\+cli.\+cpp}
+\hypertarget{test__cli_8cpp_source}{}\label{test__cli_8cpp_source}\index{tests/test\_cli.cpp@{tests/test\_cli.cpp}}
+\mbox{\hyperlink{test__cli_8cpp}{См. документацию.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{test__cli_8cpp_source_l00001}00001\ }
+\DoxyCodeLine{\Hypertarget{test__cli_8cpp_source_l00006}00006\ \textcolor{preprocessor}{\#include\ <UnitTest++/UnitTest++.h>}}
+\DoxyCodeLine{\Hypertarget{test__cli_8cpp_source_l00007}00007\ \textcolor{preprocessor}{\#include\ <iostream>}}
+\DoxyCodeLine{\Hypertarget{test__cli_8cpp_source_l00008}00008\ \textcolor{preprocessor}{\#include\ <string>}}
+\DoxyCodeLine{\Hypertarget{test__cli_8cpp_source_l00009}00009\ \textcolor{preprocessor}{\#include\ <fstream>}}
+\DoxyCodeLine{\Hypertarget{test__cli_8cpp_source_l00010}00010\ \textcolor{preprocessor}{\#include\ <cstdlib>}}
+\DoxyCodeLine{\Hypertarget{test__cli_8cpp_source_l00011}00011\ \textcolor{preprocessor}{\#include\ <cstring>}}
+\DoxyCodeLine{\Hypertarget{test__cli_8cpp_source_l00012}00012\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{\Hypertarget{test__cli_8cpp_source_l00013}00013\ \textcolor{preprocessor}{\#include\ <sstream>}}
+\DoxyCodeLine{\Hypertarget{test__cli_8cpp_source_l00014}00014\ }
+\DoxyCodeLine{\Hypertarget{test__cli_8cpp_source_l00015}00015\ \textcolor{comment}{//\ Объявление\ функции\ main\_server\ из\ server.cpp}}
+\DoxyCodeLine{\Hypertarget{test__cli_8cpp_source_l00016}\mbox{\hyperlink{test__cli_8cpp_a11ed877defaf21079bc488dd2eeefacd}{00016}}\ \textcolor{keyword}{extern}\ \textcolor{stringliteral}{"{}C"{}}\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{test__cli_8cpp_a11ed877defaf21079bc488dd2eeefacd}{main\_server}}(\textcolor{keywordtype}{int}\ argc,\ \textcolor{keywordtype}{char}*\ argv[]);}
+\DoxyCodeLine{\Hypertarget{test__cli_8cpp_source_l00017}00017\ }
+\DoxyCodeLine{\Hypertarget{test__cli_8cpp_source_l00018}00018\ \textcolor{keyword}{using\ namespace\ }std;}
+\DoxyCodeLine{\Hypertarget{test__cli_8cpp_source_l00019}00019\ }
+\DoxyCodeLine{\Hypertarget{test__cli_8cpp_source_l00020}00020\ \textcolor{comment}{//\ Вспомогательная\ функция\ для\ создания\ тестовых\ файлов}}
+\DoxyCodeLine{\Hypertarget{test__cli_8cpp_source_l00021}\mbox{\hyperlink{test__cli_8cpp_a319b1e5e1de63727f4d325f6324a9452}{00021}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{test__cli_8cpp_a319b1e5e1de63727f4d325f6324a9452}{create\_test\_file}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\&\ filename,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\&\ content)\ \{}
+\DoxyCodeLine{\Hypertarget{test__cli_8cpp_source_l00022}00022\ \ \ \ \ ofstream\ file(filename);}
+\DoxyCodeLine{\Hypertarget{test__cli_8cpp_source_l00023}00023\ \ \ \ \ file\ <<\ content;}
+\DoxyCodeLine{\Hypertarget{test__cli_8cpp_source_l00024}00024\ \ \ \ \ file.close();}
+\DoxyCodeLine{\Hypertarget{test__cli_8cpp_source_l00025}00025\ \}}
+\DoxyCodeLine{\Hypertarget{test__cli_8cpp_source_l00026}00026\ }
+\DoxyCodeLine{\Hypertarget{test__cli_8cpp_source_l00027}00027\ \textcolor{comment}{//\ Вспомогательная\ функция\ для\ преобразования\ vector<string>\ в\ char*\ argv[]}}
+\DoxyCodeLine{\Hypertarget{test__cli_8cpp_source_l00028}\mbox{\hyperlink{test__cli_8cpp_ac11c312e778ab93fa8a9930077f362b7}{00028}}\ vector<char*>\ \mbox{\hyperlink{test__cli_8cpp_ac11c312e778ab93fa8a9930077f362b7}{create\_argv}}(\textcolor{keyword}{const}\ vector<string>\&\ args)\ \{}
+\DoxyCodeLine{\Hypertarget{test__cli_8cpp_source_l00029}00029\ \ \ \ \ vector<char*>\ argv;}
+\DoxyCodeLine{\Hypertarget{test__cli_8cpp_source_l00030}00030\ \ \ \ \ argv.push\_back(\textcolor{keyword}{const\_cast<}\textcolor{keywordtype}{char}*\textcolor{keyword}{>}(\textcolor{stringliteral}{"{}server"{}}));\ \ \textcolor{comment}{//\ argv[0]}}
+\DoxyCodeLine{\Hypertarget{test__cli_8cpp_source_l00031}00031\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{test__cli_8cpp_source_l00032}00032\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{const}\ \textcolor{keyword}{auto}\&\ arg\ :\ args)\ \{}
+\DoxyCodeLine{\Hypertarget{test__cli_8cpp_source_l00033}00033\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{char}*\ arg\_copy\ =\ \textcolor{keyword}{new}\ \textcolor{keywordtype}{char}[arg.size()\ +\ 1];}
+\DoxyCodeLine{\Hypertarget{test__cli_8cpp_source_l00034}00034\ \ \ \ \ \ \ \ \ strcpy(arg\_copy,\ arg.c\_str());}
+\DoxyCodeLine{\Hypertarget{test__cli_8cpp_source_l00035}00035\ \ \ \ \ \ \ \ \ argv.push\_back(arg\_copy);}
+\DoxyCodeLine{\Hypertarget{test__cli_8cpp_source_l00036}00036\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{test__cli_8cpp_source_l00037}00037\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{test__cli_8cpp_source_l00038}00038\ \ \ \ \ argv.push\_back(\textcolor{keyword}{nullptr});\ \ \textcolor{comment}{//\ NULL\ terminator}}
+\DoxyCodeLine{\Hypertarget{test__cli_8cpp_source_l00039}00039\ \ \ \ \ \textcolor{keywordflow}{return}\ argv;}
+\DoxyCodeLine{\Hypertarget{test__cli_8cpp_source_l00040}00040\ \}}
+\DoxyCodeLine{\Hypertarget{test__cli_8cpp_source_l00041}00041\ }
+\DoxyCodeLine{\Hypertarget{test__cli_8cpp_source_l00042}00042\ \textcolor{comment}{//\ Вспомогательная\ функция\ для\ очистки\ argv}}
+\DoxyCodeLine{\Hypertarget{test__cli_8cpp_source_l00043}\mbox{\hyperlink{test__cli_8cpp_a17e8be3e6dec828011e1bf3f6d4146a3}{00043}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{test__cli_8cpp_a17e8be3e6dec828011e1bf3f6d4146a3}{cleanup\_argv}}(vector<char*>\&\ argv)\ \{}
+\DoxyCodeLine{\Hypertarget{test__cli_8cpp_source_l00044}00044\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{size\_t}\ i\ =\ 1;\ i\ <\ argv.size()\ -\/\ 1;\ i++)\ \{}
+\DoxyCodeLine{\Hypertarget{test__cli_8cpp_source_l00045}00045\ \ \ \ \ \ \ \ \ \textcolor{keyword}{delete}[]\ argv[i];}
+\DoxyCodeLine{\Hypertarget{test__cli_8cpp_source_l00046}00046\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{test__cli_8cpp_source_l00047}00047\ \}}
+\DoxyCodeLine{\Hypertarget{test__cli_8cpp_source_l00048}00048\ }
+\DoxyCodeLine{\Hypertarget{test__cli_8cpp_source_l00049}\mbox{\hyperlink{test__cli_8cpp_a1c9f0482e00b69d6e2cc885303af50aa}{00049}}\ \mbox{\hyperlink{test__cli_8cpp_a1c9f0482e00b69d6e2cc885303af50aa}{SUITE}}(CLITests)\ \{}
+\DoxyCodeLine{\Hypertarget{test__cli_8cpp_source_l00050}00050\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{test__cli_8cpp_source_l00051}00051\ \ \ \ \ \textcolor{keyword}{struct\ }Setup\ \{}
+\DoxyCodeLine{\Hypertarget{test__cli_8cpp_source_l00052}00052\ \ \ \ \ \ \ \ \ Setup()\ \{}
+\DoxyCodeLine{\Hypertarget{test__cli_8cpp_source_l00053}00053\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Создаем\ тестовые\ файлы\ пользователей}}
+\DoxyCodeLine{\Hypertarget{test__cli_8cpp_source_l00054}00054\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{test__cli_8cpp_a319b1e5e1de63727f4d325f6324a9452}{create\_test\_file}}(\textcolor{stringliteral}{"{}test\_users.txt"{}},\ \textcolor{stringliteral}{"{}user:pass\(\backslash\)nadmin:admin123\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{test__cli_8cpp_source_l00055}00055\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{test__cli_8cpp_source_l00056}00056\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{test__cli_8cpp_source_l00057}00057\ \ \ \ \ \ \ \ \ \string~Setup()\ \{}
+\DoxyCodeLine{\Hypertarget{test__cli_8cpp_source_l00058}00058\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Удаляем\ временные\ файлы}}
+\DoxyCodeLine{\Hypertarget{test__cli_8cpp_source_l00059}00059\ \ \ \ \ \ \ \ \ \ \ \ \ remove(\textcolor{stringliteral}{"{}test\_users.txt"{}});}
+\DoxyCodeLine{\Hypertarget{test__cli_8cpp_source_l00060}00060\ \ \ \ \ \ \ \ \ \ \ \ \ remove(\textcolor{stringliteral}{"{}empty\_users.txt"{}});}
+\DoxyCodeLine{\Hypertarget{test__cli_8cpp_source_l00061}00061\ \ \ \ \ \ \ \ \ \ \ \ \ remove(\textcolor{stringliteral}{"{}test.log"{}});}
+\DoxyCodeLine{\Hypertarget{test__cli_8cpp_source_l00062}00062\ \ \ \ \ \ \ \ \ \ \ \ \ remove(\textcolor{stringliteral}{"{}server.log"{}});}
+\DoxyCodeLine{\Hypertarget{test__cli_8cpp_source_l00063}00063\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{test__cli_8cpp_source_l00064}00064\ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{test__cli_8cpp_source_l00065}00065\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{test__cli_8cpp_source_l00066}00066\ \ \ \ \ \textcolor{comment}{//\ Тест\ 1:\ Опция\ -\/-\/help}}
+\DoxyCodeLine{\Hypertarget{test__cli_8cpp_source_l00067}00067\ \ \ \ \ TEST\_FIXTURE(Setup,\ TestHelpFlag)\ \{}
+\DoxyCodeLine{\Hypertarget{test__cli_8cpp_source_l00068}00068\ \ \ \ \ \ \ \ \ vector<string>\ args\ =\ \{\textcolor{stringliteral}{"{}-\/-\/help"{}}\};}
+\DoxyCodeLine{\Hypertarget{test__cli_8cpp_source_l00069}00069\ \ \ \ \ \ \ \ \ vector<char*>\ argv\ =\ \mbox{\hyperlink{test__cli_8cpp_ac11c312e778ab93fa8a9930077f362b7}{create\_argv}}(args);}
+\DoxyCodeLine{\Hypertarget{test__cli_8cpp_source_l00070}00070\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ result\ =\ \mbox{\hyperlink{test__cli_8cpp_a11ed877defaf21079bc488dd2eeefacd}{main\_server}}(args.size()\ +\ 1,\ argv.data());}
+\DoxyCodeLine{\Hypertarget{test__cli_8cpp_source_l00071}00071\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{test__cli_8cpp_a17e8be3e6dec828011e1bf3f6d4146a3}{cleanup\_argv}}(argv);}
+\DoxyCodeLine{\Hypertarget{test__cli_8cpp_source_l00072}00072\ \ \ \ \ \ \ \ \ CHECK\_EQUAL(0,\ result);}
+\DoxyCodeLine{\Hypertarget{test__cli_8cpp_source_l00073}00073\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{test__cli_8cpp_source_l00074}00074\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{test__cli_8cpp_source_l00075}00075\ \ \ \ \ \textcolor{comment}{//\ Тест\ 2:\ Опция\ -\/h\ (краткая\ справка)}}
+\DoxyCodeLine{\Hypertarget{test__cli_8cpp_source_l00076}00076\ \ \ \ \ TEST\_FIXTURE(Setup,\ TestShortHelpFlag)\ \{}
+\DoxyCodeLine{\Hypertarget{test__cli_8cpp_source_l00077}00077\ \ \ \ \ \ \ \ \ vector<string>\ args\ =\ \{\textcolor{stringliteral}{"{}-\/h"{}}\};}
+\DoxyCodeLine{\Hypertarget{test__cli_8cpp_source_l00078}00078\ \ \ \ \ \ \ \ \ vector<char*>\ argv\ =\ \mbox{\hyperlink{test__cli_8cpp_ac11c312e778ab93fa8a9930077f362b7}{create\_argv}}(args);}
+\DoxyCodeLine{\Hypertarget{test__cli_8cpp_source_l00079}00079\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ result\ =\ \mbox{\hyperlink{test__cli_8cpp_a11ed877defaf21079bc488dd2eeefacd}{main\_server}}(args.size()\ +\ 1,\ argv.data());}
+\DoxyCodeLine{\Hypertarget{test__cli_8cpp_source_l00080}00080\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{test__cli_8cpp_a17e8be3e6dec828011e1bf3f6d4146a3}{cleanup\_argv}}(argv);}
+\DoxyCodeLine{\Hypertarget{test__cli_8cpp_source_l00081}00081\ \ \ \ \ \ \ \ \ CHECK\_EQUAL(0,\ result);}
+\DoxyCodeLine{\Hypertarget{test__cli_8cpp_source_l00082}00082\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{test__cli_8cpp_source_l00083}00083\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{test__cli_8cpp_source_l00084}00084\ \ \ \ \ \textcolor{comment}{//\ Тест\ 3:\ Неизвестный\ аргумент}}
+\DoxyCodeLine{\Hypertarget{test__cli_8cpp_source_l00085}00085\ \ \ \ \ TEST\_FIXTURE(Setup,\ TestInvalidArgument)\ \{}
+\DoxyCodeLine{\Hypertarget{test__cli_8cpp_source_l00086}00086\ \ \ \ \ \ \ \ \ vector<string>\ args\ =\ \{\textcolor{stringliteral}{"{}-\/-\/invalid-\/arg"{}}\};}
+\DoxyCodeLine{\Hypertarget{test__cli_8cpp_source_l00087}00087\ \ \ \ \ \ \ \ \ vector<char*>\ argv\ =\ \mbox{\hyperlink{test__cli_8cpp_ac11c312e778ab93fa8a9930077f362b7}{create\_argv}}(args);}
+\DoxyCodeLine{\Hypertarget{test__cli_8cpp_source_l00088}00088\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ result\ =\ \mbox{\hyperlink{test__cli_8cpp_a11ed877defaf21079bc488dd2eeefacd}{main\_server}}(args.size()\ +\ 1,\ argv.data());}
+\DoxyCodeLine{\Hypertarget{test__cli_8cpp_source_l00089}00089\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{test__cli_8cpp_a17e8be3e6dec828011e1bf3f6d4146a3}{cleanup\_argv}}(argv);}
+\DoxyCodeLine{\Hypertarget{test__cli_8cpp_source_l00090}00090\ \ \ \ \ \ \ \ \ CHECK(result\ !=\ 0);}
+\DoxyCodeLine{\Hypertarget{test__cli_8cpp_source_l00091}00091\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{test__cli_8cpp_source_l00092}00092\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{test__cli_8cpp_source_l00093}00093\ \ \ \ \ \textcolor{comment}{//\ Тест\ 4:\ Неверный\ порт\ (строка)}}
+\DoxyCodeLine{\Hypertarget{test__cli_8cpp_source_l00094}00094\ \ \ \ \ TEST\_FIXTURE(Setup,\ TestInvalidPortString)\ \{}
+\DoxyCodeLine{\Hypertarget{test__cli_8cpp_source_l00095}00095\ \ \ \ \ \ \ \ \ vector<string>\ args\ =\ \{\textcolor{stringliteral}{"{}-\/p"{}},\ \textcolor{stringliteral}{"{}not\_a\_number"{}},\ \textcolor{stringliteral}{"{}-\/d"{}},\ \textcolor{stringliteral}{"{}test\_users.txt"{}}\};}
+\DoxyCodeLine{\Hypertarget{test__cli_8cpp_source_l00096}00096\ \ \ \ \ \ \ \ \ vector<char*>\ argv\ =\ \mbox{\hyperlink{test__cli_8cpp_ac11c312e778ab93fa8a9930077f362b7}{create\_argv}}(args);}
+\DoxyCodeLine{\Hypertarget{test__cli_8cpp_source_l00097}00097\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ result\ =\ \mbox{\hyperlink{test__cli_8cpp_a11ed877defaf21079bc488dd2eeefacd}{main\_server}}(args.size()\ +\ 1,\ argv.data());}
+\DoxyCodeLine{\Hypertarget{test__cli_8cpp_source_l00098}00098\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{test__cli_8cpp_a17e8be3e6dec828011e1bf3f6d4146a3}{cleanup\_argv}}(argv);}
+\DoxyCodeLine{\Hypertarget{test__cli_8cpp_source_l00099}00099\ \ \ \ \ \ \ \ \ CHECK(result\ !=\ 0);}
+\DoxyCodeLine{\Hypertarget{test__cli_8cpp_source_l00100}00100\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{test__cli_8cpp_source_l00101}00101\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{test__cli_8cpp_source_l00102}00102\ \ \ \ \ \textcolor{comment}{//\ Тест\ 5:\ Неверный\ порт\ (ноль)}}
+\DoxyCodeLine{\Hypertarget{test__cli_8cpp_source_l00103}00103\ \ \ \ \ TEST\_FIXTURE(Setup,\ TestInvalidPortZero)\ \{}
+\DoxyCodeLine{\Hypertarget{test__cli_8cpp_source_l00104}00104\ \ \ \ \ \ \ \ \ vector<string>\ args\ =\ \{\textcolor{stringliteral}{"{}-\/p"{}},\ \textcolor{stringliteral}{"{}0"{}},\ \textcolor{stringliteral}{"{}-\/d"{}},\ \textcolor{stringliteral}{"{}test\_users.txt"{}}\};}
+\DoxyCodeLine{\Hypertarget{test__cli_8cpp_source_l00105}00105\ \ \ \ \ \ \ \ \ vector<char*>\ argv\ =\ \mbox{\hyperlink{test__cli_8cpp_ac11c312e778ab93fa8a9930077f362b7}{create\_argv}}(args);}
+\DoxyCodeLine{\Hypertarget{test__cli_8cpp_source_l00106}00106\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ result\ =\ \mbox{\hyperlink{test__cli_8cpp_a11ed877defaf21079bc488dd2eeefacd}{main\_server}}(args.size()\ +\ 1,\ argv.data());}
+\DoxyCodeLine{\Hypertarget{test__cli_8cpp_source_l00107}00107\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{test__cli_8cpp_a17e8be3e6dec828011e1bf3f6d4146a3}{cleanup\_argv}}(argv);}
+\DoxyCodeLine{\Hypertarget{test__cli_8cpp_source_l00108}00108\ \ \ \ \ \ \ \ \ CHECK(result\ !=\ 0);}
+\DoxyCodeLine{\Hypertarget{test__cli_8cpp_source_l00109}00109\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{test__cli_8cpp_source_l00110}00110\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{test__cli_8cpp_source_l00111}00111\ \ \ \ \ \textcolor{comment}{//\ Тест\ 6:\ Неверный\ порт\ (слишком\ большой)}}
+\DoxyCodeLine{\Hypertarget{test__cli_8cpp_source_l00112}00112\ \ \ \ \ TEST\_FIXTURE(Setup,\ TestInvalidPortTooLarge)\ \{}
+\DoxyCodeLine{\Hypertarget{test__cli_8cpp_source_l00113}00113\ \ \ \ \ \ \ \ \ vector<string>\ args\ =\ \{\textcolor{stringliteral}{"{}-\/p"{}},\ \textcolor{stringliteral}{"{}70000"{}},\ \textcolor{stringliteral}{"{}-\/d"{}},\ \textcolor{stringliteral}{"{}test\_users.txt"{}}\};}
+\DoxyCodeLine{\Hypertarget{test__cli_8cpp_source_l00114}00114\ \ \ \ \ \ \ \ \ vector<char*>\ argv\ =\ \mbox{\hyperlink{test__cli_8cpp_ac11c312e778ab93fa8a9930077f362b7}{create\_argv}}(args);}
+\DoxyCodeLine{\Hypertarget{test__cli_8cpp_source_l00115}00115\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ result\ =\ \mbox{\hyperlink{test__cli_8cpp_a11ed877defaf21079bc488dd2eeefacd}{main\_server}}(args.size()\ +\ 1,\ argv.data());}
+\DoxyCodeLine{\Hypertarget{test__cli_8cpp_source_l00116}00116\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{test__cli_8cpp_a17e8be3e6dec828011e1bf3f6d4146a3}{cleanup\_argv}}(argv);}
+\DoxyCodeLine{\Hypertarget{test__cli_8cpp_source_l00117}00117\ \ \ \ \ \ \ \ \ CHECK(result\ !=\ 0);}
+\DoxyCodeLine{\Hypertarget{test__cli_8cpp_source_l00118}00118\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{test__cli_8cpp_source_l00119}00119\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{test__cli_8cpp_source_l00120}00120\ \ \ \ \ \textcolor{comment}{//\ Тест\ 7:\ Корректный\ порт\ с\ -\/-\/help}}
+\DoxyCodeLine{\Hypertarget{test__cli_8cpp_source_l00121}00121\ \ \ \ \ TEST\_FIXTURE(Setup,\ TestValidPortWithHelp)\ \{}
+\DoxyCodeLine{\Hypertarget{test__cli_8cpp_source_l00122}00122\ \ \ \ \ \ \ \ \ vector<string>\ args\ =\ \{\textcolor{stringliteral}{"{}-\/p"{}},\ \textcolor{stringliteral}{"{}8080"{}},\ \textcolor{stringliteral}{"{}-\/d"{}},\ \textcolor{stringliteral}{"{}test\_users.txt"{}},\ \textcolor{stringliteral}{"{}-\/-\/help"{}}\};}
+\DoxyCodeLine{\Hypertarget{test__cli_8cpp_source_l00123}00123\ \ \ \ \ \ \ \ \ vector<char*>\ argv\ =\ \mbox{\hyperlink{test__cli_8cpp_ac11c312e778ab93fa8a9930077f362b7}{create\_argv}}(args);}
+\DoxyCodeLine{\Hypertarget{test__cli_8cpp_source_l00124}00124\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ result\ =\ \mbox{\hyperlink{test__cli_8cpp_a11ed877defaf21079bc488dd2eeefacd}{main\_server}}(args.size()\ +\ 1,\ argv.data());}
+\DoxyCodeLine{\Hypertarget{test__cli_8cpp_source_l00125}00125\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{test__cli_8cpp_a17e8be3e6dec828011e1bf3f6d4146a3}{cleanup\_argv}}(argv);}
+\DoxyCodeLine{\Hypertarget{test__cli_8cpp_source_l00126}00126\ \ \ \ \ \ \ \ \ CHECK\_EQUAL(0,\ result);}
+\DoxyCodeLine{\Hypertarget{test__cli_8cpp_source_l00127}00127\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{test__cli_8cpp_source_l00128}00128\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{test__cli_8cpp_source_l00129}00129\ \ \ \ \ \textcolor{comment}{//\ Тест\ 8:\ Отсутствующий\ файл\ пользователей}}
+\DoxyCodeLine{\Hypertarget{test__cli_8cpp_source_l00130}00130\ \ \ \ \ TEST\_FIXTURE(Setup,\ TestMissingDatabaseFile)\ \{}
+\DoxyCodeLine{\Hypertarget{test__cli_8cpp_source_l00131}00131\ \ \ \ \ \ \ \ \ vector<string>\ args\ =\ \{\textcolor{stringliteral}{"{}-\/-\/database=nonexistent.txt"{}}\};}
+\DoxyCodeLine{\Hypertarget{test__cli_8cpp_source_l00132}00132\ \ \ \ \ \ \ \ \ vector<char*>\ argv\ =\ \mbox{\hyperlink{test__cli_8cpp_ac11c312e778ab93fa8a9930077f362b7}{create\_argv}}(args);}
+\DoxyCodeLine{\Hypertarget{test__cli_8cpp_source_l00133}00133\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ result\ =\ \mbox{\hyperlink{test__cli_8cpp_a11ed877defaf21079bc488dd2eeefacd}{main\_server}}(args.size()\ +\ 1,\ argv.data());}
+\DoxyCodeLine{\Hypertarget{test__cli_8cpp_source_l00134}00134\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{test__cli_8cpp_a17e8be3e6dec828011e1bf3f6d4146a3}{cleanup\_argv}}(argv);}
+\DoxyCodeLine{\Hypertarget{test__cli_8cpp_source_l00135}00135\ \ \ \ \ \ \ \ \ CHECK(result\ !=\ 0);}
+\DoxyCodeLine{\Hypertarget{test__cli_8cpp_source_l00136}00136\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{test__cli_8cpp_source_l00137}00137\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{test__cli_8cpp_source_l00138}00138\ \ \ \ \ \textcolor{comment}{//\ Тест\ 9:\ Пустой\ файл\ пользователей}}
+\DoxyCodeLine{\Hypertarget{test__cli_8cpp_source_l00139}00139\ \ \ \ \ TEST\_FIXTURE(Setup,\ TestEmptyDatabaseFile)\ \{}
+\DoxyCodeLine{\Hypertarget{test__cli_8cpp_source_l00140}00140\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{test__cli_8cpp_a319b1e5e1de63727f4d325f6324a9452}{create\_test\_file}}(\textcolor{stringliteral}{"{}empty\_users.txt"{}},\ \textcolor{stringliteral}{"{}"{}});}
+\DoxyCodeLine{\Hypertarget{test__cli_8cpp_source_l00141}00141\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{test__cli_8cpp_source_l00142}00142\ \ \ \ \ \ \ \ \ vector<string>\ args\ =\ \{\textcolor{stringliteral}{"{}-\/d"{}},\ \textcolor{stringliteral}{"{}empty\_users.txt"{}}\};}
+\DoxyCodeLine{\Hypertarget{test__cli_8cpp_source_l00143}00143\ \ \ \ \ \ \ \ \ vector<char*>\ argv\ =\ \mbox{\hyperlink{test__cli_8cpp_ac11c312e778ab93fa8a9930077f362b7}{create\_argv}}(args);}
+\DoxyCodeLine{\Hypertarget{test__cli_8cpp_source_l00144}00144\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ result\ =\ \mbox{\hyperlink{test__cli_8cpp_a11ed877defaf21079bc488dd2eeefacd}{main\_server}}(args.size()\ +\ 1,\ argv.data());}
+\DoxyCodeLine{\Hypertarget{test__cli_8cpp_source_l00145}00145\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{test__cli_8cpp_a17e8be3e6dec828011e1bf3f6d4146a3}{cleanup\_argv}}(argv);}
+\DoxyCodeLine{\Hypertarget{test__cli_8cpp_source_l00146}00146\ \ \ \ \ \ \ \ \ CHECK(result\ !=\ 0);}
+\DoxyCodeLine{\Hypertarget{test__cli_8cpp_source_l00147}00147\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{test__cli_8cpp_source_l00148}00148\ \ \ \ \ \ \ \ \ remove(\textcolor{stringliteral}{"{}empty\_users.txt"{}});}
+\DoxyCodeLine{\Hypertarget{test__cli_8cpp_source_l00149}00149\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{test__cli_8cpp_source_l00150}00150\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{test__cli_8cpp_source_l00151}00151\ \ \ \ \ \textcolor{comment}{//\ Тест\ 10:\ Все\ опции\ с\ -\/-\/help}}
+\DoxyCodeLine{\Hypertarget{test__cli_8cpp_source_l00152}00152\ \ \ \ \ TEST\_FIXTURE(Setup,\ TestAllOptionsWithHelp)\ \{}
+\DoxyCodeLine{\Hypertarget{test__cli_8cpp_source_l00153}00153\ \ \ \ \ \ \ \ \ vector<string>\ args\ =\ \{\textcolor{stringliteral}{"{}-\/-\/database=test\_users.txt"{}},\ \textcolor{stringliteral}{"{}-\/-\/log=test.log"{}},\ \textcolor{stringliteral}{"{}-\/-\/port=8080"{}},\ \textcolor{stringliteral}{"{}-\/-\/help"{}}\};}
+\DoxyCodeLine{\Hypertarget{test__cli_8cpp_source_l00154}00154\ \ \ \ \ \ \ \ \ vector<char*>\ argv\ =\ \mbox{\hyperlink{test__cli_8cpp_ac11c312e778ab93fa8a9930077f362b7}{create\_argv}}(args);}
+\DoxyCodeLine{\Hypertarget{test__cli_8cpp_source_l00155}00155\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ result\ =\ \mbox{\hyperlink{test__cli_8cpp_a11ed877defaf21079bc488dd2eeefacd}{main\_server}}(args.size()\ +\ 1,\ argv.data());}
+\DoxyCodeLine{\Hypertarget{test__cli_8cpp_source_l00156}00156\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{test__cli_8cpp_a17e8be3e6dec828011e1bf3f6d4146a3}{cleanup\_argv}}(argv);}
+\DoxyCodeLine{\Hypertarget{test__cli_8cpp_source_l00157}00157\ \ \ \ \ \ \ \ \ CHECK\_EQUAL(0,\ result);}
+\DoxyCodeLine{\Hypertarget{test__cli_8cpp_source_l00158}00158\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{test__cli_8cpp_source_l00159}00159\ \}}
+\DoxyCodeLine{\Hypertarget{test__cli_8cpp_source_l00160}00160\ }
+\DoxyCodeLine{\Hypertarget{test__cli_8cpp_source_l00161}\mbox{\hyperlink{test__cli_8cpp_ae66f6b31b5ad750f1fe042a706a4e3d4}{00161}}\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{test__cli_8cpp_ae66f6b31b5ad750f1fe042a706a4e3d4}{main}}()\ \{}
+\DoxyCodeLine{\Hypertarget{test__cli_8cpp_source_l00162}00162\ \ \ \ \ \textcolor{keywordflow}{return}\ UnitTest::RunAllTests();}
+\DoxyCodeLine{\Hypertarget{test__cli_8cpp_source_l00163}00163\ \}}
+
+\end{DoxyCode}

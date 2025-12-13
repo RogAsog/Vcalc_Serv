@@ -1,0 +1,140 @@
+\doxysection{test\+\_\+sha256.\+cpp}
+\hypertarget{test__sha256_8cpp_source}{}\label{test__sha256_8cpp_source}\index{tests/test\_sha256.cpp@{tests/test\_sha256.cpp}}
+\mbox{\hyperlink{test__sha256_8cpp}{См. документацию.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{test__sha256_8cpp_source_l00001}00001\ }
+\DoxyCodeLine{\Hypertarget{test__sha256_8cpp_source_l00006}00006\ \textcolor{preprocessor}{\#include\ <UnitTest++/UnitTest++.h>}}
+\DoxyCodeLine{\Hypertarget{test__sha256_8cpp_source_l00007}00007\ \textcolor{preprocessor}{\#include\ <cstring>}}
+\DoxyCodeLine{\Hypertarget{test__sha256_8cpp_source_l00008}00008\ \textcolor{preprocessor}{\#include\ "{}../sha256.hpp"{}}}
+\DoxyCodeLine{\Hypertarget{test__sha256_8cpp_source_l00009}00009\ }
+\DoxyCodeLine{\Hypertarget{test__sha256_8cpp_source_l00010}\mbox{\hyperlink{test__sha256_8cpp_a5c7358eba5cd88559dd9a4b53ad387ce}{00010}}\ \mbox{\hyperlink{test__sha256_8cpp_a5c7358eba5cd88559dd9a4b53ad387ce}{SUITE}}(SHA256Tests)\ \{}
+\DoxyCodeLine{\Hypertarget{test__sha256_8cpp_source_l00011}00011\ \ \ \ \ \textcolor{comment}{//\ Тест\ 1:\ Пустая\ строка}}
+\DoxyCodeLine{\Hypertarget{test__sha256_8cpp_source_l00012}00012\ \ \ \ \ TEST(EmptyString)\ \{}
+\DoxyCodeLine{\Hypertarget{test__sha256_8cpp_source_l00013}00013\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ empty\ =\ \textcolor{stringliteral}{"{}"{}};}
+\DoxyCodeLine{\Hypertarget{test__sha256_8cpp_source_l00014}00014\ \ \ \ \ \ \ \ \ uint8\_t\ hash[32];}
+\DoxyCodeLine{\Hypertarget{test__sha256_8cpp_source_l00015}00015\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{sha256_8cpp_a7133cfeac4cf97ed0425937e65f6a6d5}{sha256}}((uint8\_t*)empty,\ 0,\ hash);}
+\DoxyCodeLine{\Hypertarget{test__sha256_8cpp_source_l00016}00016\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{test__sha256_8cpp_source_l00017}00017\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ expected\ =\ \textcolor{stringliteral}{"{}E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855"{}};}
+\DoxyCodeLine{\Hypertarget{test__sha256_8cpp_source_l00018}00018\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{char}\ hex[65];}
+\DoxyCodeLine{\Hypertarget{test__sha256_8cpp_source_l00019}00019\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ 32;\ i++)\ \{}
+\DoxyCodeLine{\Hypertarget{test__sha256_8cpp_source_l00020}00020\ \ \ \ \ \ \ \ \ \ \ \ \ sprintf(hex\ +\ i*2,\ \textcolor{stringliteral}{"{}\%02X"{}},\ hash[i]);}
+\DoxyCodeLine{\Hypertarget{test__sha256_8cpp_source_l00021}00021\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{test__sha256_8cpp_source_l00022}00022\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{test__sha256_8cpp_source_l00023}00023\ \ \ \ \ \ \ \ \ CHECK\_EQUAL(std::string(expected),\ std::string(hex));}
+\DoxyCodeLine{\Hypertarget{test__sha256_8cpp_source_l00024}00024\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{test__sha256_8cpp_source_l00025}00025\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{test__sha256_8cpp_source_l00026}00026\ \ \ \ \ \textcolor{comment}{//\ Тест\ 2:\ Строка\ "{}abc"{}}}
+\DoxyCodeLine{\Hypertarget{test__sha256_8cpp_source_l00027}00027\ \ \ \ \ TEST(ABCString)\ \{}
+\DoxyCodeLine{\Hypertarget{test__sha256_8cpp_source_l00028}00028\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ abc\ =\ \textcolor{stringliteral}{"{}abc"{}};}
+\DoxyCodeLine{\Hypertarget{test__sha256_8cpp_source_l00029}00029\ \ \ \ \ \ \ \ \ uint8\_t\ hash[32];}
+\DoxyCodeLine{\Hypertarget{test__sha256_8cpp_source_l00030}00030\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{sha256_8cpp_a7133cfeac4cf97ed0425937e65f6a6d5}{sha256}}((uint8\_t*)abc,\ 3,\ hash);}
+\DoxyCodeLine{\Hypertarget{test__sha256_8cpp_source_l00031}00031\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{test__sha256_8cpp_source_l00032}00032\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ expected\ =\ \textcolor{stringliteral}{"{}BA7816BF8F01CFEA414140DE5DAE2223B00361A396177A9CB410FF61F20015AD"{}};}
+\DoxyCodeLine{\Hypertarget{test__sha256_8cpp_source_l00033}00033\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{char}\ hex[65];}
+\DoxyCodeLine{\Hypertarget{test__sha256_8cpp_source_l00034}00034\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ 32;\ i++)\ \{}
+\DoxyCodeLine{\Hypertarget{test__sha256_8cpp_source_l00035}00035\ \ \ \ \ \ \ \ \ \ \ \ \ sprintf(hex\ +\ i*2,\ \textcolor{stringliteral}{"{}\%02X"{}},\ hash[i]);}
+\DoxyCodeLine{\Hypertarget{test__sha256_8cpp_source_l00036}00036\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{test__sha256_8cpp_source_l00037}00037\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{test__sha256_8cpp_source_l00038}00038\ \ \ \ \ \ \ \ \ CHECK\_EQUAL(std::string(expected),\ std::string(hex));}
+\DoxyCodeLine{\Hypertarget{test__sha256_8cpp_source_l00039}00039\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{test__sha256_8cpp_source_l00040}00040\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{test__sha256_8cpp_source_l00041}00041\ \ \ \ \ \textcolor{comment}{//\ Тест\ 3:\ Длинная\ строка}}
+\DoxyCodeLine{\Hypertarget{test__sha256_8cpp_source_l00042}00042\ \ \ \ \ TEST(LongString)\ \{}
+\DoxyCodeLine{\Hypertarget{test__sha256_8cpp_source_l00043}00043\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ long\_text\ =\ \textcolor{stringliteral}{"{}abcdefghbcdefghicdefghijdefghijkefghijklfghijklmghijklmnhijklmnoijklmnopjklmnopqklmnopqrlmnopqrsmnopqrstnopqrstu"{}};}
+\DoxyCodeLine{\Hypertarget{test__sha256_8cpp_source_l00044}00044\ \ \ \ \ \ \ \ \ uint8\_t\ hash[32];}
+\DoxyCodeLine{\Hypertarget{test__sha256_8cpp_source_l00045}00045\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{sha256_8cpp_a7133cfeac4cf97ed0425937e65f6a6d5}{sha256}}((uint8\_t*)long\_text,\ strlen(long\_text),\ hash);}
+\DoxyCodeLine{\Hypertarget{test__sha256_8cpp_source_l00046}00046\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{test__sha256_8cpp_source_l00047}00047\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ expected\ =\ \textcolor{stringliteral}{"{}CF5B16A778AF8380036CE59E7B0492370B249B11E8F07A51AFAC45037AFEE9D1"{}};}
+\DoxyCodeLine{\Hypertarget{test__sha256_8cpp_source_l00048}00048\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{char}\ hex[65];}
+\DoxyCodeLine{\Hypertarget{test__sha256_8cpp_source_l00049}00049\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ 32;\ i++)\ \{}
+\DoxyCodeLine{\Hypertarget{test__sha256_8cpp_source_l00050}00050\ \ \ \ \ \ \ \ \ \ \ \ \ sprintf(hex\ +\ i*2,\ \textcolor{stringliteral}{"{}\%02X"{}},\ hash[i]);}
+\DoxyCodeLine{\Hypertarget{test__sha256_8cpp_source_l00051}00051\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{test__sha256_8cpp_source_l00052}00052\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{test__sha256_8cpp_source_l00053}00053\ \ \ \ \ \ \ \ \ CHECK\_EQUAL(std::string(expected),\ std::string(hex));}
+\DoxyCodeLine{\Hypertarget{test__sha256_8cpp_source_l00054}00054\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{test__sha256_8cpp_source_l00055}00055\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{test__sha256_8cpp_source_l00056}00056\ \ \ \ \ \textcolor{comment}{//\ Тест\ 4:\ Консистентность}}
+\DoxyCodeLine{\Hypertarget{test__sha256_8cpp_source_l00057}00057\ \ \ \ \ TEST(Consistency)\ \{}
+\DoxyCodeLine{\Hypertarget{test__sha256_8cpp_source_l00058}00058\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ data\ =\ \textcolor{stringliteral}{"{}test\ data"{}};}
+\DoxyCodeLine{\Hypertarget{test__sha256_8cpp_source_l00059}00059\ \ \ \ \ \ \ \ \ uint8\_t\ hash1[32],\ hash2[32];}
+\DoxyCodeLine{\Hypertarget{test__sha256_8cpp_source_l00060}00060\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{test__sha256_8cpp_source_l00061}00061\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{sha256_8cpp_a7133cfeac4cf97ed0425937e65f6a6d5}{sha256}}((uint8\_t*)data,\ strlen(data),\ hash1);}
+\DoxyCodeLine{\Hypertarget{test__sha256_8cpp_source_l00062}00062\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{sha256_8cpp_a7133cfeac4cf97ed0425937e65f6a6d5}{sha256}}((uint8\_t*)data,\ strlen(data),\ hash2);}
+\DoxyCodeLine{\Hypertarget{test__sha256_8cpp_source_l00063}00063\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{test__sha256_8cpp_source_l00064}00064\ \ \ \ \ \ \ \ \ CHECK\_ARRAY\_EQUAL(hash1,\ hash2,\ 32);}
+\DoxyCodeLine{\Hypertarget{test__sha256_8cpp_source_l00065}00065\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{test__sha256_8cpp_source_l00066}00066\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{test__sha256_8cpp_source_l00067}00067\ \ \ \ \ \textcolor{comment}{//\ Тест\ 5:\ Разные\ длины\ данных}}
+\DoxyCodeLine{\Hypertarget{test__sha256_8cpp_source_l00068}00068\ \ \ \ \ TEST(DifferentLengths)\ \{}
+\DoxyCodeLine{\Hypertarget{test__sha256_8cpp_source_l00069}00069\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ lengths\_ok\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{test__sha256_8cpp_source_l00070}00070\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ test\_strings[]\ =\ \{\textcolor{stringliteral}{"{}a"{}},\ \textcolor{stringliteral}{"{}ab"{}},\ \textcolor{stringliteral}{"{}abc"{}},\ \textcolor{stringliteral}{"{}abcd"{}},\ \textcolor{stringliteral}{"{}abcde"{}},\ \textcolor{stringliteral}{"{}abcdef"{}}\};}
+\DoxyCodeLine{\Hypertarget{test__sha256_8cpp_source_l00071}00071\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{test__sha256_8cpp_source_l00072}00072\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ str\ :\ test\_strings)\ \{}
+\DoxyCodeLine{\Hypertarget{test__sha256_8cpp_source_l00073}00073\ \ \ \ \ \ \ \ \ \ \ \ \ uint8\_t\ h[32];}
+\DoxyCodeLine{\Hypertarget{test__sha256_8cpp_source_l00074}00074\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{sha256_8cpp_a7133cfeac4cf97ed0425937e65f6a6d5}{sha256}}((uint8\_t*)str,\ strlen(str),\ h);}
+\DoxyCodeLine{\Hypertarget{test__sha256_8cpp_source_l00075}00075\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{test__sha256_8cpp_source_l00076}00076\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ all\_zero\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{test__sha256_8cpp_source_l00077}00077\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ 32;\ i++)\ \{}
+\DoxyCodeLine{\Hypertarget{test__sha256_8cpp_source_l00078}00078\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (h[i]\ !=\ 0)\ \{}
+\DoxyCodeLine{\Hypertarget{test__sha256_8cpp_source_l00079}00079\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ all\_zero\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{test__sha256_8cpp_source_l00080}00080\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{test__sha256_8cpp_source_l00081}00081\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{test__sha256_8cpp_source_l00082}00082\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{test__sha256_8cpp_source_l00083}00083\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{test__sha256_8cpp_source_l00084}00084\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (all\_zero)\ \{}
+\DoxyCodeLine{\Hypertarget{test__sha256_8cpp_source_l00085}00085\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ lengths\_ok\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{test__sha256_8cpp_source_l00086}00086\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{test__sha256_8cpp_source_l00087}00087\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{test__sha256_8cpp_source_l00088}00088\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{test__sha256_8cpp_source_l00089}00089\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{test__sha256_8cpp_source_l00090}00090\ \ \ \ \ \ \ \ \ CHECK(lengths\_ok);}
+\DoxyCodeLine{\Hypertarget{test__sha256_8cpp_source_l00091}00091\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{test__sha256_8cpp_source_l00092}00092\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{test__sha256_8cpp_source_l00093}00093\ \ \ \ \ \textcolor{comment}{//\ Тест\ 6:\ Разные\ данные\ дают\ разные\ хэши}}
+\DoxyCodeLine{\Hypertarget{test__sha256_8cpp_source_l00094}00094\ \ \ \ \ TEST(DifferentDataDifferentHash)\ \{}
+\DoxyCodeLine{\Hypertarget{test__sha256_8cpp_source_l00095}00095\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ str1\ =\ \textcolor{stringliteral}{"{}hello"{}};}
+\DoxyCodeLine{\Hypertarget{test__sha256_8cpp_source_l00096}00096\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ str2\ =\ \textcolor{stringliteral}{"{}world"{}};}
+\DoxyCodeLine{\Hypertarget{test__sha256_8cpp_source_l00097}00097\ \ \ \ \ \ \ \ \ uint8\_t\ hash1[32],\ hash2[32];}
+\DoxyCodeLine{\Hypertarget{test__sha256_8cpp_source_l00098}00098\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{test__sha256_8cpp_source_l00099}00099\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{sha256_8cpp_a7133cfeac4cf97ed0425937e65f6a6d5}{sha256}}((uint8\_t*)str1,\ strlen(str1),\ hash1);}
+\DoxyCodeLine{\Hypertarget{test__sha256_8cpp_source_l00100}00100\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{sha256_8cpp_a7133cfeac4cf97ed0425937e65f6a6d5}{sha256}}((uint8\_t*)str2,\ strlen(str2),\ hash2);}
+\DoxyCodeLine{\Hypertarget{test__sha256_8cpp_source_l00101}00101\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{test__sha256_8cpp_source_l00102}00102\ \ \ \ \ \ \ \ \ CHECK(memcmp(hash1,\ hash2,\ 32)\ !=\ 0);}
+\DoxyCodeLine{\Hypertarget{test__sha256_8cpp_source_l00103}00103\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{test__sha256_8cpp_source_l00104}00104\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{test__sha256_8cpp_source_l00105}00105\ \ \ \ \ \textcolor{comment}{//\ Тест\ 7:\ Один\ символ\ разницы\ меняет\ хэш}}
+\DoxyCodeLine{\Hypertarget{test__sha256_8cpp_source_l00106}00106\ \ \ \ \ TEST(OneCharacterDifference)\ \{}
+\DoxyCodeLine{\Hypertarget{test__sha256_8cpp_source_l00107}00107\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ str1\ =\ \textcolor{stringliteral}{"{}test1"{}};}
+\DoxyCodeLine{\Hypertarget{test__sha256_8cpp_source_l00108}00108\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ str2\ =\ \textcolor{stringliteral}{"{}test2"{}};}
+\DoxyCodeLine{\Hypertarget{test__sha256_8cpp_source_l00109}00109\ \ \ \ \ \ \ \ \ uint8\_t\ hash1[32],\ hash2[32];}
+\DoxyCodeLine{\Hypertarget{test__sha256_8cpp_source_l00110}00110\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{test__sha256_8cpp_source_l00111}00111\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{sha256_8cpp_a7133cfeac4cf97ed0425937e65f6a6d5}{sha256}}((uint8\_t*)str1,\ strlen(str1),\ hash1);}
+\DoxyCodeLine{\Hypertarget{test__sha256_8cpp_source_l00112}00112\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{sha256_8cpp_a7133cfeac4cf97ed0425937e65f6a6d5}{sha256}}((uint8\_t*)str2,\ strlen(str2),\ hash2);}
+\DoxyCodeLine{\Hypertarget{test__sha256_8cpp_source_l00113}00113\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{test__sha256_8cpp_source_l00114}00114\ \ \ \ \ \ \ \ \ CHECK(memcmp(hash1,\ hash2,\ 32)\ !=\ 0);}
+\DoxyCodeLine{\Hypertarget{test__sha256_8cpp_source_l00115}00115\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{test__sha256_8cpp_source_l00116}00116\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{test__sha256_8cpp_source_l00117}00117\ \ \ \ \ \textcolor{comment}{//\ Тест\ 8:\ Хэш\ не\ нулевой\ для\ непустых\ данных}}
+\DoxyCodeLine{\Hypertarget{test__sha256_8cpp_source_l00118}00118\ \ \ \ \ TEST(HashNotEmpty)\ \{}
+\DoxyCodeLine{\Hypertarget{test__sha256_8cpp_source_l00119}00119\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ non\_empty\ =\ \textcolor{stringliteral}{"{}x"{}};}
+\DoxyCodeLine{\Hypertarget{test__sha256_8cpp_source_l00120}00120\ \ \ \ \ \ \ \ \ uint8\_t\ hash[32];}
+\DoxyCodeLine{\Hypertarget{test__sha256_8cpp_source_l00121}00121\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{test__sha256_8cpp_source_l00122}00122\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{sha256_8cpp_a7133cfeac4cf97ed0425937e65f6a6d5}{sha256}}((uint8\_t*)non\_empty,\ strlen(non\_empty),\ hash);}
+\DoxyCodeLine{\Hypertarget{test__sha256_8cpp_source_l00123}00123\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{test__sha256_8cpp_source_l00124}00124\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ all\_zero\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{test__sha256_8cpp_source_l00125}00125\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ 32;\ i++)\ \{}
+\DoxyCodeLine{\Hypertarget{test__sha256_8cpp_source_l00126}00126\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (hash[i]\ !=\ 0)\ \{}
+\DoxyCodeLine{\Hypertarget{test__sha256_8cpp_source_l00127}00127\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ all\_zero\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{test__sha256_8cpp_source_l00128}00128\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{test__sha256_8cpp_source_l00129}00129\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{test__sha256_8cpp_source_l00130}00130\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{test__sha256_8cpp_source_l00131}00131\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{test__sha256_8cpp_source_l00132}00132\ \ \ \ \ \ \ \ \ CHECK(!all\_zero);}
+\DoxyCodeLine{\Hypertarget{test__sha256_8cpp_source_l00133}00133\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{test__sha256_8cpp_source_l00134}00134\ \}}
+\DoxyCodeLine{\Hypertarget{test__sha256_8cpp_source_l00135}00135\ }
+\DoxyCodeLine{\Hypertarget{test__sha256_8cpp_source_l00136}\mbox{\hyperlink{test__sha256_8cpp_ae66f6b31b5ad750f1fe042a706a4e3d4}{00136}}\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{test__sha256_8cpp_ae66f6b31b5ad750f1fe042a706a4e3d4}{main}}()\ \{}
+\DoxyCodeLine{\Hypertarget{test__sha256_8cpp_source_l00137}00137\ \ \ \ \ \textcolor{keywordflow}{return}\ UnitTest::RunAllTests();}
+\DoxyCodeLine{\Hypertarget{test__sha256_8cpp_source_l00138}00138\ \}}
+
+\end{DoxyCode}

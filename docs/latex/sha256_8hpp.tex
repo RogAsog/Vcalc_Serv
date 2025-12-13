@@ -1,0 +1,71 @@
+\doxysection{Файл sha256.\+hpp}
+\hypertarget{sha256_8hpp}{}\label{sha256_8hpp}\index{sha256.hpp@{sha256.hpp}}
+
+
+Заголовочный файл для реализации SHA-\/256.  
+
+
+{\ttfamily \#include $<$cstdint$>$}\newline
+{\ttfamily \#include $<$cstddef$>$}\newline
+\doxysubsubsection*{Функции}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{sha256_8hpp_a7133cfeac4cf97ed0425937e65f6a6d5}{sha256}} (const uint8\+\_\+t \texorpdfstring{$\ast$}{*}data, size\+\_\+t len, uint8\+\_\+t out\mbox{[}32\mbox{]})
+\begin{DoxyCompactList}\small\item\em Вычисляет хэш SHA-\/256 для данных \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Подробное описание}
+Заголовочный файл для реализации SHA-\/256. 
+
+
+
+См. определение в файле \mbox{\hyperlink{sha256_8hpp_source}{sha256.\+hpp}}
+
+
+
+\doxysubsection{Функции}
+\Hypertarget{sha256_8hpp_a7133cfeac4cf97ed0425937e65f6a6d5}\label{sha256_8hpp_a7133cfeac4cf97ed0425937e65f6a6d5} 
+\index{sha256.hpp@{sha256.hpp}!sha256@{sha256}}
+\index{sha256@{sha256}!sha256.hpp@{sha256.hpp}}
+\doxysubsubsection{\texorpdfstring{sha256()}{sha256()}}
+{\footnotesize\ttfamily void sha256 (\begin{DoxyParamCaption}\item[{const uint8\+\_\+t \texorpdfstring{$\ast$}{*}}]{data,  }\item[{size\+\_\+t}]{len,  }\item[{uint8\+\_\+t}]{out\mbox{[}32\mbox{]} }\end{DoxyParamCaption})}
+
+
+
+Вычисляет хэш SHA-\/256 для данных 
+
+
+\begin{DoxyParams}{Аргументы}
+{\em data} & Указатель на входные данные \\
+\hline
+{\em len} & Длина данных в байтах \\
+\hline
+{\em out} & Массив для записи результата (32 байта)\\
+\hline
+\end{DoxyParams}
+Вычисляет хэш SHA-\/256 для данных
+
+
+\begin{DoxyParams}{Аргументы}
+{\em data} & Входные данные для хеширования \\
+\hline
+{\em len} & Длина входных данных в байтах \\
+\hline
+{\em out} & Выходной массив для хэша (32 байта)\\
+\hline
+\end{DoxyParams}
+Реализация алгоритма SHA-\/256\+:
+\begin{DoxyEnumerate}
+\item Инициализация хэш-\/значений
+\item Подготовка сообщения с дополнением
+\item Обработка блоков по 512 бит
+\item Генерация итогового хэша
+\end{DoxyEnumerate}
+
+\begin{DoxyNote}{Заметки}
+Функция выделяет динамическую память для временного буфера 
+\end{DoxyNote}
+
+
+См. определение в файле \mbox{\hyperlink{sha256_8cpp_source}{sha256.\+cpp}} строка \mbox{\hyperlink{sha256_8cpp_source_l00101}{101}}
+

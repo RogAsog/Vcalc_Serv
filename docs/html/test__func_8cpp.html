@@ -1,0 +1,251 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ru">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.9.8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Vcalc Server: Файл tests/test_func.cpp</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">Vcalc Server<span id="projectnumber">&#160;1.0</span>
+   </div>
+   <div id="projectbrief">Сервер аутентификации и вычислений</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Создано системой Doxygen 1.9.8 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() {
+  initMenu('',true,false,'search.php','Поиск');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */
+</script>
+<div id="main-nav"></div>
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Загрузка...</div>
+<div class="SRStatus" id="Searching">Поиск...</div>
+<div class="SRStatus" id="NoMatches">Не найдено</div>
+</div>
+</div>
+</div>
+</div>
+
+<div id="nav-path" class="navpath">
+  <ul>
+<li class="navelem"><a class="el" href="dir_59425e443f801f1f2fd8bbe4959a3ccf.html">tests</a></li>  </ul>
+</div>
+</div><!-- top -->
+<div class="header">
+  <div class="summary">
+<a href="#func-members">Функции</a>  </div>
+  <div class="headertitle"><div class="title">Файл test_func.cpp</div></div>
+</div><!--header-->
+<div class="contents">
+
+<p>Функциональные тесты сервера vcalc.  
+<a href="#details">Подробнее...</a></p>
+<div class="textblock"><code>#include &lt;UnitTest++/UnitTest++.h&gt;</code><br />
+<code>#include &lt;iostream&gt;</code><br />
+<code>#include &lt;cstdlib&gt;</code><br />
+<code>#include &lt;string&gt;</code><br />
+<code>#include &lt;fstream&gt;</code><br />
+<code>#include &lt;vector&gt;</code><br />
+<code>#include &lt;thread&gt;</code><br />
+<code>#include &lt;chrono&gt;</code><br />
+</div>
+<p><a href="test__func_8cpp_source.html">См. исходные тексты.</a></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
+Функции</h2></td></tr>
+<tr class="memitem:a5978dfe588c7ad1133f3eab4b097d731" id="r_a5978dfe588c7ad1133f3eab4b097d731"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="test__func_8cpp.html#a5978dfe588c7ad1133f3eab4b097d731">run_command</a> (const string &amp;cmd, int timeout_seconds=5)</td></tr>
+<tr class="separator:a5978dfe588c7ad1133f3eab4b097d731"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aade7cf33ba1b69568021e14f514f8a26" id="r_aade7cf33ba1b69568021e14f514f8a26"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="test__func_8cpp.html#aade7cf33ba1b69568021e14f514f8a26">check_server_running</a> (int port)</td></tr>
+<tr class="separator:aade7cf33ba1b69568021e14f514f8a26"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa0e15e5175f37cdb98db4d37c1e86068" id="r_aa0e15e5175f37cdb98db4d37c1e86068"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="test__func_8cpp.html#aa0e15e5175f37cdb98db4d37c1e86068">stop_server</a> (int port)</td></tr>
+<tr class="separator:aa0e15e5175f37cdb98db4d37c1e86068"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6044becf0e76929a4e8a1d5d54af9f5d" id="r_a6044becf0e76929a4e8a1d5d54af9f5d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="test__func_8cpp.html#a6044becf0e76929a4e8a1d5d54af9f5d">create_test_users</a> (const string &amp;filename)</td></tr>
+<tr class="separator:a6044becf0e76929a4e8a1d5d54af9f5d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1dc7b641b73ec32767b5e74140969ea0" id="r_a1dc7b641b73ec32767b5e74140969ea0"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="test__func_8cpp.html#a1dc7b641b73ec32767b5e74140969ea0">SUITE</a> (SimpleFunctionalTests)</td></tr>
+<tr class="separator:a1dc7b641b73ec32767b5e74140969ea0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae66f6b31b5ad750f1fe042a706a4e3d4" id="r_ae66f6b31b5ad750f1fe042a706a4e3d4"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="test__func_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4">main</a> ()</td></tr>
+<tr class="separator:ae66f6b31b5ad750f1fe042a706a4e3d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Подробное описание</h2>
+<div class="textblock"><p>Функциональные тесты сервера vcalc. </p>
+
+<p class="definition">См. определение в файле <a class="el" href="test__func_8cpp_source.html">test_func.cpp</a></p>
+</div><h2 class="groupheader">Функции</h2>
+<a id="aade7cf33ba1b69568021e14f514f8a26" name="aade7cf33ba1b69568021e14f514f8a26"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aade7cf33ba1b69568021e14f514f8a26">&#9670;&#160;</a></span>check_server_running()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool check_server_running </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>port</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">См. определение в файле <a class="el" href="test__func_8cpp_source.html">test_func.cpp</a> строка <a class="el" href="test__func_8cpp_source.html#l00025">25</a></p>
+
+</div>
+</div>
+<a id="a6044becf0e76929a4e8a1d5d54af9f5d" name="a6044becf0e76929a4e8a1d5d54af9f5d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6044becf0e76929a4e8a1d5d54af9f5d">&#9670;&#160;</a></span>create_test_users()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void create_test_users </td>
+          <td>(</td>
+          <td class="paramtype">const string &amp;&#160;</td>
+          <td class="paramname"><em>filename</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">См. определение в файле <a class="el" href="test__func_8cpp_source.html">test_func.cpp</a> строка <a class="el" href="test__func_8cpp_source.html#l00048">48</a></p>
+
+</div>
+</div>
+<a id="ae66f6b31b5ad750f1fe042a706a4e3d4" name="ae66f6b31b5ad750f1fe042a706a4e3d4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae66f6b31b5ad750f1fe042a706a4e3d4">&#9670;&#160;</a></span>main()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int main </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">См. определение в файле <a class="el" href="test__func_8cpp_source.html">test_func.cpp</a> строка <a class="el" href="test__func_8cpp_source.html#l00194">194</a></p>
+
+</div>
+</div>
+<a id="a5978dfe588c7ad1133f3eab4b097d731" name="a5978dfe588c7ad1133f3eab4b097d731"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5978dfe588c7ad1133f3eab4b097d731">&#9670;&#160;</a></span>run_command()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int run_command </td>
+          <td>(</td>
+          <td class="paramtype">const string &amp;&#160;</td>
+          <td class="paramname"><em>cmd</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>timeout_seconds</em> = <code>5</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">См. определение в файле <a class="el" href="test__func_8cpp_source.html">test_func.cpp</a> строка <a class="el" href="test__func_8cpp_source.html#l00019">19</a></p>
+
+</div>
+</div>
+<a id="aa0e15e5175f37cdb98db4d37c1e86068" name="aa0e15e5175f37cdb98db4d37c1e86068"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa0e15e5175f37cdb98db4d37c1e86068">&#9670;&#160;</a></span>stop_server()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void stop_server </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>port</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">См. определение в файле <a class="el" href="test__func_8cpp_source.html">test_func.cpp</a> строка <a class="el" href="test__func_8cpp_source.html#l00040">40</a></p>
+
+</div>
+</div>
+<a id="a1dc7b641b73ec32767b5e74140969ea0" name="a1dc7b641b73ec32767b5e74140969ea0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1dc7b641b73ec32767b5e74140969ea0">&#9670;&#160;</a></span>SUITE()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">SUITE </td>
+          <td>(</td>
+          <td class="paramtype">SimpleFunctionalTests&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">См. определение в файле <a class="el" href="test__func_8cpp_source.html">test_func.cpp</a> строка <a class="el" href="test__func_8cpp_source.html#l00056">56</a></p>
+
+</div>
+</div>
+</div><!-- contents -->
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+Создано системой&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
+</small></address>
+</body>
+</html>

@@ -1,0 +1,98 @@
+\doxysection{Файл tests/test\+\_\+cli.cpp}
+\hypertarget{test__cli_8cpp}{}\label{test__cli_8cpp}\index{tests/test\_cli.cpp@{tests/test\_cli.cpp}}
+
+
+Тест интерфейса командной строки с использованием Unit\+Test++.  
+
+
+{\ttfamily \#include $<$Unit\+Test++/\+Unit\+Test++.\+h$>$}\newline
+{\ttfamily \#include $<$iostream$>$}\newline
+{\ttfamily \#include $<$string$>$}\newline
+{\ttfamily \#include $<$fstream$>$}\newline
+{\ttfamily \#include $<$cstdlib$>$}\newline
+{\ttfamily \#include $<$cstring$>$}\newline
+{\ttfamily \#include $<$vector$>$}\newline
+{\ttfamily \#include $<$sstream$>$}\newline
+\doxysubsubsection*{Функции}
+\begin{DoxyCompactItemize}
+\item 
+int \mbox{\hyperlink{test__cli_8cpp_a11ed877defaf21079bc488dd2eeefacd}{main\+\_\+server}} (int argc, char \texorpdfstring{$\ast$}{*}argv\mbox{[}$\,$\mbox{]})
+\item 
+void \mbox{\hyperlink{test__cli_8cpp_a319b1e5e1de63727f4d325f6324a9452}{create\+\_\+test\+\_\+file}} (const string \&filename, const string \&content)
+\item 
+vector$<$ char \texorpdfstring{$\ast$}{*} $>$ \mbox{\hyperlink{test__cli_8cpp_ac11c312e778ab93fa8a9930077f362b7}{create\+\_\+argv}} (const vector$<$ string $>$ \&args)
+\item 
+void \mbox{\hyperlink{test__cli_8cpp_a17e8be3e6dec828011e1bf3f6d4146a3}{cleanup\+\_\+argv}} (vector$<$ char \texorpdfstring{$\ast$}{*} $>$ \&argv)
+\item 
+\mbox{\hyperlink{test__cli_8cpp_a1c9f0482e00b69d6e2cc885303af50aa}{SUITE}} (CLITests)
+\item 
+int \mbox{\hyperlink{test__cli_8cpp_ae66f6b31b5ad750f1fe042a706a4e3d4}{main}} ()
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Подробное описание}
+Тест интерфейса командной строки с использованием Unit\+Test++. 
+
+
+
+См. определение в файле \mbox{\hyperlink{test__cli_8cpp_source}{test\+\_\+cli.\+cpp}}
+
+
+
+\doxysubsection{Функции}
+\Hypertarget{test__cli_8cpp_a17e8be3e6dec828011e1bf3f6d4146a3}\label{test__cli_8cpp_a17e8be3e6dec828011e1bf3f6d4146a3} 
+\index{test\_cli.cpp@{test\_cli.cpp}!cleanup\_argv@{cleanup\_argv}}
+\index{cleanup\_argv@{cleanup\_argv}!test\_cli.cpp@{test\_cli.cpp}}
+\doxysubsubsection{\texorpdfstring{cleanup\_argv()}{cleanup\_argv()}}
+{\footnotesize\ttfamily void cleanup\+\_\+argv (\begin{DoxyParamCaption}\item[{vector$<$ char \texorpdfstring{$\ast$}{*} $>$ \&}]{argv }\end{DoxyParamCaption})}
+
+
+
+См. определение в файле \mbox{\hyperlink{test__cli_8cpp_source}{test\+\_\+cli.\+cpp}} строка \mbox{\hyperlink{test__cli_8cpp_source_l00043}{43}}
+
+\Hypertarget{test__cli_8cpp_ac11c312e778ab93fa8a9930077f362b7}\label{test__cli_8cpp_ac11c312e778ab93fa8a9930077f362b7} 
+\index{test\_cli.cpp@{test\_cli.cpp}!create\_argv@{create\_argv}}
+\index{create\_argv@{create\_argv}!test\_cli.cpp@{test\_cli.cpp}}
+\doxysubsubsection{\texorpdfstring{create\_argv()}{create\_argv()}}
+{\footnotesize\ttfamily vector$<$ char \texorpdfstring{$\ast$}{*} $>$ create\+\_\+argv (\begin{DoxyParamCaption}\item[{const vector$<$ string $>$ \&}]{args }\end{DoxyParamCaption})}
+
+
+
+См. определение в файле \mbox{\hyperlink{test__cli_8cpp_source}{test\+\_\+cli.\+cpp}} строка \mbox{\hyperlink{test__cli_8cpp_source_l00028}{28}}
+
+\Hypertarget{test__cli_8cpp_a319b1e5e1de63727f4d325f6324a9452}\label{test__cli_8cpp_a319b1e5e1de63727f4d325f6324a9452} 
+\index{test\_cli.cpp@{test\_cli.cpp}!create\_test\_file@{create\_test\_file}}
+\index{create\_test\_file@{create\_test\_file}!test\_cli.cpp@{test\_cli.cpp}}
+\doxysubsubsection{\texorpdfstring{create\_test\_file()}{create\_test\_file()}}
+{\footnotesize\ttfamily void create\+\_\+test\+\_\+file (\begin{DoxyParamCaption}\item[{const string \&}]{filename,  }\item[{const string \&}]{content }\end{DoxyParamCaption})}
+
+
+
+См. определение в файле \mbox{\hyperlink{test__cli_8cpp_source}{test\+\_\+cli.\+cpp}} строка \mbox{\hyperlink{test__cli_8cpp_source_l00021}{21}}
+
+\Hypertarget{test__cli_8cpp_ae66f6b31b5ad750f1fe042a706a4e3d4}\label{test__cli_8cpp_ae66f6b31b5ad750f1fe042a706a4e3d4} 
+\index{test\_cli.cpp@{test\_cli.cpp}!main@{main}}
+\index{main@{main}!test\_cli.cpp@{test\_cli.cpp}}
+\doxysubsubsection{\texorpdfstring{main()}{main()}}
+{\footnotesize\ttfamily int main (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+См. определение в файле \mbox{\hyperlink{test__cli_8cpp_source}{test\+\_\+cli.\+cpp}} строка \mbox{\hyperlink{test__cli_8cpp_source_l00161}{161}}
+
+\Hypertarget{test__cli_8cpp_a11ed877defaf21079bc488dd2eeefacd}\label{test__cli_8cpp_a11ed877defaf21079bc488dd2eeefacd} 
+\index{test\_cli.cpp@{test\_cli.cpp}!main\_server@{main\_server}}
+\index{main\_server@{main\_server}!test\_cli.cpp@{test\_cli.cpp}}
+\doxysubsubsection{\texorpdfstring{main\_server()}{main\_server()}}
+{\footnotesize\ttfamily int main\+\_\+server (\begin{DoxyParamCaption}\item[{int}]{argc,  }\item[{char \texorpdfstring{$\ast$}{*}}]{argv\mbox{[}$\,$\mbox{]} }\end{DoxyParamCaption})}
+
+\Hypertarget{test__cli_8cpp_a1c9f0482e00b69d6e2cc885303af50aa}\label{test__cli_8cpp_a1c9f0482e00b69d6e2cc885303af50aa} 
+\index{test\_cli.cpp@{test\_cli.cpp}!SUITE@{SUITE}}
+\index{SUITE@{SUITE}!test\_cli.cpp@{test\_cli.cpp}}
+\doxysubsubsection{\texorpdfstring{SUITE()}{SUITE()}}
+{\footnotesize\ttfamily SUITE (\begin{DoxyParamCaption}\item[{CLITests}]{ }\end{DoxyParamCaption})}
+
+
+
+См. определение в файле \mbox{\hyperlink{test__cli_8cpp_source}{test\+\_\+cli.\+cpp}} строка \mbox{\hyperlink{test__cli_8cpp_source_l00049}{49}}
+

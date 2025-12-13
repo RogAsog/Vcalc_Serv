@@ -1,0 +1,143 @@
+\doxysection{test\+\_\+vectors.\+cpp}
+\hypertarget{test__vectors_8cpp_source}{}\label{test__vectors_8cpp_source}\index{tests/test\_vectors.cpp@{tests/test\_vectors.cpp}}
+\mbox{\hyperlink{test__vectors_8cpp}{См. документацию.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{test__vectors_8cpp_source_l00001}00001\ }
+\DoxyCodeLine{\Hypertarget{test__vectors_8cpp_source_l00006}00006\ \textcolor{preprocessor}{\#include\ <UnitTest++/UnitTest++.h>}}
+\DoxyCodeLine{\Hypertarget{test__vectors_8cpp_source_l00007}00007\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{\Hypertarget{test__vectors_8cpp_source_l00008}00008\ \textcolor{preprocessor}{\#include\ <cstring>}}
+\DoxyCodeLine{\Hypertarget{test__vectors_8cpp_source_l00009}00009\ \textcolor{preprocessor}{\#include\ <cmath>}}
+\DoxyCodeLine{\Hypertarget{test__vectors_8cpp_source_l00010}00010\ \textcolor{preprocessor}{\#include\ <cstdint>}\ \ \textcolor{comment}{//\ Добавил\ этот\ include}}
+\DoxyCodeLine{\Hypertarget{test__vectors_8cpp_source_l00011}00011\ }
+\DoxyCodeLine{\Hypertarget{test__vectors_8cpp_source_l00012}\mbox{\hyperlink{test__vectors_8cpp_af0a8aa4e617e54f71af802cd4f75a46f}{00012}}\ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{test__vectors_8cpp_af0a8aa4e617e54f71af802cd4f75a46f}{calculateSumOfSquares}}(\textcolor{keyword}{const}\ std::vector<float>\&\ vec)\ \{}
+\DoxyCodeLine{\Hypertarget{test__vectors_8cpp_source_l00013}00013\ \ \ \ \ \textcolor{keywordtype}{float}\ sum\ =\ 0.0f;}
+\DoxyCodeLine{\Hypertarget{test__vectors_8cpp_source_l00014}00014\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{float}\ val\ :\ vec)\ \{}
+\DoxyCodeLine{\Hypertarget{test__vectors_8cpp_source_l00015}00015\ \ \ \ \ \ \ \ \ sum\ +=\ val\ *\ val;}
+\DoxyCodeLine{\Hypertarget{test__vectors_8cpp_source_l00016}00016\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{test__vectors_8cpp_source_l00017}00017\ \ \ \ \ \textcolor{keywordflow}{return}\ sum;}
+\DoxyCodeLine{\Hypertarget{test__vectors_8cpp_source_l00018}00018\ \}}
+\DoxyCodeLine{\Hypertarget{test__vectors_8cpp_source_l00019}00019\ }
+\DoxyCodeLine{\Hypertarget{test__vectors_8cpp_source_l00020}\mbox{\hyperlink{test__vectors_8cpp_ac2a69562ae05feea162abef133b2808b}{00020}}\ uint32\_t\ \mbox{\hyperlink{test__vectors_8cpp_ac2a69562ae05feea162abef133b2808b}{floatToLittleEndian}}(\textcolor{keywordtype}{float}\ f)\ \{}
+\DoxyCodeLine{\Hypertarget{test__vectors_8cpp_source_l00021}00021\ \ \ \ \ uint32\_t\ bits;}
+\DoxyCodeLine{\Hypertarget{test__vectors_8cpp_source_l00022}00022\ \ \ \ \ memcpy(\&bits,\ \&f,\ \textcolor{keyword}{sizeof}(\textcolor{keywordtype}{float}));}
+\DoxyCodeLine{\Hypertarget{test__vectors_8cpp_source_l00023}00023\ \ \ \ \ uint8\_t*\ bytes\ =\ (uint8\_t*)\&bits;}
+\DoxyCodeLine{\Hypertarget{test__vectors_8cpp_source_l00024}00024\ \ \ \ \ uint32\_t\ result\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{test__vectors_8cpp_source_l00025}00025\ \ \ \ \ result\ |=\ (bytes[0]\ <<\ 0);}
+\DoxyCodeLine{\Hypertarget{test__vectors_8cpp_source_l00026}00026\ \ \ \ \ result\ |=\ (bytes[1]\ <<\ 8);}
+\DoxyCodeLine{\Hypertarget{test__vectors_8cpp_source_l00027}00027\ \ \ \ \ result\ |=\ (bytes[2]\ <<\ 16);}
+\DoxyCodeLine{\Hypertarget{test__vectors_8cpp_source_l00028}00028\ \ \ \ \ result\ |=\ (bytes[3]\ <<\ 24);}
+\DoxyCodeLine{\Hypertarget{test__vectors_8cpp_source_l00029}00029\ \ \ \ \ \textcolor{keywordflow}{return}\ result;}
+\DoxyCodeLine{\Hypertarget{test__vectors_8cpp_source_l00030}00030\ \}}
+\DoxyCodeLine{\Hypertarget{test__vectors_8cpp_source_l00031}00031\ }
+\DoxyCodeLine{\Hypertarget{test__vectors_8cpp_source_l00032}\mbox{\hyperlink{test__vectors_8cpp_a42c597da3acd6b7eaebc78a819f314d6}{00032}}\ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{test__vectors_8cpp_a42c597da3acd6b7eaebc78a819f314d6}{littleEndianToFloat}}(uint32\_t\ val)\ \{}
+\DoxyCodeLine{\Hypertarget{test__vectors_8cpp_source_l00033}00033\ \ \ \ \ uint8\_t*\ bytes\ =\ (uint8\_t*)\&val;}
+\DoxyCodeLine{\Hypertarget{test__vectors_8cpp_source_l00034}00034\ \ \ \ \ uint32\_t\ bits\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{test__vectors_8cpp_source_l00035}00035\ \ \ \ \ bits\ |=\ (bytes[0]\ <<\ 0);}
+\DoxyCodeLine{\Hypertarget{test__vectors_8cpp_source_l00036}00036\ \ \ \ \ bits\ |=\ (bytes[1]\ <<\ 8);}
+\DoxyCodeLine{\Hypertarget{test__vectors_8cpp_source_l00037}00037\ \ \ \ \ bits\ |=\ (bytes[2]\ <<\ 16);}
+\DoxyCodeLine{\Hypertarget{test__vectors_8cpp_source_l00038}00038\ \ \ \ \ bits\ |=\ (bytes[3]\ <<\ 24);}
+\DoxyCodeLine{\Hypertarget{test__vectors_8cpp_source_l00039}00039\ \ \ \ \ \textcolor{keywordtype}{float}\ f;}
+\DoxyCodeLine{\Hypertarget{test__vectors_8cpp_source_l00040}00040\ \ \ \ \ memcpy(\&f,\ \&bits,\ \textcolor{keyword}{sizeof}(\textcolor{keywordtype}{float}));}
+\DoxyCodeLine{\Hypertarget{test__vectors_8cpp_source_l00041}00041\ \ \ \ \ \textcolor{keywordflow}{return}\ f;}
+\DoxyCodeLine{\Hypertarget{test__vectors_8cpp_source_l00042}00042\ \}}
+\DoxyCodeLine{\Hypertarget{test__vectors_8cpp_source_l00043}00043\ }
+\DoxyCodeLine{\Hypertarget{test__vectors_8cpp_source_l00044}\mbox{\hyperlink{test__vectors_8cpp_aa6f75da22a2e829e9f6851726ffcea7d}{00044}}\ \mbox{\hyperlink{test__vectors_8cpp_aa6f75da22a2e829e9f6851726ffcea7d}{SUITE}}(VectorTests)\ \{}
+\DoxyCodeLine{\Hypertarget{test__vectors_8cpp_source_l00045}00045\ \ \ \ \ \textcolor{comment}{//\ Тест\ 1:\ Простой\ вектор}}
+\DoxyCodeLine{\Hypertarget{test__vectors_8cpp_source_l00046}00046\ \ \ \ \ TEST(SimpleVector)\ \{}
+\DoxyCodeLine{\Hypertarget{test__vectors_8cpp_source_l00047}00047\ \ \ \ \ \ \ \ \ std::vector<float>\ vec\ =\ \{1.0f,\ 2.0f,\ 3.0f,\ 4.0f\};}
+\DoxyCodeLine{\Hypertarget{test__vectors_8cpp_source_l00048}00048\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ result\ =\ \mbox{\hyperlink{test__vectors_8cpp_af0a8aa4e617e54f71af802cd4f75a46f}{calculateSumOfSquares}}(vec);}
+\DoxyCodeLine{\Hypertarget{test__vectors_8cpp_source_l00049}00049\ \ \ \ \ \ \ \ \ CHECK\_CLOSE(30.0f,\ result,\ 0.0001f);}
+\DoxyCodeLine{\Hypertarget{test__vectors_8cpp_source_l00050}00050\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{test__vectors_8cpp_source_l00051}00051\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{test__vectors_8cpp_source_l00052}00052\ \ \ \ \ \textcolor{comment}{//\ Тест\ 2:\ Отрицательные\ значения}}
+\DoxyCodeLine{\Hypertarget{test__vectors_8cpp_source_l00053}00053\ \ \ \ \ TEST(NegativeValues)\ \{}
+\DoxyCodeLine{\Hypertarget{test__vectors_8cpp_source_l00054}00054\ \ \ \ \ \ \ \ \ std::vector<float>\ vec\ =\ \{-\/1.0f,\ -\/2.0f,\ 3.0f,\ 4.0f\};}
+\DoxyCodeLine{\Hypertarget{test__vectors_8cpp_source_l00055}00055\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ result\ =\ \mbox{\hyperlink{test__vectors_8cpp_af0a8aa4e617e54f71af802cd4f75a46f}{calculateSumOfSquares}}(vec);}
+\DoxyCodeLine{\Hypertarget{test__vectors_8cpp_source_l00056}00056\ \ \ \ \ \ \ \ \ CHECK\_CLOSE(30.0f,\ result,\ 0.0001f);}
+\DoxyCodeLine{\Hypertarget{test__vectors_8cpp_source_l00057}00057\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{test__vectors_8cpp_source_l00058}00058\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{test__vectors_8cpp_source_l00059}00059\ \ \ \ \ \textcolor{comment}{//\ Тест\ 3:\ Пустой\ вектор}}
+\DoxyCodeLine{\Hypertarget{test__vectors_8cpp_source_l00060}00060\ \ \ \ \ TEST(EmptyVector)\ \{}
+\DoxyCodeLine{\Hypertarget{test__vectors_8cpp_source_l00061}00061\ \ \ \ \ \ \ \ \ std::vector<float>\ vec\ =\ \{\};}
+\DoxyCodeLine{\Hypertarget{test__vectors_8cpp_source_l00062}00062\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ result\ =\ \mbox{\hyperlink{test__vectors_8cpp_af0a8aa4e617e54f71af802cd4f75a46f}{calculateSumOfSquares}}(vec);}
+\DoxyCodeLine{\Hypertarget{test__vectors_8cpp_source_l00063}00063\ \ \ \ \ \ \ \ \ CHECK\_EQUAL(0.0f,\ result);}
+\DoxyCodeLine{\Hypertarget{test__vectors_8cpp_source_l00064}00064\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{test__vectors_8cpp_source_l00065}00065\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{test__vectors_8cpp_source_l00066}00066\ \ \ \ \ \textcolor{comment}{//\ Тест\ 4:\ Один\ элемент}}
+\DoxyCodeLine{\Hypertarget{test__vectors_8cpp_source_l00067}00067\ \ \ \ \ TEST(SingleElement)\ \{}
+\DoxyCodeLine{\Hypertarget{test__vectors_8cpp_source_l00068}00068\ \ \ \ \ \ \ \ \ std::vector<float>\ vec\ =\ \{5.0f\};}
+\DoxyCodeLine{\Hypertarget{test__vectors_8cpp_source_l00069}00069\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ result\ =\ \mbox{\hyperlink{test__vectors_8cpp_af0a8aa4e617e54f71af802cd4f75a46f}{calculateSumOfSquares}}(vec);}
+\DoxyCodeLine{\Hypertarget{test__vectors_8cpp_source_l00070}00070\ \ \ \ \ \ \ \ \ CHECK\_CLOSE(25.0f,\ result,\ 0.0001f);}
+\DoxyCodeLine{\Hypertarget{test__vectors_8cpp_source_l00071}00071\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{test__vectors_8cpp_source_l00072}00072\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{test__vectors_8cpp_source_l00073}00073\ \ \ \ \ \textcolor{comment}{//\ Тест\ 5:\ Большие\ числа}}
+\DoxyCodeLine{\Hypertarget{test__vectors_8cpp_source_l00074}00074\ \ \ \ \ TEST(LargeNumbers)\ \{}
+\DoxyCodeLine{\Hypertarget{test__vectors_8cpp_source_l00075}00075\ \ \ \ \ \ \ \ \ std::vector<float>\ vec\ =\ \{100.0f,\ 200.0f,\ 300.0f\};}
+\DoxyCodeLine{\Hypertarget{test__vectors_8cpp_source_l00076}00076\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ result\ =\ \mbox{\hyperlink{test__vectors_8cpp_af0a8aa4e617e54f71af802cd4f75a46f}{calculateSumOfSquares}}(vec);}
+\DoxyCodeLine{\Hypertarget{test__vectors_8cpp_source_l00077}00077\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ expected\ =\ 10000.0f\ +\ 40000.0f\ +\ 90000.0f;}
+\DoxyCodeLine{\Hypertarget{test__vectors_8cpp_source_l00078}00078\ \ \ \ \ \ \ \ \ CHECK\_CLOSE(expected,\ result,\ 0.1f);}
+\DoxyCodeLine{\Hypertarget{test__vectors_8cpp_source_l00079}00079\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{test__vectors_8cpp_source_l00080}00080\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{test__vectors_8cpp_source_l00081}00081\ \ \ \ \ \textcolor{comment}{//\ Тест\ 6:\ Дробные\ числа}}
+\DoxyCodeLine{\Hypertarget{test__vectors_8cpp_source_l00082}00082\ \ \ \ \ TEST(FractionalNumbers)\ \{}
+\DoxyCodeLine{\Hypertarget{test__vectors_8cpp_source_l00083}00083\ \ \ \ \ \ \ \ \ std::vector<float>\ vec\ =\ \{0.5f,\ 1.5f,\ 2.5f\};}
+\DoxyCodeLine{\Hypertarget{test__vectors_8cpp_source_l00084}00084\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ result\ =\ \mbox{\hyperlink{test__vectors_8cpp_af0a8aa4e617e54f71af802cd4f75a46f}{calculateSumOfSquares}}(vec);}
+\DoxyCodeLine{\Hypertarget{test__vectors_8cpp_source_l00085}00085\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ expected\ =\ 0.25f\ +\ 2.25f\ +\ 6.25f;}
+\DoxyCodeLine{\Hypertarget{test__vectors_8cpp_source_l00086}00086\ \ \ \ \ \ \ \ \ CHECK\_CLOSE(expected,\ result,\ 0.0001f);}
+\DoxyCodeLine{\Hypertarget{test__vectors_8cpp_source_l00087}00087\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{test__vectors_8cpp_source_l00088}00088\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{test__vectors_8cpp_source_l00089}00089\ \ \ \ \ \textcolor{comment}{//\ Тест\ 7:\ Конвертация\ endian}}
+\DoxyCodeLine{\Hypertarget{test__vectors_8cpp_source_l00090}00090\ \ \ \ \ TEST(EndianConversion)\ \{}
+\DoxyCodeLine{\Hypertarget{test__vectors_8cpp_source_l00091}00091\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ original\ =\ 123.456f;}
+\DoxyCodeLine{\Hypertarget{test__vectors_8cpp_source_l00092}00092\ \ \ \ \ \ \ \ \ uint32\_t\ le\ =\ \mbox{\hyperlink{test__vectors_8cpp_ac2a69562ae05feea162abef133b2808b}{floatToLittleEndian}}(original);}
+\DoxyCodeLine{\Hypertarget{test__vectors_8cpp_source_l00093}00093\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ converted\ =\ \mbox{\hyperlink{test__vectors_8cpp_a42c597da3acd6b7eaebc78a819f314d6}{littleEndianToFloat}}(le);}
+\DoxyCodeLine{\Hypertarget{test__vectors_8cpp_source_l00094}00094\ \ \ \ \ \ \ \ \ CHECK\_CLOSE(original,\ converted,\ 0.0001f);}
+\DoxyCodeLine{\Hypertarget{test__vectors_8cpp_source_l00095}00095\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{test__vectors_8cpp_source_l00096}00096\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{test__vectors_8cpp_source_l00097}00097\ \ \ \ \ \textcolor{comment}{//\ Тест\ 8:\ Все\ нули}}
+\DoxyCodeLine{\Hypertarget{test__vectors_8cpp_source_l00098}00098\ \ \ \ \ TEST(AllZeros)\ \{}
+\DoxyCodeLine{\Hypertarget{test__vectors_8cpp_source_l00099}00099\ \ \ \ \ \ \ \ \ std::vector<float>\ vec(5,\ 0.0f);}
+\DoxyCodeLine{\Hypertarget{test__vectors_8cpp_source_l00100}00100\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ result\ =\ \mbox{\hyperlink{test__vectors_8cpp_af0a8aa4e617e54f71af802cd4f75a46f}{calculateSumOfSquares}}(vec);}
+\DoxyCodeLine{\Hypertarget{test__vectors_8cpp_source_l00101}00101\ \ \ \ \ \ \ \ \ CHECK\_EQUAL(0.0f,\ result);}
+\DoxyCodeLine{\Hypertarget{test__vectors_8cpp_source_l00102}00102\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{test__vectors_8cpp_source_l00103}00103\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{test__vectors_8cpp_source_l00104}00104\ \ \ \ \ \textcolor{comment}{//\ Тест\ 9:\ Очень\ маленькие\ числа}}
+\DoxyCodeLine{\Hypertarget{test__vectors_8cpp_source_l00105}00105\ \ \ \ \ TEST(VerySmallNumbers)\ \{}
+\DoxyCodeLine{\Hypertarget{test__vectors_8cpp_source_l00106}00106\ \ \ \ \ \ \ \ \ std::vector<float>\ vec\ =\ \{0.001f,\ 0.002f,\ 0.003f\};}
+\DoxyCodeLine{\Hypertarget{test__vectors_8cpp_source_l00107}00107\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ result\ =\ \mbox{\hyperlink{test__vectors_8cpp_af0a8aa4e617e54f71af802cd4f75a46f}{calculateSumOfSquares}}(vec);}
+\DoxyCodeLine{\Hypertarget{test__vectors_8cpp_source_l00108}00108\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ expected\ =\ 0.000001f\ +\ 0.000004f\ +\ 0.000009f;}
+\DoxyCodeLine{\Hypertarget{test__vectors_8cpp_source_l00109}00109\ \ \ \ \ \ \ \ \ CHECK\_CLOSE(expected,\ result,\ 1e-\/10f);}
+\DoxyCodeLine{\Hypertarget{test__vectors_8cpp_source_l00110}00110\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{test__vectors_8cpp_source_l00111}00111\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{test__vectors_8cpp_source_l00112}00112\ \ \ \ \ \textcolor{comment}{//\ Тест\ 10:\ Смешанные\ значения}}
+\DoxyCodeLine{\Hypertarget{test__vectors_8cpp_source_l00113}00113\ \ \ \ \ TEST(MixedPositiveNegative)\ \{}
+\DoxyCodeLine{\Hypertarget{test__vectors_8cpp_source_l00114}00114\ \ \ \ \ \ \ \ \ std::vector<float>\ vec\ =\ \{-\/2.0f,\ 0.0f,\ 2.0f,\ -\/4.0f,\ 4.0f\};}
+\DoxyCodeLine{\Hypertarget{test__vectors_8cpp_source_l00115}00115\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ result\ =\ \mbox{\hyperlink{test__vectors_8cpp_af0a8aa4e617e54f71af802cd4f75a46f}{calculateSumOfSquares}}(vec);}
+\DoxyCodeLine{\Hypertarget{test__vectors_8cpp_source_l00116}00116\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ expected\ =\ 4.0f\ +\ 0.0f\ +\ 4.0f\ +\ 16.0f\ +\ 16.0f;}
+\DoxyCodeLine{\Hypertarget{test__vectors_8cpp_source_l00117}00117\ \ \ \ \ \ \ \ \ CHECK\_CLOSE(expected,\ result,\ 0.0001f);}
+\DoxyCodeLine{\Hypertarget{test__vectors_8cpp_source_l00118}00118\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{test__vectors_8cpp_source_l00119}00119\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{test__vectors_8cpp_source_l00120}00120\ \ \ \ \ \textcolor{comment}{//\ Тест\ 11:\ Много\ элементов}}
+\DoxyCodeLine{\Hypertarget{test__vectors_8cpp_source_l00121}00121\ \ \ \ \ TEST(ManyElements)\ \{}
+\DoxyCodeLine{\Hypertarget{test__vectors_8cpp_source_l00122}00122\ \ \ \ \ \ \ \ \ std::vector<float>\ vec;}
+\DoxyCodeLine{\Hypertarget{test__vectors_8cpp_source_l00123}00123\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ 100;\ i++)\ \{}
+\DoxyCodeLine{\Hypertarget{test__vectors_8cpp_source_l00124}00124\ \ \ \ \ \ \ \ \ \ \ \ \ vec.push\_back(1.0f);}
+\DoxyCodeLine{\Hypertarget{test__vectors_8cpp_source_l00125}00125\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{test__vectors_8cpp_source_l00126}00126\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ result\ =\ \mbox{\hyperlink{test__vectors_8cpp_af0a8aa4e617e54f71af802cd4f75a46f}{calculateSumOfSquares}}(vec);}
+\DoxyCodeLine{\Hypertarget{test__vectors_8cpp_source_l00127}00127\ \ \ \ \ \ \ \ \ CHECK\_CLOSE(100.0f,\ result,\ 0.0001f);}
+\DoxyCodeLine{\Hypertarget{test__vectors_8cpp_source_l00128}00128\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{test__vectors_8cpp_source_l00129}00129\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{test__vectors_8cpp_source_l00130}00130\ \ \ \ \ \textcolor{comment}{//\ Тест\ 12:\ Конвертация\ отрицательного\ числа}}
+\DoxyCodeLine{\Hypertarget{test__vectors_8cpp_source_l00131}00131\ \ \ \ \ TEST(NegativeEndianConversion)\ \{}
+\DoxyCodeLine{\Hypertarget{test__vectors_8cpp_source_l00132}00132\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ negative\ =\ -\/123.456f;}
+\DoxyCodeLine{\Hypertarget{test__vectors_8cpp_source_l00133}00133\ \ \ \ \ \ \ \ \ uint32\_t\ le\ =\ \mbox{\hyperlink{test__vectors_8cpp_ac2a69562ae05feea162abef133b2808b}{floatToLittleEndian}}(negative);}
+\DoxyCodeLine{\Hypertarget{test__vectors_8cpp_source_l00134}00134\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ converted\ =\ \mbox{\hyperlink{test__vectors_8cpp_a42c597da3acd6b7eaebc78a819f314d6}{littleEndianToFloat}}(le);}
+\DoxyCodeLine{\Hypertarget{test__vectors_8cpp_source_l00135}00135\ \ \ \ \ \ \ \ \ CHECK\_CLOSE(negative,\ converted,\ 0.0001f);}
+\DoxyCodeLine{\Hypertarget{test__vectors_8cpp_source_l00136}00136\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{test__vectors_8cpp_source_l00137}00137\ \}}
+\DoxyCodeLine{\Hypertarget{test__vectors_8cpp_source_l00138}00138\ }
+\DoxyCodeLine{\Hypertarget{test__vectors_8cpp_source_l00139}\mbox{\hyperlink{test__vectors_8cpp_ae66f6b31b5ad750f1fe042a706a4e3d4}{00139}}\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{test__vectors_8cpp_ae66f6b31b5ad750f1fe042a706a4e3d4}{main}}()\ \{}
+\DoxyCodeLine{\Hypertarget{test__vectors_8cpp_source_l00140}00140\ \ \ \ \ \textcolor{keywordflow}{return}\ UnitTest::RunAllTests();}
+\DoxyCodeLine{\Hypertarget{test__vectors_8cpp_source_l00141}00141\ \}}
+
+\end{DoxyCode}
