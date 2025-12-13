@@ -1,5 +1,5 @@
 CXX = g++
-CXXFLAGS = -Wall -Wextra -std=c++17 -O2 -I.
+CXXFLAGS = -Wall -Wextra -std=c++17 -O2 -I. -Wno-unused-result
 LIBS = -lboost_program_options -lUnitTest++
 
 SERVER_SOURCES = server.cpp sha256.cpp
@@ -67,10 +67,19 @@ test: tests/test_sha256 tests/test_auth tests/test_vectors tests/test_protocol t
 	@echo "======================================="
 	@echo "Запуск модульных тестов..."
 	@echo "======================================="
+	@echo "Тесты SHA256:"
 	@./tests/test_sha256
+	@echo ""
+	@echo "Тесты аутентификации:"
 	@./tests/test_auth
+	@echo ""
+	@echo "Тесты векторов:"
 	@./tests/test_vectors
+	@echo ""
+	@echo "Тесты протокола:"
 	@./tests/test_protocol
+	@echo ""
+	@echo "Тесты CLI:"
 	@./tests/test_cli
 	@echo "======================================="
 	@echo "Модульные тесты завершены"
@@ -85,31 +94,32 @@ test-func: tests/test_func
 # Все тесты
 test-all: test test-func
 
-# Компиляция тестов
+# Компиляция тестов - все из исходников напрямую
 tests/test_sha256: tests/test_sha256.cpp sha256.cpp
-	$(CXX) $(CXXFLAGS) -o $@ tests/test_sha256.cpp sha256.cpp $(LIBS)
+	$(CXX) $(CXXFLAGS) -o $@ $^ $(LIBS)
 
 tests/test_auth: tests/test_auth.cpp sha256.cpp
-	$(CXX) $(CXXFLAGS) -o $@ tests/test_auth.cpp sha256.cpp $(LIBS)
+	$(CXX) $(CXXFLAGS) -o $@ $^ $(LIBS)
 
 tests/test_vectors: tests/test_vectors.cpp
-	$(CXX) $(CXXFLAGS) -o $@ tests/test_vectors.cpp $(LIBS)
+	$(CXX) $(CXXFLAGS) -o $@ $< $(LIBS)
 
 tests/test_protocol: tests/test_protocol.cpp
-	$(CXX) $(CXXFLAGS) -o $@ tests/test_protocol.cpp $(LIBS)
+	$(CXX) $(CXXFLAGS) -o $@ $< $(LIBS)
 
-tests/test_cli: tests/test_cli.cpp
-	$(CXX) $(CXXFLAGS) -o $@ tests/test_cli.cpp $(LIBS)
+# Компиляция test_cli с флагом TEST_MODE
+tests/test_cli: tests/test_cli.cpp server.cpp sha256.cpp
+	$(CXX) $(CXXFLAGS) -DTEST_MODE -o $@ $^ $(LIBS)
 
 # Простые функциональные тесты
 tests/test_func: tests/test_func.cpp
-	$(CXX) $(CXXFLAGS) -o $@ tests/test_func.cpp $(LIBS)
+	$(CXX) $(CXXFLAGS) -o $@ $< $(LIBS)
 
 clean:
 	rm -f $(SERVER_OBJ) server users.txt server.log
 	rm -f tests/test_sha256 tests/test_auth tests/test_vectors tests/test_protocol tests/test_cli
 	rm -f tests/test_func
-	rm -f test*.txt test*.log 2>/dev/null
+	rm -f test*.txt test*.log empty_users.txt 2>/dev/null
 	rm -rf $(DOC_DIR)
 	@pkill -f './server' 2>/dev/null || true
 

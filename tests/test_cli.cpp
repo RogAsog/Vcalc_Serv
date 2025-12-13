@@ -5,106 +5,159 @@
 
 #include <UnitTest++/UnitTest++.h>
 #include <iostream>
-#include <cstdlib>
 #include <string>
+#include <fstream>
+#include <cstdlib>
+#include <cstring>
+#include <vector>
+#include <sstream>
+
+// Объявление функции main_server из server.cpp
+extern "C" int main_server(int argc, char* argv[]);
 
 using namespace std;
 
-// Вспомогательная функция для подавления предупреждения
-int safe_system(const char* cmd) {
-    return system(cmd);
+// Вспомогательная функция для создания тестовых файлов
+void create_test_file(const string& filename, const string& content) {
+    ofstream file(filename);
+    file << content;
+    file.close();
+}
+
+// Вспомогательная функция для преобразования vector<string> в char* argv[]
+vector<char*> create_argv(const vector<string>& args) {
+    vector<char*> argv;
+    argv.push_back(const_cast<char*>("server"));  // argv[0]
+    
+    for (const auto& arg : args) {
+        char* arg_copy = new char[arg.size() + 1];
+        strcpy(arg_copy, arg.c_str());
+        argv.push_back(arg_copy);
+    }
+    
+    argv.push_back(nullptr);  // NULL terminator
+    return argv;
+}
+
+// Вспомогательная функция для очистки argv
+void cleanup_argv(vector<char*>& argv) {
+    for (size_t i = 1; i < argv.size() - 1; i++) {
+        delete[] argv[i];
+    }
 }
 
 SUITE(CLITests) {
-    // Проверяем наличие сервера перед тестами
+    
     struct Setup {
         Setup() {
-            if (system("test -f ./server 2>/dev/null") != 0) {
-                cerr << "Ошибка: сначала соберите сервер (make all)" << endl;
-                exit(1);
-            }
-            // Убиваем старые процессы сервера
-            safe_system("pkill -f './server' > /dev/null 2>&1");
+            // Создаем тестовые файлы пользователей
+            create_test_file("test_users.txt", "user:pass\nadmin:admin123\n");
         }
         
         ~Setup() {
-            // Очистка после тестов
-            safe_system("rm -f test_users.txt users2.txt test.log server2.log 2>/dev/null");
-            safe_system("pkill -f './server' > /dev/null 2>&1");
+            // Удаляем временные файлы
+            remove("test_users.txt");
+            remove("empty_users.txt");
+            remove("test.log");
+            remove("server.log");
         }
     };
     
-    TEST_FIXTURE(Setup, HelpFlag) {
-        int result = safe_system("./server --help > /dev/null 2>&1");
+    // Тест 1: Опция --help
+    TEST_FIXTURE(Setup, TestHelpFlag) {
+        vector<string> args = {"--help"};
+        vector<char*> argv = create_argv(args);
+        int result = main_server(args.size() + 1, argv.data());
+        cleanup_argv(argv);
         CHECK_EQUAL(0, result);
     }
     
-    TEST_FIXTURE(Setup, ShortHelpFlag) {
-        int result = safe_system("./server -h > /dev/null 2>&1");
+    // Тест 2: Опция -h (краткая справка)
+    TEST_FIXTURE(Setup, TestShortHelpFlag) {
+        vector<string> args = {"-h"};
+        vector<char*> argv = create_argv(args);
+        int result = main_server(args.size() + 1, argv.data());
+        cleanup_argv(argv);
         CHECK_EQUAL(0, result);
     }
     
-    TEST_FIXTURE(Setup, InvalidArgument) {
-        int result = safe_system("./server --invalid-arg > /dev/null 2>&1");
+    // Тест 3: Неизвестный аргумент
+    TEST_FIXTURE(Setup, TestInvalidArgument) {
+        vector<string> args = {"--invalid-arg"};
+        vector<char*> argv = create_argv(args);
+        int result = main_server(args.size() + 1, argv.data());
+        cleanup_argv(argv);
         CHECK(result != 0);
     }
     
-    TEST_FIXTURE(Setup, WithPortOption) {
-        // Создаем временный файл пользователей
-        int create_result = safe_system("echo 'user:pass' > test_users.txt 2>/dev/null");
-        CHECK_EQUAL(0, create_result);
-        
-        // Запускаем сервер с указанием порта
-        int result = safe_system("timeout 0.5 ./server -p 55555 -d test_users.txt -l test.log > /dev/null 2>&1");
-        CHECK(result != 0); // timeout должен завершить процесс
-    }
-    
-    TEST_FIXTURE(Setup, DefaultPort) {
-        // Создаем временный файл пользователей
-        int create_result = safe_system("echo 'user:pass' > users2.txt 2>/dev/null");
-        CHECK_EQUAL(0, create_result);
-        
-        // Запускаем сервер с портом по умолчанию
-        int result = safe_system("timeout 0.5 ./server -d users2.txt -l server2.log > /dev/null 2>&1");
-        CHECK(result != 0); // timeout должен завершить процесс
-    }
-    
-    TEST_FIXTURE(Setup, DatabaseOption) {
-        int result = safe_system("./server --database=test.txt --help > /dev/null 2>&1");
-        CHECK_EQUAL(0, result);
-    }
-    
-    TEST_FIXTURE(Setup, LogOption) {
-        int result = safe_system("./server --log=test.log --help > /dev/null 2>&1");
-        CHECK_EQUAL(0, result);
-    }
-    
-    TEST_FIXTURE(Setup, AllOptions) {
-        // Создаем временный файл пользователей
-        int create_result = safe_system("echo 'admin:admin123' > all_test_users.txt 2>/dev/null");
-        CHECK_EQUAL(0, create_result);
-        
-        // Проверяем все опции
-        int result = safe_system("./server --database=all_test_users.txt --log=all_test.log --port=77777 --help > /dev/null 2>&1");
-        CHECK_EQUAL(0, result);
-        
-        // Очистка
-        safe_system("rm -f all_test_users.txt all_test.log 2>/dev/null");
-    }
-    
-    TEST_FIXTURE(Setup, MissingDatabaseFile) {
-        // Пытаемся запустить с несуществующим файлом пользователей
-        int result = safe_system("./server --database=nonexistent.txt > /dev/null 2>&1");
+    // Тест 4: Неверный порт (строка)
+    TEST_FIXTURE(Setup, TestInvalidPortString) {
+        vector<string> args = {"-p", "not_a_number", "-d", "test_users.txt"};
+        vector<char*> argv = create_argv(args);
+        int result = main_server(args.size() + 1, argv.data());
+        cleanup_argv(argv);
         CHECK(result != 0);
+    }
+    
+    // Тест 5: Неверный порт (ноль)
+    TEST_FIXTURE(Setup, TestInvalidPortZero) {
+        vector<string> args = {"-p", "0", "-d", "test_users.txt"};
+        vector<char*> argv = create_argv(args);
+        int result = main_server(args.size() + 1, argv.data());
+        cleanup_argv(argv);
+        CHECK(result != 0);
+    }
+    
+    // Тест 6: Неверный порт (слишком большой)
+    TEST_FIXTURE(Setup, TestInvalidPortTooLarge) {
+        vector<string> args = {"-p", "70000", "-d", "test_users.txt"};
+        vector<char*> argv = create_argv(args);
+        int result = main_server(args.size() + 1, argv.data());
+        cleanup_argv(argv);
+        CHECK(result != 0);
+    }
+    
+    // Тест 7: Корректный порт с --help
+    TEST_FIXTURE(Setup, TestValidPortWithHelp) {
+        vector<string> args = {"-p", "8080", "-d", "test_users.txt", "--help"};
+        vector<char*> argv = create_argv(args);
+        int result = main_server(args.size() + 1, argv.data());
+        cleanup_argv(argv);
+        CHECK_EQUAL(0, result);
+    }
+    
+    // Тест 8: Отсутствующий файл пользователей
+    TEST_FIXTURE(Setup, TestMissingDatabaseFile) {
+        vector<string> args = {"--database=nonexistent.txt"};
+        vector<char*> argv = create_argv(args);
+        int result = main_server(args.size() + 1, argv.data());
+        cleanup_argv(argv);
+        CHECK(result != 0);
+    }
+    
+    // Тест 9: Пустой файл пользователей
+    TEST_FIXTURE(Setup, TestEmptyDatabaseFile) {
+        create_test_file("empty_users.txt", "");
+        
+        vector<string> args = {"-d", "empty_users.txt"};
+        vector<char*> argv = create_argv(args);
+        int result = main_server(args.size() + 1, argv.data());
+        cleanup_argv(argv);
+        CHECK(result != 0);
+        
+        remove("empty_users.txt");
+    }
+    
+    // Тест 10: Все опции с --help
+    TEST_FIXTURE(Setup, TestAllOptionsWithHelp) {
+        vector<string> args = {"--database=test_users.txt", "--log=test.log", "--port=8080", "--help"};
+        vector<char*> argv = create_argv(args);
+        int result = main_server(args.size() + 1, argv.data());
+        cleanup_argv(argv);
+        CHECK_EQUAL(0, result);
     }
 }
 
 int main() {
-    // Проверяем, собран ли сервер
-    if (system("test -f ./server 2>/dev/null") != 0) {
-        cerr << "Ошибка: сначала соберите сервер (make all)" << endl;
-        return 1;
-    }
-    
     return UnitTest::RunAllTests();
 }
