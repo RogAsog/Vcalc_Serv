@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Debian) (preloaded format=pdflatex 2025.12.9)  17 DEC 2025 22:09
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Debian) (preloaded format=pdflatex 2025.12.9)  19 DEC 2025 15:11
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1097,12 +1097,13 @@ File: uwasy.fd 2020/01/19 v2.4 Wasy-2 symbol font definitions
 LaTeX Font Warning: Font shape `T2A/phv/b/n' undefined
 (Font)              using `T2A/phv/m/n' instead on input line 207.
 
-[1] [2]
+[1] [2] [3] [4
+
+]
 Package hyperref Info: Option `pageanchor' set `true' on input line 210.
 
 {\cyrillictext \CYRG \cyrl \cyra \cyrv \cyra } 1.
 (./files.tex) [1
-
 
 ]
 LaTeX Font Info:    Font shape `T1/phv/b/n' will be
@@ -1134,24 +1135,24 @@ LaTeX Font Info:    Font shape `TS1/phv/m/n' will be
 (Font)              scaled to size 8.99994pt on input line 23.
 
 
-LaTeX Font Warning: Font shape `T2A/pcr/m/it' undefined
-(Font)              using `T2A/pcr/m/n' instead on input line 57.
+LaTeX Font Warning: Font shape `T2A/phv/m/it' undefined
+(Font)              using `T2A/phv/m/n' instead on input line 38.
 
-[3{/usr/share/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc}] [4])
-(./server_8cpp_source.tex [5] [6] [7] [8]) (./sha256_8cpp.tex
+
+LaTeX Font Warning: Font shape `T2A/pcr/m/it' undefined
+(Font)              using `T2A/pcr/m/n' instead on input line 61.
+
+[3{/usr/share/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc}] [4]
+Underfull \hbox (badness 10000) detected at line 142
+[][][]
+ []
+
+[5]) (./server_8cpp_source.tex [6] [7] [8] [9]) (./sha256_8cpp.tex
 Underfull \hbox (badness 10000) in paragraph at lines 8--12
 
  []
 
-
-LaTeX Font Warning: Font shape `T2A/phv/m/it' undefined
-(Font)              using `T2A/phv/m/n' instead on input line 16.
-
-
-LaTeX Font Warning: Font shape `T2A/phv/bc/n' undefined
-(Font)              using `T2A/phv/m/n' instead on input line 43.
-
-
+[10]
 Underfull \hbox (badness 10000) detected at line 43
 [][][]
  []
@@ -1161,17 +1162,17 @@ Underfull \hbox (badness 10000) detected at line 46
 [][][]
  []
 
-[9] [10]
+[11]
 Underfull \hbox (badness 10000) detected at line 155
 [][][]
  []
 
-[11]) (./sha256_8cpp_source.tex [12]) (./sha256_8hpp.tex [13]
+[12]) (./sha256_8cpp_source.tex [13] [14]) (./sha256_8hpp.tex
 Underfull \hbox (badness 10000) in paragraph at lines 8--10
 
  []
 
-[14]
+[15]
 Underfull \hbox (badness 10000) detected at line 65
 [][][]
  []
@@ -1181,17 +1182,17 @@ Underfull \hbox (badness 10000) in paragraph at lines 8--13
 
  []
 
-[15]) (./test__auth_8cpp_source.tex [16] [17]) (./test__cli_8cpp.tex
+[16]) (./test__auth_8cpp_source.tex [17] [18]) (./test__cli_8cpp.tex [19]
 Underfull \hbox (badness 10000) in paragraph at lines 8--16
 
  []
 
-[18]) (./test__cli_8cpp_source.tex [19] [20]) (./test__func_8cpp.tex
+[20]) (./test__cli_8cpp_source.tex [21] [22]) (./test__func_8cpp.tex
 Underfull \hbox (badness 10000) in paragraph at lines 8--16
 
  []
 
-[21] [22]) (./test__func_8cpp_source.tex [23]
+[23]) (./test__func_8cpp_source.tex [24]
 
 ! LaTeX Error: Unicode character ✓ (U+2713)
                not set up for use with LaTeX.
@@ -1218,6 +1219,7 @@ l.81 ...но\ остановлен"{}}\ <<\ endl;}
 You may provide a definition with
 \DeclareUnicodeCharacter 
 
+[25]
 
 ! LaTeX Error: Unicode character ✓ (U+2713)
                not set up for use with LaTeX.
@@ -1257,7 +1259,6 @@ l.119 ...�ся\ корректно"{}}\ <<\ endl;}
 You may provide a definition with
 \DeclareUnicodeCharacter 
 
-[24]
 
 ! LaTeX Error: Unicode character ✓ (U+2713)
                not set up for use with LaTeX.
@@ -1284,6 +1285,7 @@ l.147 ...�\ порту\ "{}}\ <<\ port\ <<\ endl;}
 You may provide a definition with
 \DeclareUnicodeCharacter 
 
+[26]
 
 ! LaTeX Error: Unicode character ✓ (U+2713)
                not set up for use with LaTeX.
@@ -1315,19 +1317,17 @@ Underfull \hbox (badness 10000) in paragraph at lines 8--12
 
  []
 
-[25]) (./test__protocol_8cpp_source.tex [26] [27]) (./test__sha256_8cpp.tex
+) (./test__protocol_8cpp_source.tex [27] [28]) (./test__sha256_8cpp.tex
 Underfull \hbox (badness 10000) in paragraph at lines 8--11
 
  []
 
-) (./test__sha256_8cpp_source.tex [28] [29]) (./test__vectors_8cpp.tex
+[29]) (./test__sha256_8cpp_source.tex [30]) (./test__vectors_8cpp.tex [31]
 Underfull \hbox (badness 10000) in paragraph at lines 8--13
 
  []
 
-[30]) (./test__vectors_8cpp_source.tex [31] [32]) [33] [34
-
-]
+) (./test__vectors_8cpp_source.tex [32] [33]) [34]
 No file refman.ind.
 (./refman.aux)
  ***********
@@ -1339,18 +1339,18 @@ L3 programming layer <2024-01-22>
 LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 
 Package rerunfilecheck Info: File `refman.out' has not changed.
-(rerunfilecheck)             Checksum: 258A7560839A78FD8E7DF67D0DE14D55;15028.
+(rerunfilecheck)             Checksum: 21A09CC26757E409EC6A9DE6C77913AB;15432.
  ) 
 Here is how much of TeX's memory you used:
- 21562 strings out of 475077
- 364085 string characters out of 5775106
- 1946975 words of memory out of 5000000
- 41805 multiletter control sequences out of 15000+600000
+ 21616 strings out of 475077
+ 365448 string characters out of 5775106
+ 1948975 words of memory out of 5000000
+ 41815 multiletter control sequences out of 15000+600000
  576101 words of font info for 75 fonts, out of 8000000 for 9000
  725 hyphenation exceptions out of 8191
- 101i,16n,117p,504b,757s stack positions out of 10000i,1000n,20000p,200000b,200000s
- </home/gosey/.texlive2023/texmf-var/fonts/pk/ljfour/lh/lh-t2a/larm0900.600pk
-> </home/gosey/.texlive2023/texmf-var/fonts/pk/ljfour/lh/lh-t2a/larm0800.600pk>
+ 101i,16n,117p,504b,658s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ </home/gosey/.texlive2023/texmf-var/fonts/pk/ljfour/lh/lh-t2a/larm0800.600pk
+> </home/gosey/.texlive2023/texmf-var/fonts/pk/ljfour/lh/lh-t2a/larm0900.600pk>
  </home/gosey/.texlive2023/texmf-var/fonts/pk/ljfour/lh/lh-t2a/larm2488.600pk> 
 </home/gosey/.texlive2023/texmf-var/fonts/pk/ljfour/lh/lh-t2a/larm2074.600pk> <
 /home/gosey/.texlive2023/texmf-var/fonts/pk/ljfour/lh/lh-t2a/larm0700.600pk> </
@@ -1363,10 +1363,10 @@ texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/share/texlive
 -dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/share/texlive/texmf-dist/f
 onts/type1/public/amsfonts/cm/cmsy8.pfb></usr/share/texlive/texmf-dist/fonts/ty
 pe1/urw/helvetic/uhvr8a.pfb>
-Output written on refman.pdf (38 pages, 296758 bytes).
+Output written on refman.pdf (40 pages, 302688 bytes).
 PDF statistics:
- 3300 PDF objects out of 3580 (max. 8388607)
- 2751 compressed objects within 28 object streams
- 1557 named destinations out of 1728 (max. 500000)
- 673 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 3378 PDF objects out of 3580 (max. 8388607)
+ 2820 compressed objects within 29 object streams
+ 1602 named destinations out of 1728 (max. 500000)
+ 689 words of extra memory for PDF output out of 10000 (max. 10000000)
 

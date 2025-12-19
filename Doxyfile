@@ -21,7 +21,6 @@ EXTRACT_STATIC         = YES
 GENERATE_HTML          = YES
 HTML_OUTPUT            = html
 
-# LaTeX/PDF вывод - ключевые настройки!
 GENERATE_LATEX         = YES
 LATEX_OUTPUT           = latex
 USE_PDFLATEX           = YES
@@ -41,7 +40,6 @@ HAVE_DOT               = NO
 CALL_GRAPH             = NO
 CALLER_GRAPH           = NO
 
-# Кодировка - важный параметр!
 DOXYFILE_ENCODING      = UTF-8
 INPUT_ENCODING         = UTF-8
 OUTPUT_DIRECTORY       = docs

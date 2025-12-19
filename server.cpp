@@ -88,6 +88,72 @@ void writeLittleEndian32(uint32_t value, uint8_t* bytes) {
     bytes[3] = (value >> 24) & 0xFF;
 }
 
+/**
+ * @brief Проверяет, является ли строка шестнадцатеричной
+ */
+bool isHexString(const string& str) {
+    for (char c : str) {
+        if (!((c >= '0' && c <= '9') || 
+              (c >= 'A' && c <= 'F') || 
+              (c >= 'a' && c <= 'f'))) {
+            return false;
+        }
+    }
+    return true;
+}
+
+/**
+ * @brief Парсит строку аутентификации, поддерживая оба формата
+ * @param authStr Строка аутентификации
+ * @param login [out] Извлеченный логин
+ * @param salt [out] Извлеченная соль (16 hex символов)
+ * @param hash [out] Извлеченный хэш (64 hex символа)
+ * @return true если успешно, false если ошибка
+ */
+bool parseAuthString(const string& authStr, string& login, string& salt, string& hash) {
+    // Подсчитываем количество двоеточий
+    size_t colonCount = 0;
+    for (char c : authStr) {
+        if (c == ':') colonCount++;
+    }
+    
+    //логин:соль:хэш
+    if (colonCount == 2) {
+        size_t firstColon = authStr.find(':');
+        size_t secondColon = authStr.find(':', firstColon + 1);
+        
+        if (firstColon == string::npos || secondColon == string::npos || 
+            firstColon == 0 || secondColon == firstColon + 1) {
+            return false;
+        }
+        
+        login = authStr.substr(0, firstColon);
+        salt = authStr.substr(firstColon + 1, secondColon - firstColon - 1);
+        hash = authStr.substr(secondColon + 1);
+    }
+    //логин(4) + соль(16) + хэш(64)
+    else if (colonCount == 0 && authStr.length() == 84) {
+        login = authStr.substr(0, 4);
+        salt = authStr.substr(4, 16);
+        hash = authStr.substr(20, 64);
+    }
+    else {
+        return false;
+    }
+    
+    // Проверка форматов
+    if (login.empty() || salt.length() != 16 || hash.length() != 64) {
+        return false;
+    }
+    
+    // Проверка hex формата
+    if (!isHexString(salt) || !isHexString(hash)) {
+        return false;
+    }
+    
+    return true;
+}
+
 void handleClient(int sock, const vector<pair<string,string>> &users, const string &logFile) {
     logMsg(logFile, "Клиент подключен");
     
@@ -102,18 +168,24 @@ void handleClient(int sock, const vector<pair<string,string>> &users, const stri
     auth[n] = '\0';
     
     string authStr(auth);
-    if (authStr.length() < 84) { 
+    
+    // Парсинг строки аутентификации
+    string login, salt, hash;
+    if (!parseAuthString(authStr, login, salt, hash)) {
         writeAll(sock, "ERR", 3); 
-        logMsg(logFile, "Неверный формат аутентификации");
+        logMsg(logFile, "Неверный формат аутентификации: " + 
+                        (authStr.length() > 50 ? authStr.substr(0, 50) + "..." : authStr));
         close(sock); 
         return; 
     }
     
-    string login = authStr.substr(0, 4);
-    string salt = authStr.substr(4, 16);
-    string hash = authStr.substr(20, 64);
+    // Логируем формат (новый или старый)
+    size_t colonCount = 0;
+    for (char c : authStr) if (c == ':') colonCount++;
+    string format = (colonCount == 2) ? "новый (логин:соль:хэш)" : 
+                   (colonCount == 0 && authStr.length() == 84) ? "старый (логин4+соль16+хэш64)" : "неизвестный";
     
-    logMsg(logFile, "Аутентификация: " + login);
+    logMsg(logFile, "Аутентификация: " + login + " (формат: " + format + ")");
     
     if (!checkAuth(login, salt, hash, users)) {
         writeAll(sock, "ERR", 3);
@@ -176,12 +248,10 @@ void handleClient(int sock, const vector<pair<string,string>> &users, const stri
     close(sock);
 }
 
-// Основная логика сервера (используется и в обычном режиме, и в тестах)
+// Основная логика сервера
 #ifndef TEST_MODE
-// Обычный режим: функция main
 int main(int argc, char *argv[]) {
 #else
-// Тестовый режим: функция main_server для тестов
 extern "C" int main_server(int argc, char *argv[]) {
 #endif
     string userFile = "users.txt";
@@ -201,7 +271,6 @@ extern "C" int main_server(int argc, char *argv[]) {
         po::notify(vm);
     } catch (exception &e) {
         #ifdef TEST_MODE
-        // В тестовом режиме просто возвращаем код ошибки
         return 1;
         #else
         cerr << "Ошибка: " << e.what() << endl << desc << endl;
@@ -218,7 +287,6 @@ extern "C" int main_server(int argc, char *argv[]) {
         #endif
     }
     
-    // Проверка порта
     if (port <= 0 || port > 65535) {
         #ifdef TEST_MODE
         return 1;
@@ -231,7 +299,6 @@ extern "C" int main_server(int argc, char *argv[]) {
     
     #ifndef TEST_MODE
     logMsg(logFile, "=== Запуск сервера ===");
-    logMsg(logFile, "Порт: " + to_string(port));
     #endif
     
     auto users = loadUsers(userFile);
@@ -239,25 +306,18 @@ extern "C" int main_server(int argc, char *argv[]) {
         #ifdef TEST_MODE
         return 1;
         #else
-        cerr << "Ошибка: Нет пользователей в " << userFile << endl;
-        logMsg(logFile, "ОШИБКА: Файл пользователей пуст");
+        cerr << "Ошибка: Нет пользователей" << endl;
         return 1;
         #endif
     }
     
-    #ifndef TEST_MODE
-    logMsg(logFile, "Загружено пользователей: " + to_string(users.size()));
-    #endif
-    
     #ifdef TEST_MODE
-    // В тестовом режиме не запускаем реальный сервер
     return 0;
     #endif
     
     int sock = socket(AF_INET, SOCK_STREAM, 0);
     if (sock < 0) { 
-        perror("Ошибка создания сокета"); 
-        logMsg(logFile, "ОШИБКА: Не удалось создать сокет");
+        perror("Ошибка сокета"); 
         return 1; 
     }
     
@@ -270,36 +330,27 @@ extern "C" int main_server(int argc, char *argv[]) {
     addr.sin_addr.s_addr = INADDR_ANY;
     
     if (bind(sock, (sockaddr*)&addr, sizeof(addr)) < 0) { 
-        perror("Ошибка привязки сокета"); 
-        logMsg(logFile, "ОШИБКА: Не удалось привязать сокет к порту " + to_string(port));
+        perror("Ошибка привязки"); 
         close(sock); 
         return 1; 
     }
     
     if (listen(sock, 5) < 0) { 
         perror("Ошибка прослушивания"); 
-        logMsg(logFile, "ОШИБКА: Не удалось начать прослушивание");
         close(sock); 
         return 1; 
     }
     
-    cout << "Сервер vcalc запущен на порту " << port << endl;
-    cout << "Для остановки нажмите Ctrl+C" << endl;
-    logMsg(logFile, "Сервер запущен, ожидание подключений...");
+    cout << "Сервер запущен на порту " << port << endl;
     
-    // Основной цикл
     while (true) {
         sockaddr_in client;
         socklen_t len = sizeof(client);
         int clientSock = accept(sock, (sockaddr*)&client, &len);
-        if (clientSock < 0) {
-            logMsg(logFile, "Предупреждение: ошибка accept");
-            continue;
-        }
+        if (clientSock < 0) continue;
         handleClient(clientSock, users, logFile);
     }
     
     close(sock);
-    logMsg(logFile, "=== Сервер остановлен ===");
     return 0;
 }

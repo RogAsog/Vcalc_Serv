@@ -4,83 +4,85 @@
 \contentsline {section}{\numberline {1.1}Файлы}{1}{section.1.1}%
 \contentsline {chapter}{\numberline {2}Файлы}{3}{chapter.2}%
 \contentsline {section}{\numberline {2.1}Файл server.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}cpp}{3}{section.2.1}%
-\contentsline {subsection}{\numberline {2.1.1}Подробное описание}{3}{subsection.2.1.1}%
+\contentsline {subsection}{\numberline {2.1.1}Подробное описание}{4}{subsection.2.1.1}%
 \contentsline {subsection}{\numberline {2.1.2}Функции}{4}{subsection.2.1.2}%
 \contentsline {subsubsection}{\numberline {2.1.2.1}checkAuth()}{4}{subsubsection.2.1.2.1}%
 \contentsline {subsubsection}{\numberline {2.1.2.2}handleClient()}{4}{subsubsection.2.1.2.2}%
-\contentsline {subsubsection}{\numberline {2.1.2.3}loadUsers()}{4}{subsubsection.2.1.2.3}%
-\contentsline {subsubsection}{\numberline {2.1.2.4}logMsg()}{4}{subsubsection.2.1.2.4}%
-\contentsline {subsubsection}{\numberline {2.1.2.5}main()}{4}{subsubsection.2.1.2.5}%
-\contentsline {subsubsection}{\numberline {2.1.2.6}readAll()}{4}{subsubsection.2.1.2.6}%
-\contentsline {subsubsection}{\numberline {2.1.2.7}readLittleEndian32()}{5}{subsubsection.2.1.2.7}%
-\contentsline {subsubsection}{\numberline {2.1.2.8}writeAll()}{5}{subsubsection.2.1.2.8}%
-\contentsline {subsubsection}{\numberline {2.1.2.9}writeLittleEndian32()}{5}{subsubsection.2.1.2.9}%
-\contentsline {section}{\numberline {2.2}server.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}cpp}{5}{section.2.2}%
-\contentsline {section}{\numberline {2.3}Файл sha256.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}cpp}{9}{section.2.3}%
-\contentsline {subsection}{\numberline {2.3.1}Подробное описание}{9}{subsection.2.3.1}%
-\contentsline {subsection}{\numberline {2.3.2}Функции}{10}{subsection.2.3.2}%
-\contentsline {subsubsection}{\numberline {2.3.2.1}bsig0()}{10}{subsubsection.2.3.2.1}%
-\contentsline {subsubsection}{\numberline {2.3.2.2}bsig1()}{10}{subsubsection.2.3.2.2}%
-\contentsline {subsubsection}{\numberline {2.3.2.3}ch()}{10}{subsubsection.2.3.2.3}%
-\contentsline {subsubsection}{\numberline {2.3.2.4}maj()}{10}{subsubsection.2.3.2.4}%
-\contentsline {subsubsection}{\numberline {2.3.2.5}ROTR()}{10}{subsubsection.2.3.2.5}%
-\contentsline {subsubsection}{\numberline {2.3.2.6}sha256()}{10}{subsubsection.2.3.2.6}%
-\contentsline {subsubsection}{\numberline {2.3.2.7}SHR()}{11}{subsubsection.2.3.2.7}%
-\contentsline {subsubsection}{\numberline {2.3.2.8}ssig0()}{11}{subsubsection.2.3.2.8}%
-\contentsline {subsubsection}{\numberline {2.3.2.9}ssig1()}{11}{subsubsection.2.3.2.9}%
-\contentsline {subsection}{\numberline {2.3.3}Переменные}{12}{subsection.2.3.3}%
-\contentsline {subsubsection}{\numberline {2.3.3.1}k}{12}{subsubsection.2.3.3.1}%
-\contentsline {section}{\numberline {2.4}sha256.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}cpp}{12}{section.2.4}%
-\contentsline {section}{\numberline {2.5}Файл sha256.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}hpp}{14}{section.2.5}%
-\contentsline {subsection}{\numberline {2.5.1}Подробное описание}{14}{subsection.2.5.1}%
-\contentsline {subsection}{\numberline {2.5.2}Функции}{14}{subsection.2.5.2}%
-\contentsline {subsubsection}{\numberline {2.5.2.1}sha256()}{14}{subsubsection.2.5.2.1}%
-\contentsline {section}{\numberline {2.6}sha256.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}hpp}{15}{section.2.6}%
-\contentsline {section}{\numberline {2.7}Файл tests/test\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}\_\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}auth.cpp}{15}{section.2.7}%
-\contentsline {subsection}{\numberline {2.7.1}Подробное описание}{15}{subsection.2.7.1}%
-\contentsline {subsection}{\numberline {2.7.2}Функции}{16}{subsection.2.7.2}%
-\contentsline {subsubsection}{\numberline {2.7.2.1}checkAuth()}{16}{subsubsection.2.7.2.1}%
-\contentsline {subsubsection}{\numberline {2.7.2.2}main()}{16}{subsubsection.2.7.2.2}%
-\contentsline {subsubsection}{\numberline {2.7.2.3}SUITE()}{16}{subsubsection.2.7.2.3}%
-\contentsline {section}{\numberline {2.8}test\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}\_\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}auth.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}cpp}{16}{section.2.8}%
-\contentsline {section}{\numberline {2.9}Файл tests/test\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}\_\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}cli.cpp}{18}{section.2.9}%
-\contentsline {subsection}{\numberline {2.9.1}Подробное описание}{19}{subsection.2.9.1}%
-\contentsline {subsection}{\numberline {2.9.2}Функции}{19}{subsection.2.9.2}%
-\contentsline {subsubsection}{\numberline {2.9.2.1}cleanup\_argv()}{19}{subsubsection.2.9.2.1}%
-\contentsline {subsubsection}{\numberline {2.9.2.2}create\_argv()}{19}{subsubsection.2.9.2.2}%
-\contentsline {subsubsection}{\numberline {2.9.2.3}create\_test\_file()}{19}{subsubsection.2.9.2.3}%
-\contentsline {subsubsection}{\numberline {2.9.2.4}main()}{19}{subsubsection.2.9.2.4}%
-\contentsline {subsubsection}{\numberline {2.9.2.5}main\_server()}{19}{subsubsection.2.9.2.5}%
-\contentsline {subsubsection}{\numberline {2.9.2.6}SUITE()}{19}{subsubsection.2.9.2.6}%
-\contentsline {section}{\numberline {2.10}test\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}\_\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}cli.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}cpp}{20}{section.2.10}%
-\contentsline {section}{\numberline {2.11}Файл tests/test\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}\_\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}func.cpp}{21}{section.2.11}%
-\contentsline {subsection}{\numberline {2.11.1}Подробное описание}{22}{subsection.2.11.1}%
-\contentsline {subsection}{\numberline {2.11.2}Функции}{22}{subsection.2.11.2}%
-\contentsline {subsubsection}{\numberline {2.11.2.1}check\_server\_running()}{22}{subsubsection.2.11.2.1}%
-\contentsline {subsubsection}{\numberline {2.11.2.2}create\_test\_users()}{22}{subsubsection.2.11.2.2}%
-\contentsline {subsubsection}{\numberline {2.11.2.3}main()}{22}{subsubsection.2.11.2.3}%
-\contentsline {subsubsection}{\numberline {2.11.2.4}run\_command()}{23}{subsubsection.2.11.2.4}%
-\contentsline {subsubsection}{\numberline {2.11.2.5}stop\_server()}{23}{subsubsection.2.11.2.5}%
-\contentsline {subsubsection}{\numberline {2.11.2.6}SUITE()}{23}{subsubsection.2.11.2.6}%
-\contentsline {section}{\numberline {2.12}test\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}\_\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}func.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}cpp}{23}{section.2.12}%
-\contentsline {section}{\numberline {2.13}Файл tests/test\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}\_\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}protocol.cpp}{25}{section.2.13}%
-\contentsline {subsection}{\numberline {2.13.1}Подробное описание}{26}{subsection.2.13.1}%
-\contentsline {subsection}{\numberline {2.13.2}Функции}{26}{subsection.2.13.2}%
-\contentsline {subsubsection}{\numberline {2.13.2.1}main()}{26}{subsubsection.2.13.2.1}%
-\contentsline {subsubsection}{\numberline {2.13.2.2}SUITE()}{26}{subsubsection.2.13.2.2}%
-\contentsline {section}{\numberline {2.14}test\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}\_\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}protocol.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}cpp}{26}{section.2.14}%
-\contentsline {section}{\numberline {2.15}Файл tests/test\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}\_\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}sha256.cpp}{28}{section.2.15}%
-\contentsline {subsection}{\numberline {2.15.1}Подробное описание}{28}{subsection.2.15.1}%
-\contentsline {subsection}{\numberline {2.15.2}Функции}{28}{subsection.2.15.2}%
-\contentsline {subsubsection}{\numberline {2.15.2.1}main()}{28}{subsubsection.2.15.2.1}%
-\contentsline {subsubsection}{\numberline {2.15.2.2}SUITE()}{28}{subsubsection.2.15.2.2}%
-\contentsline {section}{\numberline {2.16}test\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}\_\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}sha256.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}cpp}{29}{section.2.16}%
-\contentsline {section}{\numberline {2.17}Файл tests/test\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}\_\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}vectors.cpp}{30}{section.2.17}%
-\contentsline {subsection}{\numberline {2.17.1}Подробное описание}{31}{subsection.2.17.1}%
-\contentsline {subsection}{\numberline {2.17.2}Функции}{31}{subsection.2.17.2}%
-\contentsline {subsubsection}{\numberline {2.17.2.1}calculateSumOfSquares()}{31}{subsubsection.2.17.2.1}%
-\contentsline {subsubsection}{\numberline {2.17.2.2}floatToLittleEndian()}{31}{subsubsection.2.17.2.2}%
-\contentsline {subsubsection}{\numberline {2.17.2.3}littleEndianToFloat()}{31}{subsubsection.2.17.2.3}%
-\contentsline {subsubsection}{\numberline {2.17.2.4}main()}{31}{subsubsection.2.17.2.4}%
-\contentsline {subsubsection}{\numberline {2.17.2.5}SUITE()}{31}{subsubsection.2.17.2.5}%
-\contentsline {section}{\numberline {2.18}test\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}\_\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}vectors.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}cpp}{32}{section.2.18}%
+\contentsline {subsubsection}{\numberline {2.1.2.3}isHexString()}{4}{subsubsection.2.1.2.3}%
+\contentsline {subsubsection}{\numberline {2.1.2.4}loadUsers()}{4}{subsubsection.2.1.2.4}%
+\contentsline {subsubsection}{\numberline {2.1.2.5}logMsg()}{4}{subsubsection.2.1.2.5}%
+\contentsline {subsubsection}{\numberline {2.1.2.6}main()}{5}{subsubsection.2.1.2.6}%
+\contentsline {subsubsection}{\numberline {2.1.2.7}parseAuthString()}{5}{subsubsection.2.1.2.7}%
+\contentsline {subsubsection}{\numberline {2.1.2.8}readAll()}{5}{subsubsection.2.1.2.8}%
+\contentsline {subsubsection}{\numberline {2.1.2.9}readLittleEndian32()}{5}{subsubsection.2.1.2.9}%
+\contentsline {subsubsection}{\numberline {2.1.2.10}writeAll()}{6}{subsubsection.2.1.2.10}%
+\contentsline {subsubsection}{\numberline {2.1.2.11}writeLittleEndian32()}{6}{subsubsection.2.1.2.11}%
+\contentsline {section}{\numberline {2.2}server.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}cpp}{6}{section.2.2}%
+\contentsline {section}{\numberline {2.3}Файл sha256.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}cpp}{10}{section.2.3}%
+\contentsline {subsection}{\numberline {2.3.1}Подробное описание}{11}{subsection.2.3.1}%
+\contentsline {subsection}{\numberline {2.3.2}Функции}{11}{subsection.2.3.2}%
+\contentsline {subsubsection}{\numberline {2.3.2.1}bsig0()}{11}{subsubsection.2.3.2.1}%
+\contentsline {subsubsection}{\numberline {2.3.2.2}bsig1()}{11}{subsubsection.2.3.2.2}%
+\contentsline {subsubsection}{\numberline {2.3.2.3}ch()}{11}{subsubsection.2.3.2.3}%
+\contentsline {subsubsection}{\numberline {2.3.2.4}maj()}{12}{subsubsection.2.3.2.4}%
+\contentsline {subsubsection}{\numberline {2.3.2.5}ROTR()}{12}{subsubsection.2.3.2.5}%
+\contentsline {subsubsection}{\numberline {2.3.2.6}sha256()}{12}{subsubsection.2.3.2.6}%
+\contentsline {subsubsection}{\numberline {2.3.2.7}SHR()}{13}{subsubsection.2.3.2.7}%
+\contentsline {subsubsection}{\numberline {2.3.2.8}ssig0()}{13}{subsubsection.2.3.2.8}%
+\contentsline {subsubsection}{\numberline {2.3.2.9}ssig1()}{13}{subsubsection.2.3.2.9}%
+\contentsline {subsection}{\numberline {2.3.3}Переменные}{13}{subsection.2.3.3}%
+\contentsline {subsubsection}{\numberline {2.3.3.1}k}{13}{subsubsection.2.3.3.1}%
+\contentsline {section}{\numberline {2.4}sha256.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}cpp}{14}{section.2.4}%
+\contentsline {section}{\numberline {2.5}Файл sha256.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}hpp}{15}{section.2.5}%
+\contentsline {subsection}{\numberline {2.5.1}Подробное описание}{15}{subsection.2.5.1}%
+\contentsline {subsection}{\numberline {2.5.2}Функции}{16}{subsection.2.5.2}%
+\contentsline {subsubsection}{\numberline {2.5.2.1}sha256()}{16}{subsubsection.2.5.2.1}%
+\contentsline {section}{\numberline {2.6}sha256.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}hpp}{16}{section.2.6}%
+\contentsline {section}{\numberline {2.7}Файл tests/test\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}\_\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}auth.cpp}{17}{section.2.7}%
+\contentsline {subsection}{\numberline {2.7.1}Подробное описание}{17}{subsection.2.7.1}%
+\contentsline {subsection}{\numberline {2.7.2}Функции}{17}{subsection.2.7.2}%
+\contentsline {subsubsection}{\numberline {2.7.2.1}checkAuth()}{17}{subsubsection.2.7.2.1}%
+\contentsline {subsubsection}{\numberline {2.7.2.2}main()}{17}{subsubsection.2.7.2.2}%
+\contentsline {subsubsection}{\numberline {2.7.2.3}SUITE()}{17}{subsubsection.2.7.2.3}%
+\contentsline {section}{\numberline {2.8}test\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}\_\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}auth.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}cpp}{18}{section.2.8}%
+\contentsline {section}{\numberline {2.9}Файл tests/test\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}\_\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}cli.cpp}{20}{section.2.9}%
+\contentsline {subsection}{\numberline {2.9.1}Подробное описание}{20}{subsection.2.9.1}%
+\contentsline {subsection}{\numberline {2.9.2}Функции}{20}{subsection.2.9.2}%
+\contentsline {subsubsection}{\numberline {2.9.2.1}cleanup\_argv()}{20}{subsubsection.2.9.2.1}%
+\contentsline {subsubsection}{\numberline {2.9.2.2}create\_argv()}{20}{subsubsection.2.9.2.2}%
+\contentsline {subsubsection}{\numberline {2.9.2.3}create\_test\_file()}{20}{subsubsection.2.9.2.3}%
+\contentsline {subsubsection}{\numberline {2.9.2.4}main()}{21}{subsubsection.2.9.2.4}%
+\contentsline {subsubsection}{\numberline {2.9.2.5}main\_server()}{21}{subsubsection.2.9.2.5}%
+\contentsline {subsubsection}{\numberline {2.9.2.6}SUITE()}{21}{subsubsection.2.9.2.6}%
+\contentsline {section}{\numberline {2.10}test\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}\_\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}cli.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}cpp}{21}{section.2.10}%
+\contentsline {section}{\numberline {2.11}Файл tests/test\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}\_\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}func.cpp}{23}{section.2.11}%
+\contentsline {subsection}{\numberline {2.11.1}Подробное описание}{23}{subsection.2.11.1}%
+\contentsline {subsection}{\numberline {2.11.2}Функции}{24}{subsection.2.11.2}%
+\contentsline {subsubsection}{\numberline {2.11.2.1}check\_server\_running()}{24}{subsubsection.2.11.2.1}%
+\contentsline {subsubsection}{\numberline {2.11.2.2}create\_test\_users()}{24}{subsubsection.2.11.2.2}%
+\contentsline {subsubsection}{\numberline {2.11.2.3}main()}{24}{subsubsection.2.11.2.3}%
+\contentsline {subsubsection}{\numberline {2.11.2.4}run\_command()}{24}{subsubsection.2.11.2.4}%
+\contentsline {subsubsection}{\numberline {2.11.2.5}stop\_server()}{24}{subsubsection.2.11.2.5}%
+\contentsline {subsubsection}{\numberline {2.11.2.6}SUITE()}{24}{subsubsection.2.11.2.6}%
+\contentsline {section}{\numberline {2.12}test\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}\_\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}func.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}cpp}{25}{section.2.12}%
+\contentsline {section}{\numberline {2.13}Файл tests/test\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}\_\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}protocol.cpp}{27}{section.2.13}%
+\contentsline {subsection}{\numberline {2.13.1}Подробное описание}{27}{subsection.2.13.1}%
+\contentsline {subsection}{\numberline {2.13.2}Функции}{27}{subsection.2.13.2}%
+\contentsline {subsubsection}{\numberline {2.13.2.1}main()}{27}{subsubsection.2.13.2.1}%
+\contentsline {subsubsection}{\numberline {2.13.2.2}SUITE()}{28}{subsubsection.2.13.2.2}%
+\contentsline {section}{\numberline {2.14}test\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}\_\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}protocol.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}cpp}{28}{section.2.14}%
+\contentsline {section}{\numberline {2.15}Файл tests/test\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}\_\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}sha256.cpp}{29}{section.2.15}%
+\contentsline {subsection}{\numberline {2.15.1}Подробное описание}{29}{subsection.2.15.1}%
+\contentsline {subsection}{\numberline {2.15.2}Функции}{30}{subsection.2.15.2}%
+\contentsline {subsubsection}{\numberline {2.15.2.1}main()}{30}{subsubsection.2.15.2.1}%
+\contentsline {subsubsection}{\numberline {2.15.2.2}SUITE()}{30}{subsubsection.2.15.2.2}%
+\contentsline {section}{\numberline {2.16}test\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}\_\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}sha256.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}cpp}{30}{section.2.16}%
+\contentsline {section}{\numberline {2.17}Файл tests/test\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}\_\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}vectors.cpp}{32}{section.2.17}%
+\contentsline {subsection}{\numberline {2.17.1}Подробное описание}{32}{subsection.2.17.1}%
+\contentsline {subsection}{\numberline {2.17.2}Функции}{32}{subsection.2.17.2}%
+\contentsline {subsubsection}{\numberline {2.17.2.1}calculateSumOfSquares()}{32}{subsubsection.2.17.2.1}%
+\contentsline {subsubsection}{\numberline {2.17.2.2}floatToLittleEndian()}{32}{subsubsection.2.17.2.2}%
+\contentsline {subsubsection}{\numberline {2.17.2.3}littleEndianToFloat()}{32}{subsubsection.2.17.2.3}%
+\contentsline {subsubsection}{\numberline {2.17.2.4}main()}{33}{subsubsection.2.17.2.4}%
+\contentsline {subsubsection}{\numberline {2.17.2.5}SUITE()}{33}{subsubsection.2.17.2.5}%
+\contentsline {section}{\numberline {2.18}test\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}\_\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}vectors.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}cpp}{33}{section.2.18}%

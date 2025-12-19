@@ -87,220 +87,260 @@
 \DoxyCodeLine{\Hypertarget{server_8cpp_source_l00088}00088\ \ \ \ \ bytes[3]\ =\ (value\ >>\ 24)\ \&\ 0xFF;}
 \DoxyCodeLine{\Hypertarget{server_8cpp_source_l00089}00089\ \}}
 \DoxyCodeLine{\Hypertarget{server_8cpp_source_l00090}00090\ }
-\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00091}\mbox{\hyperlink{server_8cpp_abd40ed2d27d9d09a21a6e4efba1fcddd}{00091}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{server_8cpp_abd40ed2d27d9d09a21a6e4efba1fcddd}{handleClient}}(\textcolor{keywordtype}{int}\ sock,\ \textcolor{keyword}{const}\ vector<pair<string,string>>\ \&users,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\ \&logFile)\ \{}
-\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00092}00092\ \ \ \ \ \mbox{\hyperlink{server_8cpp_af27b53b8db22457a980ee54e454debfd}{logMsg}}(logFile,\ \textcolor{stringliteral}{"{}Клиент\ подключен"{}});}
-\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00093}00093\ \ \ \ \ }
-\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00094}00094\ \ \ \ \ \textcolor{comment}{//\ Аутентификация}}
-\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00095}00095\ \ \ \ \ \textcolor{keywordtype}{char}\ auth[256];}
-\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00096}00096\ \ \ \ \ ssize\_t\ n\ =\ read(sock,\ auth,\ \textcolor{keyword}{sizeof}(auth)-\/1);}
-\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00097}00097\ \ \ \ \ \textcolor{keywordflow}{if}\ (n\ <=\ 0)\ \{\ }
-\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00098}00098\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{server_8cpp_af27b53b8db22457a980ee54e454debfd}{logMsg}}(logFile,\ \textcolor{stringliteral}{"{}Ошибка\ чтения\ аутентификации"{}});}
-\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00099}00099\ \ \ \ \ \ \ \ \ close(sock);\ }
-\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00100}00100\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return};\ }
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00094}\mbox{\hyperlink{server_8cpp_ae1ca1aab8250d1319322d241e06da6f8}{00094}}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{server_8cpp_ae1ca1aab8250d1319322d241e06da6f8}{isHexString}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\&\ str)\ \{}
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00095}00095\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{char}\ c\ :\ str)\ \{}
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00096}00096\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!((c\ >=\ \textcolor{charliteral}{'0'}\ \&\&\ c\ <=\ \textcolor{charliteral}{'9'})\ ||\ }
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00097}00097\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (c\ >=\ \textcolor{charliteral}{'A'}\ \&\&\ c\ <=\ \textcolor{charliteral}{'F'})\ ||\ }
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00098}00098\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (c\ >=\ \textcolor{charliteral}{'a'}\ \&\&\ c\ <=\ \textcolor{charliteral}{'f'})))\ \{}
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00099}00099\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00100}00100\ \ \ \ \ \ \ \ \ \}}
 \DoxyCodeLine{\Hypertarget{server_8cpp_source_l00101}00101\ \ \ \ \ \}}
-\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00102}00102\ \ \ \ \ auth[n]\ =\ \textcolor{charliteral}{'\(\backslash\)0'};}
-\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00103}00103\ \ \ \ \ }
-\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00104}00104\ \ \ \ \ \textcolor{keywordtype}{string}\ authStr(auth);}
-\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00105}00105\ \ \ \ \ \textcolor{keywordflow}{if}\ (authStr.length()\ <\ 84)\ \{\ }
-\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00106}00106\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{server_8cpp_af44860e9f8040343cb955176f2d4acf9}{writeAll}}(sock,\ \textcolor{stringliteral}{"{}ERR"{}},\ 3);\ }
-\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00107}00107\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{server_8cpp_af27b53b8db22457a980ee54e454debfd}{logMsg}}(logFile,\ \textcolor{stringliteral}{"{}Неверный\ формат\ аутентификации"{}});}
-\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00108}00108\ \ \ \ \ \ \ \ \ close(sock);\ }
-\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00109}00109\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return};\ }
-\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00110}00110\ \ \ \ \ \}}
-\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00111}00111\ \ \ \ \ }
-\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00112}00112\ \ \ \ \ \textcolor{keywordtype}{string}\ login\ =\ authStr.substr(0,\ 4);}
-\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00113}00113\ \ \ \ \ \textcolor{keywordtype}{string}\ salt\ =\ authStr.substr(4,\ 16);}
-\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00114}00114\ \ \ \ \ \textcolor{keywordtype}{string}\ hash\ =\ authStr.substr(20,\ 64);}
-\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00115}00115\ \ \ \ \ }
-\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00116}00116\ \ \ \ \ \mbox{\hyperlink{server_8cpp_af27b53b8db22457a980ee54e454debfd}{logMsg}}(logFile,\ \textcolor{stringliteral}{"{}Аутентификация:\ "{}}\ +\ login);}
-\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00117}00117\ \ \ \ \ }
-\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00118}00118\ \ \ \ \ \textcolor{keywordflow}{if}\ (!\mbox{\hyperlink{server_8cpp_a6b20211fdc8cebe71bd591e89ec5828d}{checkAuth}}(login,\ salt,\ hash,\ users))\ \{}
-\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00119}00119\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{server_8cpp_af44860e9f8040343cb955176f2d4acf9}{writeAll}}(sock,\ \textcolor{stringliteral}{"{}ERR"{}},\ 3);}
-\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00120}00120\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{server_8cpp_af27b53b8db22457a980ee54e454debfd}{logMsg}}(logFile,\ \textcolor{stringliteral}{"{}Аутентификация\ отклонена:\ "{}}\ +\ login);}
-\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00121}00121\ \ \ \ \ \ \ \ \ close(sock);}
-\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00122}00122\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return};}
-\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00123}00123\ \ \ \ \ \}}
-\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00124}00124\ \ \ \ \ }
-\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00125}00125\ \ \ \ \ \mbox{\hyperlink{server_8cpp_af44860e9f8040343cb955176f2d4acf9}{writeAll}}(sock,\ \textcolor{stringliteral}{"{}OK"{}},\ 2);}
-\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00126}00126\ \ \ \ \ \mbox{\hyperlink{server_8cpp_af27b53b8db22457a980ee54e454debfd}{logMsg}}(logFile,\ \textcolor{stringliteral}{"{}Клиент\ аутентифицирован:\ "{}}\ +\ login);}
-\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00127}00127\ \ \ \ \ }
-\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00128}00128\ \ \ \ \ \textcolor{comment}{//\ Обработка\ векторов}}
-\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00129}00129\ \ \ \ \ uint8\_t\ buffer[4];}
-\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00130}00130\ \ \ \ \ \textcolor{keywordflow}{if}\ (!\mbox{\hyperlink{server_8cpp_a93a3a4c80bfa758d821375de82d1a540}{readAll}}(sock,\ buffer,\ 4))\ \{\ }
-\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00131}00131\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{server_8cpp_af27b53b8db22457a980ee54e454debfd}{logMsg}}(logFile,\ \textcolor{stringliteral}{"{}Ошибка\ чтения\ количества\ векторов"{}});}
-\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00132}00132\ \ \ \ \ \ \ \ \ close(sock);\ }
-\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00133}00133\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return};\ }
-\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00134}00134\ \ \ \ \ \}}
-\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00135}00135\ \ \ \ \ }
-\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00136}00136\ \ \ \ \ uint32\_t\ numVectors\ =\ \mbox{\hyperlink{server_8cpp_a9c710acc06d2b4ab09660e6059b457f0}{readLittleEndian32}}(buffer);}
-\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00137}00137\ \ \ \ \ }
-\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00138}00138\ \ \ \ \ \textcolor{keywordflow}{for}\ (uint32\_t\ i\ =\ 0;\ i\ <\ numVectors;\ i++)\ \{}
-\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00139}00139\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!\mbox{\hyperlink{server_8cpp_a93a3a4c80bfa758d821375de82d1a540}{readAll}}(sock,\ buffer,\ 4))\ \{}
-\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00140}00140\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{server_8cpp_af27b53b8db22457a980ee54e454debfd}{logMsg}}(logFile,\ \textcolor{stringliteral}{"{}Ошибка\ чтения\ размера\ вектора"{}});}
-\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00141}00141\ \ \ \ \ \ \ \ \ \ \ \ \ close(sock);}
-\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00142}00142\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return};}
-\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00143}00143\ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00144}00144\ \ \ \ \ \ \ \ \ }
-\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00145}00145\ \ \ \ \ \ \ \ \ uint32\_t\ vectorSize\ =\ \mbox{\hyperlink{server_8cpp_a9c710acc06d2b4ab09660e6059b457f0}{readLittleEndian32}}(buffer);}
-\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00146}00146\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ sum\ =\ 0.0f;}
-\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00147}00147\ \ \ \ \ \ \ \ \ }
-\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00148}00148\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (uint32\_t\ j\ =\ 0;\ j\ <\ vectorSize;\ j++)\ \{}
-\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00149}00149\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!\mbox{\hyperlink{server_8cpp_a93a3a4c80bfa758d821375de82d1a540}{readAll}}(sock,\ buffer,\ 4))\ \{}
-\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00150}00150\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{server_8cpp_af27b53b8db22457a980ee54e454debfd}{logMsg}}(logFile,\ \textcolor{stringliteral}{"{}Ошибка\ чтения\ данных\ вектора"{}});}
-\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00151}00151\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ close(sock);}
-\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00152}00152\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return};}
-\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00153}00153\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00154}00154\ \ \ \ \ \ \ \ \ \ \ \ \ }
-\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00155}00155\ \ \ \ \ \ \ \ \ \ \ \ \ uint32\_t\ val\ =\ \mbox{\hyperlink{server_8cpp_a9c710acc06d2b4ab09660e6059b457f0}{readLittleEndian32}}(buffer);}
-\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00156}00156\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ f;}
-\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00157}00157\ \ \ \ \ \ \ \ \ \ \ \ \ memcpy(\&f,\ \&val,\ \textcolor{keyword}{sizeof}(\textcolor{keywordtype}{float}));}
-\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00158}00158\ \ \ \ \ \ \ \ \ \ \ \ \ sum\ +=\ f\ *\ f;}
-\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00159}00159\ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00160}00160\ \ \ \ \ \ \ \ \ }
-\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00161}00161\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{server_8cpp_af27b53b8db22457a980ee54e454debfd}{logMsg}}(logFile,\ \textcolor{stringliteral}{"{}Вектор\ "{}}\ +\ to\_string(i+1)\ +\ \textcolor{stringliteral}{"{}:\ сумма\ квадратов\ =\ "{}}\ +\ to\_string(sum));}
-\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00162}00162\ \ \ \ \ \ \ \ \ }
-\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00163}00163\ \ \ \ \ \ \ \ \ uint32\_t\ resultBits;}
-\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00164}00164\ \ \ \ \ \ \ \ \ memcpy(\&resultBits,\ \&sum,\ \textcolor{keyword}{sizeof}(\textcolor{keywordtype}{float}));}
-\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00165}00165\ \ \ \ \ \ \ \ \ uint8\_t\ resultBuffer[4];}
-\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00166}00166\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{server_8cpp_a9eb47aa873544d447a7f61db5de4c832}{writeLittleEndian32}}(resultBits,\ resultBuffer);}
-\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00167}00167\ \ \ \ \ \ \ \ \ }
-\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00168}00168\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!\mbox{\hyperlink{server_8cpp_af44860e9f8040343cb955176f2d4acf9}{writeAll}}(sock,\ resultBuffer,\ 4))\ \{}
-\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00169}00169\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{server_8cpp_af27b53b8db22457a980ee54e454debfd}{logMsg}}(logFile,\ \textcolor{stringliteral}{"{}Ошибка\ отправки\ результата"{}});}
-\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00170}00170\ \ \ \ \ \ \ \ \ \ \ \ \ close(sock);}
-\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00171}00171\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return};}
-\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00172}00172\ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00173}00173\ \ \ \ \ \}}
-\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00174}00174\ \ \ \ \ }
-\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00175}00175\ \ \ \ \ \mbox{\hyperlink{server_8cpp_af27b53b8db22457a980ee54e454debfd}{logMsg}}(logFile,\ \textcolor{stringliteral}{"{}Вычисления\ завершены\ для\ "{}}\ +\ to\_string(numVectors)\ +\ \textcolor{stringliteral}{"{}\ векторов"{}});}
-\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00176}00176\ \ \ \ \ close(sock);}
-\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00177}00177\ \}}
-\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00178}00178\ }
-\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00179}00179\ \textcolor{comment}{//\ Основная\ логика\ сервера\ (используется\ и\ в\ обычном\ режиме,\ и\ в\ тестах)}}
-\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00180}00180\ \textcolor{preprocessor}{\#ifndef\ TEST\_MODE}}
-\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00181}00181\ \textcolor{comment}{//\ Обычный\ режим:\ функция\ main}}
-\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00182}\mbox{\hyperlink{server_8cpp_a0ddf1224851353fc92bfbff6f499fa97}{00182}}\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{test__sha256_8cpp_ae66f6b31b5ad750f1fe042a706a4e3d4}{main}}(\textcolor{keywordtype}{int}\ argc,\ \textcolor{keywordtype}{char}\ *argv[])\ \{}
-\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00183}00183\ \textcolor{preprocessor}{\#else}}
-\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00184}00184\ \textcolor{comment}{//\ Тестовый\ режим:\ функция\ main\_server\ для\ тестов}}
-\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00185}00185\ \textcolor{keyword}{extern}\ \textcolor{stringliteral}{"{}C"{}}\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{test__cli_8cpp_a11ed877defaf21079bc488dd2eeefacd}{main\_server}}(\textcolor{keywordtype}{int}\ argc,\ \textcolor{keywordtype}{char}\ *argv[])\ \{}
-\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00186}00186\ \textcolor{preprocessor}{\#endif}}
-\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00187}00187\ \ \ \ \ \textcolor{keywordtype}{string}\ userFile\ =\ \textcolor{stringliteral}{"{}users.txt"{}};}
-\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00188}00188\ \ \ \ \ \textcolor{keywordtype}{string}\ logFile\ =\ \textcolor{stringliteral}{"{}server.log"{}};}
-\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00189}00189\ \ \ \ \ \textcolor{keywordtype}{int}\ port\ =\ 33333;}
-\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00190}00190\ \ \ \ \ }
-\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00191}00191\ \ \ \ \ po::options\_description\ desc(\textcolor{stringliteral}{"{}Сервер\ vcalc\ v1.0\(\backslash\)n\(\backslash\)nИспользование:\ server\ [options]\(\backslash\)n\(\backslash\)nДоступные\ опции"{}});}
-\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00192}00192\ \ \ \ \ desc.add\_options()}
-\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00193}00193\ \ \ \ \ \ \ \ \ (\textcolor{stringliteral}{"{}help,h"{}},\ \textcolor{stringliteral}{"{}Показать\ справку"{}})}
-\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00194}00194\ \ \ \ \ \ \ \ \ (\textcolor{stringliteral}{"{}database,d"{}},\ po::value<string>(\&userFile)-\/>default\_value(\textcolor{stringliteral}{"{}users.txt"{}}),\ \textcolor{stringliteral}{"{}Файл\ с\ базой\ пользователей"{}})}
-\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00195}00195\ \ \ \ \ \ \ \ \ (\textcolor{stringliteral}{"{}log,l"{}},\ po::value<string>(\&logFile)-\/>default\_value(\textcolor{stringliteral}{"{}server.log"{}}),\ \textcolor{stringliteral}{"{}Файл\ логов"{}})}
-\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00196}00196\ \ \ \ \ \ \ \ \ (\textcolor{stringliteral}{"{}port,p"{}},\ po::value<int>(\&port)-\/>default\_value(33333),\ \textcolor{stringliteral}{"{}Порт\ сервера"{}});}
-\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00197}00197\ \ \ \ \ }
-\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00198}00198\ \ \ \ \ po::variables\_map\ vm;}
-\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00199}00199\ \ \ \ \ \textcolor{keywordflow}{try}\ \{}
-\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00200}00200\ \ \ \ \ \ \ \ \ po::store(po::parse\_command\_line(argc,\ argv,\ desc),\ vm);}
-\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00201}00201\ \ \ \ \ \ \ \ \ po::notify(vm);}
-\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00202}00202\ \ \ \ \ \}\ \textcolor{keywordflow}{catch}\ (exception\ \&e)\ \{}
-\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00203}00203\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \#ifdef\ TEST\_MODE}}
-\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00204}00204\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ В\ тестовом\ режиме\ просто\ возвращаем\ код\ ошибки}}
-\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00205}00205\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ 1;}
-\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00206}00206\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \#else}}
-\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00207}00207\ \ \ \ \ \ \ \ \ cerr\ <<\ \textcolor{stringliteral}{"{}Ошибка:\ "{}}\ <<\ e.what()\ <<\ endl\ <<\ desc\ <<\ endl;}
-\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00208}00208\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ 1;}
-\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00209}00209\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \#endif}}
-\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00210}00210\ \ \ \ \ \}}
-\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00211}00211\ \ \ \ \ }
-\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00212}00212\ \ \ \ \ \textcolor{keywordflow}{if}\ (vm.count(\textcolor{stringliteral}{"{}help"{}}))\ \{}
-\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00213}00213\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \#ifdef\ TEST\_MODE}}
-\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00214}00214\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ 0;}
-\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00215}00215\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \#else}}
-\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00216}00216\ \ \ \ \ \ \ \ \ cout\ <<\ desc\ <<\ endl;}
-\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00217}00217\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ 0;}
-\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00218}00218\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \#endif}}
-\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00219}00219\ \ \ \ \ \}}
-\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00220}00220\ \ \ \ \ }
-\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00221}00221\ \ \ \ \ \textcolor{comment}{//\ Проверка\ порта}}
-\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00222}00222\ \ \ \ \ \textcolor{keywordflow}{if}\ (port\ <=\ 0\ ||\ port\ >\ 65535)\ \{}
-\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00223}00223\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \#ifdef\ TEST\_MODE}}
-\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00224}00224\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ 1;}
-\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00225}00225\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \#else}}
-\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00226}00226\ \ \ \ \ \ \ \ \ cerr\ <<\ \textcolor{stringliteral}{"{}Ошибка:\ Порт\ должен\ быть\ в\ диапазоне\ 1-\/65535"{}}\ <<\ endl;}
-\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00227}00227\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{server_8cpp_af27b53b8db22457a980ee54e454debfd}{logMsg}}(logFile,\ \textcolor{stringliteral}{"{}ОШИБКА:\ Неверный\ порт\ "{}}\ +\ to\_string(port));}
-\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00228}00228\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ 1;}
-\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00229}00229\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \#endif}}
-\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00230}00230\ \ \ \ \ \}}
-\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00231}00231\ \ \ \ \ }
-\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00232}00232\ \textcolor{preprocessor}{\ \ \ \ \#ifndef\ TEST\_MODE}}
-\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00233}00233\ \ \ \ \ \mbox{\hyperlink{server_8cpp_af27b53b8db22457a980ee54e454debfd}{logMsg}}(logFile,\ \textcolor{stringliteral}{"{}===\ Запуск\ сервера\ ==="{}});}
-\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00234}00234\ \ \ \ \ \mbox{\hyperlink{server_8cpp_af27b53b8db22457a980ee54e454debfd}{logMsg}}(logFile,\ \textcolor{stringliteral}{"{}Порт:\ "{}}\ +\ to\_string(port));}
-\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00235}00235\ \textcolor{preprocessor}{\ \ \ \ \#endif}}
-\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00236}00236\ \ \ \ \ }
-\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00237}00237\ \ \ \ \ \textcolor{keyword}{auto}\ users\ =\ \mbox{\hyperlink{server_8cpp_a61c423a906340757fe23ccfc52e6a971}{loadUsers}}(userFile);}
-\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00238}00238\ \ \ \ \ \textcolor{keywordflow}{if}\ (users.empty())\ \{}
-\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00239}00239\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \#ifdef\ TEST\_MODE}}
-\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00240}00240\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ 1;}
-\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00241}00241\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \#else}}
-\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00242}00242\ \ \ \ \ \ \ \ \ cerr\ <<\ \textcolor{stringliteral}{"{}Ошибка:\ Нет\ пользователей\ в\ "{}}\ <<\ userFile\ <<\ endl;}
-\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00243}00243\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{server_8cpp_af27b53b8db22457a980ee54e454debfd}{logMsg}}(logFile,\ \textcolor{stringliteral}{"{}ОШИБКА:\ Файл\ пользователей\ пуст"{}});}
-\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00244}00244\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ 1;}
-\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00245}00245\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \#endif}}
-\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00246}00246\ \ \ \ \ \}}
-\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00247}00247\ \ \ \ \ }
-\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00248}00248\ \textcolor{preprocessor}{\ \ \ \ \#ifndef\ TEST\_MODE}}
-\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00249}00249\ \ \ \ \ \mbox{\hyperlink{server_8cpp_af27b53b8db22457a980ee54e454debfd}{logMsg}}(logFile,\ \textcolor{stringliteral}{"{}Загружено\ пользователей:\ "{}}\ +\ to\_string(users.size()));}
-\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00250}00250\ \textcolor{preprocessor}{\ \ \ \ \#endif}}
-\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00251}00251\ \ \ \ \ }
-\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00252}00252\ \textcolor{preprocessor}{\ \ \ \ \#ifdef\ TEST\_MODE}}
-\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00253}00253\ \ \ \ \ \textcolor{comment}{//\ В\ тестовом\ режиме\ не\ запускаем\ реальный\ сервер}}
-\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00254}00254\ \ \ \ \ \textcolor{keywordflow}{return}\ 0;}
-\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00255}00255\ \textcolor{preprocessor}{\ \ \ \ \#endif}}
-\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00256}00256\ \ \ \ \ }
-\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00257}00257\ \ \ \ \ \textcolor{keywordtype}{int}\ sock\ =\ socket(AF\_INET,\ SOCK\_STREAM,\ 0);}
-\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00258}00258\ \ \ \ \ \textcolor{keywordflow}{if}\ (sock\ <\ 0)\ \{\ }
-\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00259}00259\ \ \ \ \ \ \ \ \ perror(\textcolor{stringliteral}{"{}Ошибка\ создания\ сокета"{}});\ }
-\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00260}00260\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{server_8cpp_af27b53b8db22457a980ee54e454debfd}{logMsg}}(logFile,\ \textcolor{stringliteral}{"{}ОШИБКА:\ Не\ удалось\ создать\ сокет"{}});}
-\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00261}00261\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ 1;\ }
-\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00262}00262\ \ \ \ \ \}}
-\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00263}00263\ \ \ \ \ }
-\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00264}00264\ \ \ \ \ \textcolor{keywordtype}{int}\ opt\ =\ 1;}
-\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00265}00265\ \ \ \ \ setsockopt(sock,\ SOL\_SOCKET,\ SO\_REUSEADDR,\ \&opt,\ \textcolor{keyword}{sizeof}(opt));}
-\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00266}00266\ \ \ \ \ }
-\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00267}00267\ \ \ \ \ sockaddr\_in\ addr\ =\ \{\};}
-\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00268}00268\ \ \ \ \ addr.sin\_family\ =\ AF\_INET;}
-\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00269}00269\ \ \ \ \ addr.sin\_port\ =\ htons(port);}
-\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00270}00270\ \ \ \ \ addr.sin\_addr.s\_addr\ =\ INADDR\_ANY;}
-\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00271}00271\ \ \ \ \ }
-\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00272}00272\ \ \ \ \ \textcolor{keywordflow}{if}\ (bind(sock,\ (sockaddr*)\&addr,\ \textcolor{keyword}{sizeof}(addr))\ <\ 0)\ \{\ }
-\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00273}00273\ \ \ \ \ \ \ \ \ perror(\textcolor{stringliteral}{"{}Ошибка\ привязки\ сокета"{}});\ }
-\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00274}00274\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{server_8cpp_af27b53b8db22457a980ee54e454debfd}{logMsg}}(logFile,\ \textcolor{stringliteral}{"{}ОШИБКА:\ Не\ удалось\ привязать\ сокет\ к\ порту\ "{}}\ +\ to\_string(port));}
-\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00275}00275\ \ \ \ \ \ \ \ \ close(sock);\ }
-\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00276}00276\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ 1;\ }
-\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00277}00277\ \ \ \ \ \}}
-\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00278}00278\ \ \ \ \ }
-\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00279}00279\ \ \ \ \ \textcolor{keywordflow}{if}\ (listen(sock,\ 5)\ <\ 0)\ \{\ }
-\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00280}00280\ \ \ \ \ \ \ \ \ perror(\textcolor{stringliteral}{"{}Ошибка\ прослушивания"{}});\ }
-\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00281}00281\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{server_8cpp_af27b53b8db22457a980ee54e454debfd}{logMsg}}(logFile,\ \textcolor{stringliteral}{"{}ОШИБКА:\ Не\ удалось\ начать\ прослушивание"{}});}
-\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00282}00282\ \ \ \ \ \ \ \ \ close(sock);\ }
-\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00283}00283\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ 1;\ }
-\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00284}00284\ \ \ \ \ \}}
-\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00285}00285\ \ \ \ \ }
-\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00286}00286\ \ \ \ \ cout\ <<\ \textcolor{stringliteral}{"{}Сервер\ vcalc\ запущен\ на\ порту\ "{}}\ <<\ port\ <<\ endl;}
-\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00287}00287\ \ \ \ \ cout\ <<\ \textcolor{stringliteral}{"{}Для\ остановки\ нажмите\ Ctrl+C"{}}\ <<\ endl;}
-\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00288}00288\ \ \ \ \ \mbox{\hyperlink{server_8cpp_af27b53b8db22457a980ee54e454debfd}{logMsg}}(logFile,\ \textcolor{stringliteral}{"{}Сервер\ запущен,\ ожидание\ подключений..."{}});}
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00102}00102\ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00103}00103\ \}}
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00104}00104\ }
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00113}\mbox{\hyperlink{server_8cpp_a0fd1ef1d013aa6bae8e280b3617350b2}{00113}}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{server_8cpp_a0fd1ef1d013aa6bae8e280b3617350b2}{parseAuthString}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\&\ authStr,\ \textcolor{keywordtype}{string}\&\ login,\ \textcolor{keywordtype}{string}\&\ salt,\ \textcolor{keywordtype}{string}\&\ hash)\ \{}
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00114}00114\ \ \ \ \ \textcolor{comment}{//\ Подсчитываем\ количество\ двоеточий}}
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00115}00115\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ colonCount\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00116}00116\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{char}\ c\ :\ authStr)\ \{}
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00117}00117\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (c\ ==\ \textcolor{charliteral}{':'})\ colonCount++;}
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00118}00118\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00119}00119\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00120}00120\ \ \ \ \ \textcolor{comment}{//логин:соль:хэш}}
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00121}00121\ \ \ \ \ \textcolor{keywordflow}{if}\ (colonCount\ ==\ 2)\ \{}
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00122}00122\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ firstColon\ =\ authStr.find(\textcolor{charliteral}{':'});}
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00123}00123\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ secondColon\ =\ authStr.find(\textcolor{charliteral}{':'},\ firstColon\ +\ 1);}
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00124}00124\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00125}00125\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (firstColon\ ==\ string::npos\ ||\ secondColon\ ==\ string::npos\ ||\ }
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00126}00126\ \ \ \ \ \ \ \ \ \ \ \ \ firstColon\ ==\ 0\ ||\ secondColon\ ==\ firstColon\ +\ 1)\ \{}
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00127}00127\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00128}00128\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00129}00129\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00130}00130\ \ \ \ \ \ \ \ \ login\ =\ authStr.substr(0,\ firstColon);}
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00131}00131\ \ \ \ \ \ \ \ \ salt\ =\ authStr.substr(firstColon\ +\ 1,\ secondColon\ -\/\ firstColon\ -\/\ 1);}
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00132}00132\ \ \ \ \ \ \ \ \ hash\ =\ authStr.substr(secondColon\ +\ 1);}
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00133}00133\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00134}00134\ \ \ \ \ \textcolor{comment}{//логин(4)\ +\ соль(16)\ +\ хэш(64)}}
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00135}00135\ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (colonCount\ ==\ 0\ \&\&\ authStr.length()\ ==\ 84)\ \{}
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00136}00136\ \ \ \ \ \ \ \ \ login\ =\ authStr.substr(0,\ 4);}
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00137}00137\ \ \ \ \ \ \ \ \ salt\ =\ authStr.substr(4,\ 16);}
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00138}00138\ \ \ \ \ \ \ \ \ hash\ =\ authStr.substr(20,\ 64);}
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00139}00139\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00140}00140\ \ \ \ \ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00141}00141\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00142}00142\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00143}00143\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00144}00144\ \ \ \ \ \textcolor{comment}{//\ Проверка\ форматов}}
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00145}00145\ \ \ \ \ \textcolor{keywordflow}{if}\ (login.empty()\ ||\ salt.length()\ !=\ 16\ ||\ hash.length()\ !=\ 64)\ \{}
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00146}00146\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00147}00147\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00148}00148\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00149}00149\ \ \ \ \ \textcolor{comment}{//\ Проверка\ hex\ формата}}
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00150}00150\ \ \ \ \ \textcolor{keywordflow}{if}\ (!\mbox{\hyperlink{server_8cpp_ae1ca1aab8250d1319322d241e06da6f8}{isHexString}}(salt)\ ||\ !\mbox{\hyperlink{server_8cpp_ae1ca1aab8250d1319322d241e06da6f8}{isHexString}}(hash))\ \{}
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00151}00151\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00152}00152\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00153}00153\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00154}00154\ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00155}00155\ \}}
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00156}00156\ }
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00157}\mbox{\hyperlink{server_8cpp_abd40ed2d27d9d09a21a6e4efba1fcddd}{00157}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{server_8cpp_abd40ed2d27d9d09a21a6e4efba1fcddd}{handleClient}}(\textcolor{keywordtype}{int}\ sock,\ \textcolor{keyword}{const}\ vector<pair<string,string>>\ \&users,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\ \&logFile)\ \{}
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00158}00158\ \ \ \ \ \mbox{\hyperlink{server_8cpp_af27b53b8db22457a980ee54e454debfd}{logMsg}}(logFile,\ \textcolor{stringliteral}{"{}Клиент\ подключен"{}});}
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00159}00159\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00160}00160\ \ \ \ \ \textcolor{comment}{//\ Аутентификация}}
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00161}00161\ \ \ \ \ \textcolor{keywordtype}{char}\ auth[256];}
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00162}00162\ \ \ \ \ ssize\_t\ n\ =\ read(sock,\ auth,\ \textcolor{keyword}{sizeof}(auth)-\/1);}
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00163}00163\ \ \ \ \ \textcolor{keywordflow}{if}\ (n\ <=\ 0)\ \{\ }
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00164}00164\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{server_8cpp_af27b53b8db22457a980ee54e454debfd}{logMsg}}(logFile,\ \textcolor{stringliteral}{"{}Ошибка\ чтения\ аутентификации"{}});}
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00165}00165\ \ \ \ \ \ \ \ \ close(sock);\ }
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00166}00166\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return};\ }
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00167}00167\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00168}00168\ \ \ \ \ auth[n]\ =\ \textcolor{charliteral}{'\(\backslash\)0'};}
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00169}00169\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00170}00170\ \ \ \ \ \textcolor{keywordtype}{string}\ authStr(auth);}
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00171}00171\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00172}00172\ \ \ \ \ \textcolor{comment}{//\ Парсинг\ строки\ аутентификации}}
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00173}00173\ \ \ \ \ \textcolor{keywordtype}{string}\ login,\ salt,\ hash;}
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00174}00174\ \ \ \ \ \textcolor{keywordflow}{if}\ (!\mbox{\hyperlink{server_8cpp_a0fd1ef1d013aa6bae8e280b3617350b2}{parseAuthString}}(authStr,\ login,\ salt,\ hash))\ \{}
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00175}00175\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{server_8cpp_af44860e9f8040343cb955176f2d4acf9}{writeAll}}(sock,\ \textcolor{stringliteral}{"{}ERR"{}},\ 3);\ }
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00176}00176\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{server_8cpp_af27b53b8db22457a980ee54e454debfd}{logMsg}}(logFile,\ \textcolor{stringliteral}{"{}Неверный\ формат\ аутентификации:\ "{}}\ +\ }
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00177}00177\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (authStr.length()\ >\ 50\ ?\ authStr.substr(0,\ 50)\ +\ \textcolor{stringliteral}{"{}..."{}}\ :\ authStr));}
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00178}00178\ \ \ \ \ \ \ \ \ close(sock);\ }
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00179}00179\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return};\ }
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00180}00180\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00181}00181\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00182}00182\ \ \ \ \ \textcolor{comment}{//\ Логируем\ формат\ (новый\ или\ старый)}}
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00183}00183\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ colonCount\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00184}00184\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{char}\ c\ :\ authStr)\ \textcolor{keywordflow}{if}\ (c\ ==\ \textcolor{charliteral}{':'})\ colonCount++;}
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00185}00185\ \ \ \ \ \textcolor{keywordtype}{string}\ format\ =\ (colonCount\ ==\ 2)\ ?\ \textcolor{stringliteral}{"{}новый\ (логин:соль:хэш)"{}}\ :\ }
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00186}00186\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (colonCount\ ==\ 0\ \&\&\ authStr.length()\ ==\ 84)\ ?\ \textcolor{stringliteral}{"{}старый\ (логин4+соль16+хэш64)"{}}\ :\ \textcolor{stringliteral}{"{}неизвестный"{}};}
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00187}00187\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00188}00188\ \ \ \ \ \mbox{\hyperlink{server_8cpp_af27b53b8db22457a980ee54e454debfd}{logMsg}}(logFile,\ \textcolor{stringliteral}{"{}Аутентификация:\ "{}}\ +\ login\ +\ \textcolor{stringliteral}{"{}\ (формат:\ "{}}\ +\ format\ +\ \textcolor{stringliteral}{"{})"{}});}
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00189}00189\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00190}00190\ \ \ \ \ \textcolor{keywordflow}{if}\ (!\mbox{\hyperlink{server_8cpp_a6b20211fdc8cebe71bd591e89ec5828d}{checkAuth}}(login,\ salt,\ hash,\ users))\ \{}
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00191}00191\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{server_8cpp_af44860e9f8040343cb955176f2d4acf9}{writeAll}}(sock,\ \textcolor{stringliteral}{"{}ERR"{}},\ 3);}
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00192}00192\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{server_8cpp_af27b53b8db22457a980ee54e454debfd}{logMsg}}(logFile,\ \textcolor{stringliteral}{"{}Аутентификация\ отклонена:\ "{}}\ +\ login);}
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00193}00193\ \ \ \ \ \ \ \ \ close(sock);}
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00194}00194\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00195}00195\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00196}00196\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00197}00197\ \ \ \ \ \mbox{\hyperlink{server_8cpp_af44860e9f8040343cb955176f2d4acf9}{writeAll}}(sock,\ \textcolor{stringliteral}{"{}OK"{}},\ 2);}
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00198}00198\ \ \ \ \ \mbox{\hyperlink{server_8cpp_af27b53b8db22457a980ee54e454debfd}{logMsg}}(logFile,\ \textcolor{stringliteral}{"{}Клиент\ аутентифицирован:\ "{}}\ +\ login);}
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00199}00199\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00200}00200\ \ \ \ \ \textcolor{comment}{//\ Обработка\ векторов}}
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00201}00201\ \ \ \ \ uint8\_t\ buffer[4];}
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00202}00202\ \ \ \ \ \textcolor{keywordflow}{if}\ (!\mbox{\hyperlink{server_8cpp_a93a3a4c80bfa758d821375de82d1a540}{readAll}}(sock,\ buffer,\ 4))\ \{\ }
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00203}00203\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{server_8cpp_af27b53b8db22457a980ee54e454debfd}{logMsg}}(logFile,\ \textcolor{stringliteral}{"{}Ошибка\ чтения\ количества\ векторов"{}});}
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00204}00204\ \ \ \ \ \ \ \ \ close(sock);\ }
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00205}00205\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return};\ }
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00206}00206\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00207}00207\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00208}00208\ \ \ \ \ uint32\_t\ numVectors\ =\ \mbox{\hyperlink{server_8cpp_a9c710acc06d2b4ab09660e6059b457f0}{readLittleEndian32}}(buffer);}
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00209}00209\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00210}00210\ \ \ \ \ \textcolor{keywordflow}{for}\ (uint32\_t\ i\ =\ 0;\ i\ <\ numVectors;\ i++)\ \{}
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00211}00211\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!\mbox{\hyperlink{server_8cpp_a93a3a4c80bfa758d821375de82d1a540}{readAll}}(sock,\ buffer,\ 4))\ \{}
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00212}00212\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{server_8cpp_af27b53b8db22457a980ee54e454debfd}{logMsg}}(logFile,\ \textcolor{stringliteral}{"{}Ошибка\ чтения\ размера\ вектора"{}});}
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00213}00213\ \ \ \ \ \ \ \ \ \ \ \ \ close(sock);}
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00214}00214\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00215}00215\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00216}00216\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00217}00217\ \ \ \ \ \ \ \ \ uint32\_t\ vectorSize\ =\ \mbox{\hyperlink{server_8cpp_a9c710acc06d2b4ab09660e6059b457f0}{readLittleEndian32}}(buffer);}
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00218}00218\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ sum\ =\ 0.0f;}
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00219}00219\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00220}00220\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (uint32\_t\ j\ =\ 0;\ j\ <\ vectorSize;\ j++)\ \{}
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00221}00221\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!\mbox{\hyperlink{server_8cpp_a93a3a4c80bfa758d821375de82d1a540}{readAll}}(sock,\ buffer,\ 4))\ \{}
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00222}00222\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{server_8cpp_af27b53b8db22457a980ee54e454debfd}{logMsg}}(logFile,\ \textcolor{stringliteral}{"{}Ошибка\ чтения\ данных\ вектора"{}});}
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00223}00223\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ close(sock);}
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00224}00224\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00225}00225\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00226}00226\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00227}00227\ \ \ \ \ \ \ \ \ \ \ \ \ uint32\_t\ val\ =\ \mbox{\hyperlink{server_8cpp_a9c710acc06d2b4ab09660e6059b457f0}{readLittleEndian32}}(buffer);}
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00228}00228\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ f;}
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00229}00229\ \ \ \ \ \ \ \ \ \ \ \ \ memcpy(\&f,\ \&val,\ \textcolor{keyword}{sizeof}(\textcolor{keywordtype}{float}));}
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00230}00230\ \ \ \ \ \ \ \ \ \ \ \ \ sum\ +=\ f\ *\ f;}
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00231}00231\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00232}00232\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00233}00233\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{server_8cpp_af27b53b8db22457a980ee54e454debfd}{logMsg}}(logFile,\ \textcolor{stringliteral}{"{}Вектор\ "{}}\ +\ to\_string(i+1)\ +\ \textcolor{stringliteral}{"{}:\ сумма\ квадратов\ =\ "{}}\ +\ to\_string(sum));}
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00234}00234\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00235}00235\ \ \ \ \ \ \ \ \ uint32\_t\ resultBits;}
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00236}00236\ \ \ \ \ \ \ \ \ memcpy(\&resultBits,\ \&sum,\ \textcolor{keyword}{sizeof}(\textcolor{keywordtype}{float}));}
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00237}00237\ \ \ \ \ \ \ \ \ uint8\_t\ resultBuffer[4];}
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00238}00238\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{server_8cpp_a9eb47aa873544d447a7f61db5de4c832}{writeLittleEndian32}}(resultBits,\ resultBuffer);}
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00239}00239\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00240}00240\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!\mbox{\hyperlink{server_8cpp_af44860e9f8040343cb955176f2d4acf9}{writeAll}}(sock,\ resultBuffer,\ 4))\ \{}
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00241}00241\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{server_8cpp_af27b53b8db22457a980ee54e454debfd}{logMsg}}(logFile,\ \textcolor{stringliteral}{"{}Ошибка\ отправки\ результата"{}});}
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00242}00242\ \ \ \ \ \ \ \ \ \ \ \ \ close(sock);}
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00243}00243\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00244}00244\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00245}00245\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00246}00246\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00247}00247\ \ \ \ \ \mbox{\hyperlink{server_8cpp_af27b53b8db22457a980ee54e454debfd}{logMsg}}(logFile,\ \textcolor{stringliteral}{"{}Вычисления\ завершены\ для\ "{}}\ +\ to\_string(numVectors)\ +\ \textcolor{stringliteral}{"{}\ векторов"{}});}
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00248}00248\ \ \ \ \ close(sock);}
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00249}00249\ \}}
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00250}00250\ }
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00251}00251\ \textcolor{comment}{//\ Основная\ логика\ сервера}}
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00252}00252\ \textcolor{preprocessor}{\#ifndef\ TEST\_MODE}}
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00253}\mbox{\hyperlink{server_8cpp_a0ddf1224851353fc92bfbff6f499fa97}{00253}}\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{test__sha256_8cpp_ae66f6b31b5ad750f1fe042a706a4e3d4}{main}}(\textcolor{keywordtype}{int}\ argc,\ \textcolor{keywordtype}{char}\ *argv[])\ \{}
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00254}00254\ \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00255}00255\ \textcolor{keyword}{extern}\ \textcolor{stringliteral}{"{}C"{}}\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{test__cli_8cpp_a11ed877defaf21079bc488dd2eeefacd}{main\_server}}(\textcolor{keywordtype}{int}\ argc,\ \textcolor{keywordtype}{char}\ *argv[])\ \{}
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00256}00256\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00257}00257\ \ \ \ \ \textcolor{keywordtype}{string}\ userFile\ =\ \textcolor{stringliteral}{"{}users.txt"{}};}
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00258}00258\ \ \ \ \ \textcolor{keywordtype}{string}\ logFile\ =\ \textcolor{stringliteral}{"{}server.log"{}};}
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00259}00259\ \ \ \ \ \textcolor{keywordtype}{int}\ port\ =\ 33333;}
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00260}00260\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00261}00261\ \ \ \ \ po::options\_description\ desc(\textcolor{stringliteral}{"{}Сервер\ vcalc\ v1.0\(\backslash\)n\(\backslash\)nИспользование:\ server\ [options]\(\backslash\)n\(\backslash\)nДоступные\ опции"{}});}
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00262}00262\ \ \ \ \ desc.add\_options()}
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00263}00263\ \ \ \ \ \ \ \ \ (\textcolor{stringliteral}{"{}help,h"{}},\ \textcolor{stringliteral}{"{}Показать\ справку"{}})}
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00264}00264\ \ \ \ \ \ \ \ \ (\textcolor{stringliteral}{"{}database,d"{}},\ po::value<string>(\&userFile)-\/>default\_value(\textcolor{stringliteral}{"{}users.txt"{}}),\ \textcolor{stringliteral}{"{}Файл\ с\ базой\ пользователей"{}})}
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00265}00265\ \ \ \ \ \ \ \ \ (\textcolor{stringliteral}{"{}log,l"{}},\ po::value<string>(\&logFile)-\/>default\_value(\textcolor{stringliteral}{"{}server.log"{}}),\ \textcolor{stringliteral}{"{}Файл\ логов"{}})}
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00266}00266\ \ \ \ \ \ \ \ \ (\textcolor{stringliteral}{"{}port,p"{}},\ po::value<int>(\&port)-\/>default\_value(33333),\ \textcolor{stringliteral}{"{}Порт\ сервера"{}});}
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00267}00267\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00268}00268\ \ \ \ \ po::variables\_map\ vm;}
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00269}00269\ \ \ \ \ \textcolor{keywordflow}{try}\ \{}
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00270}00270\ \ \ \ \ \ \ \ \ po::store(po::parse\_command\_line(argc,\ argv,\ desc),\ vm);}
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00271}00271\ \ \ \ \ \ \ \ \ po::notify(vm);}
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00272}00272\ \ \ \ \ \}\ \textcolor{keywordflow}{catch}\ (exception\ \&e)\ \{}
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00273}00273\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \#ifdef\ TEST\_MODE}}
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00274}00274\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ 1;}
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00275}00275\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \#else}}
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00276}00276\ \ \ \ \ \ \ \ \ cerr\ <<\ \textcolor{stringliteral}{"{}Ошибка:\ "{}}\ <<\ e.what()\ <<\ endl\ <<\ desc\ <<\ endl;}
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00277}00277\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ 1;}
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00278}00278\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \#endif}}
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00279}00279\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00280}00280\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00281}00281\ \ \ \ \ \textcolor{keywordflow}{if}\ (vm.count(\textcolor{stringliteral}{"{}help"{}}))\ \{}
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00282}00282\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \#ifdef\ TEST\_MODE}}
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00283}00283\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ 0;}
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00284}00284\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \#else}}
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00285}00285\ \ \ \ \ \ \ \ \ cout\ <<\ desc\ <<\ endl;}
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00286}00286\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ 0;}
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00287}00287\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \#endif}}
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00288}00288\ \ \ \ \ \}}
 \DoxyCodeLine{\Hypertarget{server_8cpp_source_l00289}00289\ \ \ \ \ }
-\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00290}00290\ \ \ \ \ \textcolor{comment}{//\ Основной\ цикл}}
-\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00291}00291\ \ \ \ \ \textcolor{keywordflow}{while}\ (\textcolor{keyword}{true})\ \{}
-\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00292}00292\ \ \ \ \ \ \ \ \ sockaddr\_in\ client;}
-\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00293}00293\ \ \ \ \ \ \ \ \ socklen\_t\ len\ =\ \textcolor{keyword}{sizeof}(client);}
-\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00294}00294\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ clientSock\ =\ accept(sock,\ (sockaddr*)\&client,\ \&len);}
-\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00295}00295\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (clientSock\ <\ 0)\ \{}
-\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00296}00296\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{server_8cpp_af27b53b8db22457a980ee54e454debfd}{logMsg}}(logFile,\ \textcolor{stringliteral}{"{}Предупреждение:\ ошибка\ accept"{}});}
-\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00297}00297\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{continue};}
-\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00298}00298\ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00299}00299\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{server_8cpp_abd40ed2d27d9d09a21a6e4efba1fcddd}{handleClient}}(clientSock,\ users,\ logFile);}
-\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00300}00300\ \ \ \ \ \}}
-\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00301}00301\ \ \ \ \ }
-\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00302}00302\ \ \ \ \ close(sock);}
-\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00303}00303\ \ \ \ \ \mbox{\hyperlink{server_8cpp_af27b53b8db22457a980ee54e454debfd}{logMsg}}(logFile,\ \textcolor{stringliteral}{"{}===\ Сервер\ остановлен\ ==="{}});}
-\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00304}00304\ \ \ \ \ \textcolor{keywordflow}{return}\ 0;}
-\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00305}00305\ \}}
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00290}00290\ \ \ \ \ \textcolor{keywordflow}{if}\ (port\ <=\ 0\ ||\ port\ >\ 65535)\ \{}
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00291}00291\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \#ifdef\ TEST\_MODE}}
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00292}00292\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ 1;}
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00293}00293\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \#else}}
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00294}00294\ \ \ \ \ \ \ \ \ cerr\ <<\ \textcolor{stringliteral}{"{}Ошибка:\ Порт\ должен\ быть\ в\ диапазоне\ 1-\/65535"{}}\ <<\ endl;}
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00295}00295\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{server_8cpp_af27b53b8db22457a980ee54e454debfd}{logMsg}}(logFile,\ \textcolor{stringliteral}{"{}ОШИБКА:\ Неверный\ порт\ "{}}\ +\ to\_string(port));}
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00296}00296\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ 1;}
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00297}00297\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \#endif}}
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00298}00298\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00299}00299\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00300}00300\ \textcolor{preprocessor}{\ \ \ \ \#ifndef\ TEST\_MODE}}
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00301}00301\ \ \ \ \ \mbox{\hyperlink{server_8cpp_af27b53b8db22457a980ee54e454debfd}{logMsg}}(logFile,\ \textcolor{stringliteral}{"{}===\ Запуск\ сервера\ ==="{}});}
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00302}00302\ \textcolor{preprocessor}{\ \ \ \ \#endif}}
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00303}00303\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00304}00304\ \ \ \ \ \textcolor{keyword}{auto}\ users\ =\ \mbox{\hyperlink{server_8cpp_a61c423a906340757fe23ccfc52e6a971}{loadUsers}}(userFile);}
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00305}00305\ \ \ \ \ \textcolor{keywordflow}{if}\ (users.empty())\ \{}
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00306}00306\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \#ifdef\ TEST\_MODE}}
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00307}00307\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ 1;}
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00308}00308\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \#else}}
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00309}00309\ \ \ \ \ \ \ \ \ cerr\ <<\ \textcolor{stringliteral}{"{}Ошибка:\ Нет\ пользователей"{}}\ <<\ endl;}
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00310}00310\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ 1;}
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00311}00311\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \#endif}}
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00312}00312\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00313}00313\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00314}00314\ \textcolor{preprocessor}{\ \ \ \ \#ifdef\ TEST\_MODE}}
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00315}00315\ \ \ \ \ \textcolor{keywordflow}{return}\ 0;}
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00316}00316\ \textcolor{preprocessor}{\ \ \ \ \#endif}}
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00317}00317\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00318}00318\ \ \ \ \ \textcolor{keywordtype}{int}\ sock\ =\ socket(AF\_INET,\ SOCK\_STREAM,\ 0);}
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00319}00319\ \ \ \ \ \textcolor{keywordflow}{if}\ (sock\ <\ 0)\ \{\ }
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00320}00320\ \ \ \ \ \ \ \ \ perror(\textcolor{stringliteral}{"{}Ошибка\ сокета"{}});\ }
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00321}00321\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ 1;\ }
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00322}00322\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00323}00323\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00324}00324\ \ \ \ \ \textcolor{keywordtype}{int}\ opt\ =\ 1;}
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00325}00325\ \ \ \ \ setsockopt(sock,\ SOL\_SOCKET,\ SO\_REUSEADDR,\ \&opt,\ \textcolor{keyword}{sizeof}(opt));}
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00326}00326\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00327}00327\ \ \ \ \ sockaddr\_in\ addr\ =\ \{\};}
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00328}00328\ \ \ \ \ addr.sin\_family\ =\ AF\_INET;}
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00329}00329\ \ \ \ \ addr.sin\_port\ =\ htons(port);}
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00330}00330\ \ \ \ \ addr.sin\_addr.s\_addr\ =\ INADDR\_ANY;}
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00331}00331\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00332}00332\ \ \ \ \ \textcolor{keywordflow}{if}\ (bind(sock,\ (sockaddr*)\&addr,\ \textcolor{keyword}{sizeof}(addr))\ <\ 0)\ \{\ }
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00333}00333\ \ \ \ \ \ \ \ \ perror(\textcolor{stringliteral}{"{}Ошибка\ привязки"{}});\ }
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00334}00334\ \ \ \ \ \ \ \ \ close(sock);\ }
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00335}00335\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ 1;\ }
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00336}00336\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00337}00337\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00338}00338\ \ \ \ \ \textcolor{keywordflow}{if}\ (listen(sock,\ 5)\ <\ 0)\ \{\ }
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00339}00339\ \ \ \ \ \ \ \ \ perror(\textcolor{stringliteral}{"{}Ошибка\ прослушивания"{}});\ }
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00340}00340\ \ \ \ \ \ \ \ \ close(sock);\ }
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00341}00341\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ 1;\ }
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00342}00342\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00343}00343\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00344}00344\ \ \ \ \ cout\ <<\ \textcolor{stringliteral}{"{}Сервер\ запущен\ на\ порту\ "{}}\ <<\ port\ <<\ endl;}
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00345}00345\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00346}00346\ \ \ \ \ \textcolor{keywordflow}{while}\ (\textcolor{keyword}{true})\ \{}
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00347}00347\ \ \ \ \ \ \ \ \ sockaddr\_in\ client;}
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00348}00348\ \ \ \ \ \ \ \ \ socklen\_t\ len\ =\ \textcolor{keyword}{sizeof}(client);}
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00349}00349\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ clientSock\ =\ accept(sock,\ (sockaddr*)\&client,\ \&len);}
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00350}00350\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (clientSock\ <\ 0)\ \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00351}00351\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{server_8cpp_abd40ed2d27d9d09a21a6e4efba1fcddd}{handleClient}}(clientSock,\ users,\ logFile);}
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00352}00352\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00353}00353\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00354}00354\ \ \ \ \ close(sock);}
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00355}00355\ \ \ \ \ \textcolor{keywordflow}{return}\ 0;}
+\DoxyCodeLine{\Hypertarget{server_8cpp_source_l00356}00356\ \}}
 
 \end{DoxyCode}

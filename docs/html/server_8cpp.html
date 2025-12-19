@@ -109,6 +109,12 @@ $(function() {
 <tr class="separator:a9c710acc06d2b4ab09660e6059b457f0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9eb47aa873544d447a7f61db5de4c832" id="r_a9eb47aa873544d447a7f61db5de4c832"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="server_8cpp.html#a9eb47aa873544d447a7f61db5de4c832">writeLittleEndian32</a> (uint32_t value, uint8_t *bytes)</td></tr>
 <tr class="separator:a9eb47aa873544d447a7f61db5de4c832"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae1ca1aab8250d1319322d241e06da6f8" id="r_ae1ca1aab8250d1319322d241e06da6f8"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="server_8cpp.html#ae1ca1aab8250d1319322d241e06da6f8">isHexString</a> (const string &amp;str)</td></tr>
+<tr class="memdesc:ae1ca1aab8250d1319322d241e06da6f8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Проверяет, является ли строка шестнадцатеричной  <br /></td></tr>
+<tr class="separator:ae1ca1aab8250d1319322d241e06da6f8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0fd1ef1d013aa6bae8e280b3617350b2" id="r_a0fd1ef1d013aa6bae8e280b3617350b2"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="server_8cpp.html#a0fd1ef1d013aa6bae8e280b3617350b2">parseAuthString</a> (const string &amp;authStr, string &amp;login, string &amp;salt, string &amp;hash)</td></tr>
+<tr class="memdesc:a0fd1ef1d013aa6bae8e280b3617350b2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Парсит строку аутентификации, поддерживая оба формата  <br /></td></tr>
+<tr class="separator:a0fd1ef1d013aa6bae8e280b3617350b2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abd40ed2d27d9d09a21a6e4efba1fcddd" id="r_abd40ed2d27d9d09a21a6e4efba1fcddd"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="server_8cpp.html#abd40ed2d27d9d09a21a6e4efba1fcddd">handleClient</a> (int sock, const vector&lt; pair&lt; string, string &gt; &gt; &amp;users, const string &amp;logFile)</td></tr>
 <tr class="separator:abd40ed2d27d9d09a21a6e4efba1fcddd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0ddf1224851353fc92bfbff6f499fa97" id="r_a0ddf1224851353fc92bfbff6f499fa97"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="server_8cpp.html#a0ddf1224851353fc92bfbff6f499fa97">main</a> (int argc, char *argv[])</td></tr>
@@ -193,7 +199,29 @@ $(function() {
       </table>
 </div><div class="memdoc">
 
-<p class="definition">См. определение в файле <a class="el" href="server_8cpp_source.html">server.cpp</a> строка <a class="el" href="server_8cpp_source.html#l00091">91</a></p>
+<p class="definition">См. определение в файле <a class="el" href="server_8cpp_source.html">server.cpp</a> строка <a class="el" href="server_8cpp_source.html#l00157">157</a></p>
+
+</div>
+</div>
+<a id="ae1ca1aab8250d1319322d241e06da6f8" name="ae1ca1aab8250d1319322d241e06da6f8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae1ca1aab8250d1319322d241e06da6f8">&#9670;&#160;</a></span>isHexString()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool isHexString </td>
+          <td>(</td>
+          <td class="paramtype">const string &amp;&#160;</td>
+          <td class="paramname"><em>str</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Проверяет, является ли строка шестнадцатеричной </p>
+
+<p class="definition">См. определение в файле <a class="el" href="server_8cpp_source.html">server.cpp</a> строка <a class="el" href="server_8cpp_source.html#l00094">94</a></p>
 
 </div>
 </div>
@@ -273,7 +301,61 @@ $(function() {
       </table>
 </div><div class="memdoc">
 
-<p class="definition">См. определение в файле <a class="el" href="server_8cpp_source.html">server.cpp</a> строка <a class="el" href="server_8cpp_source.html#l00182">182</a></p>
+<p class="definition">См. определение в файле <a class="el" href="server_8cpp_source.html">server.cpp</a> строка <a class="el" href="server_8cpp_source.html#l00253">253</a></p>
+
+</div>
+</div>
+<a id="a0fd1ef1d013aa6bae8e280b3617350b2" name="a0fd1ef1d013aa6bae8e280b3617350b2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0fd1ef1d013aa6bae8e280b3617350b2">&#9670;&#160;</a></span>parseAuthString()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool parseAuthString </td>
+          <td>(</td>
+          <td class="paramtype">const string &amp;&#160;</td>
+          <td class="paramname"><em>authStr</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">string &amp;&#160;</td>
+          <td class="paramname"><em>login</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">string &amp;&#160;</td>
+          <td class="paramname"><em>salt</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">string &amp;&#160;</td>
+          <td class="paramname"><em>hash</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Парсит строку аутентификации, поддерживая оба формата </p>
+<dl class="params"><dt>Аргументы</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">authStr</td><td>Строка аутентификации </td></tr>
+    <tr><td class="paramname">login</td><td>[out] Извлеченный логин </td></tr>
+    <tr><td class="paramname">salt</td><td>[out] Извлеченная соль (16 hex символов) </td></tr>
+    <tr><td class="paramname">hash</td><td>[out] Извлеченный хэш (64 hex символа) </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Возвращает</dt><dd>true если успешно, false если ошибка </dd></dl>
+
+<p class="definition">См. определение в файле <a class="el" href="server_8cpp_source.html">server.cpp</a> строка <a class="el" href="server_8cpp_source.html#l00113">113</a></p>
 
 </div>
 </div>

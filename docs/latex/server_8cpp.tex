@@ -34,6 +34,10 @@ uint32\+\_\+t \mbox{\hyperlink{server_8cpp_a9c710acc06d2b4ab09660e6059b457f0}{re
 \item 
 void \mbox{\hyperlink{server_8cpp_a9eb47aa873544d447a7f61db5de4c832}{write\+Little\+Endian32}} (uint32\+\_\+t value, uint8\+\_\+t \texorpdfstring{$\ast$}{*}bytes)
 \item 
+bool \mbox{\hyperlink{server_8cpp_ae1ca1aab8250d1319322d241e06da6f8}{is\+Hex\+String}} (const string \&str)
+\begin{DoxyCompactList}\small\item\em Проверяет, является ли строка шестнадцатеричной \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{server_8cpp_a0fd1ef1d013aa6bae8e280b3617350b2}{parse\+Auth\+String}} (const string \&auth\+Str, string \&login, string \&salt, string \&hash)
+\begin{DoxyCompactList}\small\item\em Парсит строку аутентификации, поддерживая оба формата \end{DoxyCompactList}\item 
 void \mbox{\hyperlink{server_8cpp_abd40ed2d27d9d09a21a6e4efba1fcddd}{handle\+Client}} (int sock, const vector$<$ pair$<$ string, string $>$ $>$ \&users, const string \&log\+File)
 \item 
 int \mbox{\hyperlink{server_8cpp_a0ddf1224851353fc92bfbff6f499fa97}{main}} (int argc, char \texorpdfstring{$\ast$}{*}argv\mbox{[}$\,$\mbox{]})
@@ -68,7 +72,21 @@ int \mbox{\hyperlink{server_8cpp_a0ddf1224851353fc92bfbff6f499fa97}{main}} (int 
 
 
 
-См. определение в файле \mbox{\hyperlink{server_8cpp_source}{server.\+cpp}} строка \mbox{\hyperlink{server_8cpp_source_l00091}{91}}
+См. определение в файле \mbox{\hyperlink{server_8cpp_source}{server.\+cpp}} строка \mbox{\hyperlink{server_8cpp_source_l00157}{157}}
+
+\Hypertarget{server_8cpp_ae1ca1aab8250d1319322d241e06da6f8}\label{server_8cpp_ae1ca1aab8250d1319322d241e06da6f8} 
+\index{server.cpp@{server.cpp}!isHexString@{isHexString}}
+\index{isHexString@{isHexString}!server.cpp@{server.cpp}}
+\doxysubsubsection{\texorpdfstring{isHexString()}{isHexString()}}
+{\footnotesize\ttfamily bool is\+Hex\+String (\begin{DoxyParamCaption}\item[{const string \&}]{str }\end{DoxyParamCaption})}
+
+
+
+Проверяет, является ли строка шестнадцатеричной 
+
+
+
+См. определение в файле \mbox{\hyperlink{server_8cpp_source}{server.\+cpp}} строка \mbox{\hyperlink{server_8cpp_source_l00094}{94}}
 
 \Hypertarget{server_8cpp_a61c423a906340757fe23ccfc52e6a971}\label{server_8cpp_a61c423a906340757fe23ccfc52e6a971} 
 \index{server.cpp@{server.cpp}!loadUsers@{loadUsers}}
@@ -98,7 +116,35 @@ int \mbox{\hyperlink{server_8cpp_a0ddf1224851353fc92bfbff6f499fa97}{main}} (int 
 
 
 
-См. определение в файле \mbox{\hyperlink{server_8cpp_source}{server.\+cpp}} строка \mbox{\hyperlink{server_8cpp_source_l00182}{182}}
+См. определение в файле \mbox{\hyperlink{server_8cpp_source}{server.\+cpp}} строка \mbox{\hyperlink{server_8cpp_source_l00253}{253}}
+
+\Hypertarget{server_8cpp_a0fd1ef1d013aa6bae8e280b3617350b2}\label{server_8cpp_a0fd1ef1d013aa6bae8e280b3617350b2} 
+\index{server.cpp@{server.cpp}!parseAuthString@{parseAuthString}}
+\index{parseAuthString@{parseAuthString}!server.cpp@{server.cpp}}
+\doxysubsubsection{\texorpdfstring{parseAuthString()}{parseAuthString()}}
+{\footnotesize\ttfamily bool parse\+Auth\+String (\begin{DoxyParamCaption}\item[{const string \&}]{auth\+Str,  }\item[{string \&}]{login,  }\item[{string \&}]{salt,  }\item[{string \&}]{hash }\end{DoxyParamCaption})}
+
+
+
+Парсит строку аутентификации, поддерживая оба формата 
+
+
+\begin{DoxyParams}{Аргументы}
+{\em auth\+Str} & Строка аутентификации \\
+\hline
+{\em login} & \mbox{[}out\mbox{]} Извлеченный логин \\
+\hline
+{\em salt} & \mbox{[}out\mbox{]} Извлеченная соль (16 hex символов) \\
+\hline
+{\em hash} & \mbox{[}out\mbox{]} Извлеченный хэш (64 hex символа) \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Возвращает}
+true если успешно, false если ошибка 
+\end{DoxyReturn}
+
+
+См. определение в файле \mbox{\hyperlink{server_8cpp_source}{server.\+cpp}} строка \mbox{\hyperlink{server_8cpp_source_l00113}{113}}
 
 \Hypertarget{server_8cpp_a93a3a4c80bfa758d821375de82d1a540}\label{server_8cpp_a93a3a4c80bfa758d821375de82d1a540} 
 \index{server.cpp@{server.cpp}!readAll@{readAll}}
